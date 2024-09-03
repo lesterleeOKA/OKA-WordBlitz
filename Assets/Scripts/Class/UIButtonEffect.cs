@@ -9,6 +9,7 @@ public class UIButtonEffect : MonoBehaviour
     private EventTrigger eventTrigger = null;
     public float scaleRatio = 0.75f;
     private Button buttonClick = null;
+    public bool pointDown = false;
     
     // Start is called before the first frame update
     void Start()
@@ -28,11 +29,17 @@ public class UIButtonEffect : MonoBehaviour
 
     void scaleSmallBtn(BaseEventData data)
     {
-        if(this.buttonClick.interactable) this.transform.DOScale(this.scaleRatio, 0.3f);
+        if(this.buttonClick.interactable) { 
+            this.transform.DOScale(this.scaleRatio, 0.3f);
+            this.pointDown = true;
+        }
     }
 
     void scaleToOriginal(BaseEventData data)
     {
-        this.transform.DOScale(1f, 0.3f);
+        if(this.buttonClick.interactable) { 
+            this.transform.DOScale(1f, 0.3f);
+            this.pointDown = false;
+        }
     }
 }
