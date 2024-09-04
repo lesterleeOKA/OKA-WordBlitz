@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using System.Collections;
 public class GameController : GameBaseController
 {
     public static GameController Instance = null;
@@ -17,14 +15,33 @@ public class GameController : GameBaseController
     {
         base.Start();
 
+        var playerNum = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
+
         for (int i = 0; i < this.playerControllers.Length; i++)
         {
             if (this.playerControllers[i] != null)
             {
-                this.playerControllers[i].InitialPlayerGrid();
+                if(i < playerNum)
+                {
+                    if (i == 0 && LoaderConfig.Instance != null)
+                    {
+                        var _playerName = LoaderConfig.Instance?.apiManager.loginName;
+                        var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance?.apiManager.peopleIcon as Texture2D);
+                        this.playerControllers[i].updatePlayerIcon(true, _playerName, icon);
+                    }
+
+                    this.playerControllers[i].gameObject.SetActive(true);
+                    this.playerControllers[i].Init();
+                }
+                else
+                {
+                    this.playerControllers[i].gameObject.SetActive(false);
+                    this.playerControllers[i].updatePlayerIcon(false);
+                }
             }
         }
     }
+
 
     public override void enterGame()
     {
@@ -34,19 +51,18 @@ public class GameController : GameBaseController
     public override void endGame()
     {
         bool showSuccess = false;
-        /*for (int i = 0; i < this.playersList.Count; i++)
+        for (int i = 0; i < this.playerControllers.Length; i++)
         {
-            var playerController = this.playersList[i].GetComponent<PlayerController>();
+            var playerController = this.playerControllers[i];
             if (playerController != null)
             {
                 if (playerController.Score >= 30)
                 {
                     showSuccess = true;
                 }
-
                 this.endGamePage.updateFinalScore(i, playerController.Score);
             }
-        }*/
+        }
         this.endGamePage.setStatus(true, showSuccess);
 
         base.endGame();

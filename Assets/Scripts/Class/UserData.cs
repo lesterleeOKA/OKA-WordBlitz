@@ -1,4 +1,4 @@
-using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ public class UserData: MonoBehaviour
     [SerializeField]
     private Color32 playerColor = Color.white;
     [SerializeField]
-    private Image[] playerIcons;
+    private PlayerIcon[] playerIcons;
 
     public string UserName
     {
@@ -40,7 +40,7 @@ public class UserData: MonoBehaviour
         set { this.playerColor = value; }
     }
 
-    public Image[] PlayerIcons
+    public PlayerIcon[] PlayerIcons
     {
         get { return this.playerIcons; }
         set { this.playerIcons = value; }

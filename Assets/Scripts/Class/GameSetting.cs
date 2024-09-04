@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 
 public class GameSetting : MonoBehaviour
 {
+    public int playerNumbers = 1;
     public string currentURL;
     public GameSetup gameSetup;
     protected virtual void Awake()
@@ -47,6 +47,12 @@ public class GameSetting : MonoBehaviour
     {
         get { return this.gameSetup.showFPS; }
         set { this.gameSetup.showFPS = value; }
+    }
+
+    public int PlayerNumbers
+    {
+        get { return this.playerNumbers; }
+        set { this.playerNumbers = value; }
     }
 }
 

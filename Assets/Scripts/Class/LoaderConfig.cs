@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class LoaderConfig : GameSetting
 {
     public static LoaderConfig Instance = null;
-    public int playerNumbers = 2;
     public string unitKey = string.Empty;
     public string testURL = string.Empty;
     public APIManager apiManager;

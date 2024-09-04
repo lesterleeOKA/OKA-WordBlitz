@@ -1,19 +1,35 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : UserData
 {
-    public int playerId = 0;
     public GridManager gridManager;
     public LineDrawer lineDrawer;
     public Cell[,] grid;
     private List<Cell> selectedCells = new List<Cell>();
     public bool IsConnectWord = false;
+    public TextMeshProUGUI answerBox;
     // Start is called before the first frame update
 
-    public void InitialPlayerGrid()
+    public void Init()
     {
-        this.grid = gridManager.CreateGrid(this.playerId);
+        this.grid = gridManager.CreateGrid(this.UserId);
+    }
+
+    public void NewQuestionWord(string _word)
+    {
+        this.gridManager.UpdateGridWithWord(this.UserId, _word);
+    }
+
+    public void updatePlayerIcon(bool _status = false, string _playerName = "", Sprite _icon= null)
+    {
+        for (int i = 0; i < this.PlayerIcons.Length; i++)
+        {
+            if (this.PlayerIcons[i] != null)
+                this.PlayerIcons[i].SetStatus(_status, _playerName, _icon);
+        }
+
     }
 
     public void SelectCell(Cell cell)
@@ -22,6 +38,7 @@ public class PlayerController : MonoBehaviour
         {
             cell.Selected();
             this.selectedCells.Add(cell);
+            if(this.answerBox != null) this.answerBox.text += cell.content.text;
             this.lineDrawer?.AddPoint(cell.transform.position);
         }
     }
@@ -64,5 +81,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         this.selectedCells.Clear();
+        if (this.answerBox != null) this.answerBox.text = "";
     }
 }

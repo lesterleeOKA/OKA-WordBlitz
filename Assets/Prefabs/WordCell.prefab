@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 15, y: 15, z: 15, w: 15}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0c5a65ed94da964d9635c0d95d79ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: -1
   content: {fileID: 1969713058206204159}
   cellSprites:
   - {fileID: 21300000, guid: 8fe791b4c479f454e999ed92c82e5e58, type: 3}

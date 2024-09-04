@@ -14,7 +14,6 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public int row;
     public int col;
     public bool isSelected = false;
-    private bool isDrawing = false;
 
     public void SetTextContent(int _playerId=0, string letter="")
     {
