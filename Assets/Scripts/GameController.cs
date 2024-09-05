@@ -33,10 +33,10 @@ public class GameController : GameBaseController
             {
                 if (i < this.playerNumber)
                 {
-                    if (i == 0 && LoaderConfig.Instance != null)
+                    if (i == 0 && LoaderConfig.Instance != null && LoaderConfig.Instance.apiManager.peopleIcon != null)
                     {
                         var _playerName = LoaderConfig.Instance?.apiManager.loginName;
-                        var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance?.apiManager.peopleIcon as Texture2D);
+                        var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
                         this.playerControllers[i].updatePlayerIcon(true, _playerName, icon);
                     }
 

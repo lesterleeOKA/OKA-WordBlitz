@@ -14,6 +14,7 @@ public class GridManager
     HashSet<Vector2Int> usedPositions = null;
     List<Vector2Int> availablePositions = null;
     HashSet<char> usedLetters = null;
+    public bool showQuestionWordPosition = false;
 
     public Cell[,] CreateGrid(int playerId, string initialWord)
     {
@@ -90,7 +91,7 @@ public class GridManager
 
             // Place the first letter
             usedPositions.Add(startPos);
-            cells[startPos.x, startPos.y].SetTextContent(playerId, word[0].ToString().ToUpper(), Color.yellow);
+            cells[startPos.x, startPos.y].SetTextContent(playerId, word[0].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
 
             // Attempt to place the remaining letters
             if (PlaceLetters(playerId, word, startPos, 1))
@@ -138,7 +139,7 @@ public class GridManager
             {
                 // Place the letter
                 usedPositions.Add(newPos);
-                cells[newPos.x, newPos.y].SetTextContent(playerId, word[index].ToString().ToUpper(), Color.yellow);
+                cells[newPos.x, newPos.y].SetTextContent(playerId, word[index].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
 
                 // Recursively attempt to place the next letter
                 if (PlaceLetters(playerId, word, newPos, index + 1))

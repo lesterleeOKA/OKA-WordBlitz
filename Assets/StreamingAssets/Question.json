@@ -23,6 +23,30 @@
         "black"
       ],
       "CorrectAnswer": "yellow"
+    },
+	{
+      "QID": "p1u1-a3",
+      "QuestionType": "Text",
+      "Question": "What is the color of orange?",
+      "Answers": [
+        "red",
+        "yellow",
+        "purple",
+        "orange"
+      ],
+      "CorrectAnswer": "orange"
+    },
+	{
+      "QID": "p1u1-a4",
+      "QuestionType": "Text",
+      "Question": "What is the color of sea?",
+      "Answers": [
+        "red",
+        "blue",
+        "white",
+        "orange"
+      ],
+      "CorrectAnswer": "blue"
     }
   ]
 

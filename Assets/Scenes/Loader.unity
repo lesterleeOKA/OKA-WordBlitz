@@ -392,7 +392,7 @@ MonoBehaviour:
   unitKey: 
   testURL: 
   apiManager:
-    jwt: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dfZW5hYmxlZCI6IjEiLCJ0b2tlbiI6IjUxMS1kOTI0YWZmMWFiNmU5ZjNhMzIwYjlkNDY2MTdjNmUwMGM3OGQyZDQwZjk2NzFlMmRlMWJiYmVjYmIzMjczMWM0IiwiZXhwaXJlcyI6MTcyNTQxODg0MCwicmVuZXdfZW5hYmxlZCI6MSwidGltZSI6IjIwMjQtMDgtMjggMDM6MDA6NDAgR01UIiwidWlkIjoiNTExIiwidXNlcl9yb2xlIjoiMyIsInNjaG9vbF9pZCI6IjI3MiIsImlwIjoiMTY5LjI1NC4xMjkuNSIsInZlcnNpb24iOm51bGwsImRldmljZSI6Im1hYyJ9.1AQpIu0wVekblcVn1TliPNP7ddgeFisf33TmRa4r3ys
+    jwt: 
     gameSettingJson: 
     questionJson: 
     accountJson: 
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e4ea16069d0ff48be9e50dd4d50e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadMethod: 2
+  loadMethod: 1
   jsonFileName: Question.json
   loadImage:
     loadMethod: 1
