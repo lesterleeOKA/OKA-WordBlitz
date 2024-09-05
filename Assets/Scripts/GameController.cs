@@ -4,6 +4,7 @@ public class GameController : GameBaseController
 {
     public static GameController Instance = null;
     public PlayerController[] playerControllers;
+    public int playerNumber = 0;
 
     protected override void Awake()
     {
@@ -14,14 +15,23 @@ public class GameController : GameBaseController
     protected override void Start()
     {
         base.Start();
+        this.playerNumber = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
+        StartCoroutine(this.InitialQuestion());
+       
+    }
 
-        var playerNum = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
+    private IEnumerator InitialQuestion()
+    {
+        QuestionController.Instance?.nextQuestion();
+        string word = QuestionController.Instance.currentQuestion.correctAnswer;
+
+        yield return new WaitForEndOfFrame();
 
         for (int i = 0; i < this.playerControllers.Length; i++)
         {
             if (this.playerControllers[i] != null)
             {
-                if(i < playerNum)
+                if (i < this.playerNumber)
                 {
                     if (i == 0 && LoaderConfig.Instance != null)
                     {
@@ -31,7 +41,7 @@ public class GameController : GameBaseController
                     }
 
                     this.playerControllers[i].gameObject.SetActive(true);
-                    this.playerControllers[i].Init();
+                    this.playerControllers[i].Init(word);
                 }
                 else
                 {
@@ -68,8 +78,30 @@ public class GameController : GameBaseController
         base.endGame();
     }
 
+    public void UpdateNextQuestion()
+    {
+        LogController.Instance?.debug("Next Question");
+        QuestionController.Instance?.nextQuestion();
+        string word = QuestionController.Instance.currentQuestion.correctAnswer;
+
+        for (int i = 0; i < this.playerNumber; i++)
+        {
+            if (this.playerControllers[i] != null)
+            {
+                this.playerControllers[i].NewQuestionWord(word);
+            }
+        }
+    }
+
+   
+
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            this.UpdateNextQuestion();
+        }
+
         // Handle mouse input
         if (Input.GetMouseButtonUp(0))
         {

@@ -5,7 +5,7 @@ public class GameBaseController : MonoBehaviour
 {
     public Timer gameTimer;
     public CanvasGroup GameUILayer, TopUILayer, getScorePopup;
-    private Vector2 originalGetScorePos = Vector2.zero;
+    public Vector2 originalGetScorePos = Vector2.zero;
     public EndGamePage endGamePage;
 
     protected virtual void Awake()

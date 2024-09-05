@@ -15,10 +15,17 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public int col;
     public bool isSelected = false;
 
-    public void SetTextContent(int _playerId=0, string letter="")
+    public void SetTextContent(int _playerId=0, string letter="", Color _color = default)
     {
         this.playerId = _playerId;
-        if (this.cellImage == null) this.cellImage = this.GetComponent<Image>();
+        if (this.cellImage == null) 
+            this.cellImage = this.GetComponent<Image>();
+
+        if (_color != default(Color)) 
+            this.cellImage.color = _color;
+        else
+            this.cellImage.color = Color.white;
+
         this.cellImage.sprite = this.cellSprites[0];
 
         if (this.content != null) {

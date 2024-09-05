@@ -1,24 +1,30 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class PlayerController : UserData
 {
+    public Scoring scoring;
     public GridManager gridManager;
     public LineDrawer lineDrawer;
     public Cell[,] grid;
     private List<Cell> selectedCells = new List<Cell>();
+    public bool IsCheckedAnswer = false;
     public bool IsConnectWord = false;
     public TextMeshProUGUI answerBox;
     // Start is called before the first frame update
 
-    public void Init()
+    public void Init(string _word)
     {
-        this.grid = gridManager.CreateGrid(this.UserId);
+        this.scoring.init();
+        this.grid = gridManager.CreateGrid(this.UserId, _word);
     }
 
     public void NewQuestionWord(string _word)
     {
+        this.StopConnection();
         this.gridManager.UpdateGridWithWord(this.UserId, _word);
     }
 
@@ -68,8 +74,47 @@ public class PlayerController : UserData
         this.lineDrawer?.StartDrawing();
     }
 
+    public void checkAnswer()
+    {
+        if(!this.IsCheckedAnswer) { 
+            int currentScore = this.Score;
+            var lowerUserAns = this.answerBox.text.ToLower();
+            var lowerQIDAns = QuestionController.Instance?.currentQuestion.correctAnswer.ToLower();
+            int resultScore = this.scoring.score(lowerUserAns, currentScore, lowerQIDAns);
+            this.Score = resultScore;
+            this.IsCheckedAnswer = true;
+            StartCoroutine(this.showResult(this.scoring.correct));
+        }
+        //LogController.Instance?.debug("Add marks" + this.Score);
+    }
+
+    public IEnumerator showResult(bool correct)
+    {
+        float delay = 1f;
+        if (correct)
+        {
+            delay = 2f;
+            SetUI.SetMove(GameController.Instance?.getScorePopup, true, new Vector2(0f, 0f), 0.5f);
+        }
+        AudioController.Instance?.PlayAudio(correct ? 1 : 2);
+        yield return new WaitForSeconds(delay);
+        SetUI.SetMove(GameController.Instance?.getScorePopup, false, GameController.Instance.originalGetScorePos, 0f);
+        this.scoring.correct = false;
+        this.IsCheckedAnswer = false;
+        if(correct) GameController.Instance?.UpdateNextQuestion();
+    }
+
     public void StopConnection()
     {
+        //Check Answer
+        if(this.answerBox != null)
+        {
+            if (!string.IsNullOrEmpty(this.answerBox.text))
+            {
+                this.checkAnswer();
+            }
+        }
+
         this.IsConnectWord = false;  // Stop drawing
         this.lineDrawer?.FinishDrawing();
 
