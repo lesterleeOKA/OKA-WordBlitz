@@ -327,6 +327,146 @@
       "Question": "",
       "CorrectAnswer": "Paint",
       "media": "p2u2-c20.mp3"
+    },
+    {
+      "QID": "p3u1-d1",
+      "QuestionType": "FillInBlank",
+      "Question": "I play the _____.",
+      "CorrectAnswer": "cello",
+      "media": "p3u1-d1.mp3"
+    },
+    {
+      "QID": "p3u1-d2",
+      "QuestionType": "FillInBlank",
+      "Question": "He plays the _____.",
+      "CorrectAnswer": "violin",
+      "media": "p3u1-d2.mp3"
+    },
+    {
+      "QID": "p3u1-d3",
+      "QuestionType": "FillInBlank",
+      "Question": "Dad plays the ______.",
+      "CorrectAnswer": "guitar",
+      "media": "p3u1-d3.mp3"
+    },
+    {
+      "QID": "p3u1-d4",
+      "QuestionType": "FillInBlank",
+      "Question": "She plays ________.",
+      "CorrectAnswer": "badminton",
+      "media": "p3u1-d4.mp3"
+    },
+    {
+      "QID": "p3u1-d5",
+      "QuestionType": "FillInBlank",
+      "Question": "Dave kicked the _______.",
+      "CorrectAnswer": "football",
+      "media": "p3u1-d5.mp3"
+    },
+    {
+      "QID": "p3u1-d6",
+      "QuestionType": "FillInBlank",
+      "Question": "Mum likes solving _____.",
+      "CorrectAnswer": "puzzles",
+      "media": "p3u1-d6.mp3"
+    },
+    {
+      "QID": "p3u1-d7",
+      "QuestionType": "FillInBlank",
+      "Question": "Ms. Ho collects _______.",
+      "CorrectAnswer": "stamps",
+      "media": "p3u1-d7.mp3"
+    },
+    {
+      "QID": "p3u1-d8",
+      "QuestionType": "FillInBlank",
+      "Question": "Keith plays the _______.",
+      "CorrectAnswer": "drum",
+      "media": "p3u1-d8.mp3"
+    },
+    {
+      "QID": "p3u1-d9",
+      "QuestionType": "FillInBlank",
+      "Question": "They are playing the ________.",
+      "CorrectAnswer": "trumpet",
+      "media": "p3u1-d9.mp3"
+    },
+    {
+      "QID": "p3u1-d10",
+      "QuestionType": "FillInBlank",
+      "Question": "He is playing the _______.",
+      "CorrectAnswer": "piano",
+      "media": "p3u1-d10.mp3"
+    },
+    {
+      "QID": "p3u1-d11",
+      "QuestionType": "FillInBlank",
+      "Question": "I can throw a ________.",
+      "CorrectAnswer": "baseball",
+      "media": "p3u1-d11.mp3"
+    },
+    {
+      "QID": "p3u1-d12",
+      "QuestionType": "FillInBlank",
+      "Question": "He is a _______ player.",
+      "CorrectAnswer": "basketball",
+      "media": "p3u1-d12.mp3"
+    },
+    {
+      "QID": "p3u1-d13",
+      "QuestionType": "FillInBlank",
+      "Question": "Mr. Chan enjoys ______ to school.",
+      "CorrectAnswer": "cycling",
+      "media": "p3u1-d13.mp3"
+    },
+    {
+      "QID": "p3u1-d14",
+      "QuestionType": "FillInBlank",
+      "Question": "Ms. Law listens to _______.",
+      "CorrectAnswer": "music",
+      "media": "p3u1-d14.mp3"
+    },
+    {
+      "QID": "p3u1-d15",
+      "QuestionType": "FillInBlank",
+      "Question": "He is playing a ________.",
+      "CorrectAnswer": "recorder",
+      "media": "p3u1-d15.mp3"
+    },
+    {
+      "QID": "p3u1-d16",
+      "QuestionType": "FillInBlank",
+      "Question": "She is learning the ______.",
+      "CorrectAnswer": "viola",
+      "media": "p3u1-d16.mp3"
+    },
+    {
+      "QID": "p3u1-d17",
+      "QuestionType": "FillInBlank",
+      "Question": "Auntie is a ______ dancer.",
+      "CorrectAnswer": "ballet",
+      "media": "p3u1-d17.mp3"
+    },
+    {
+      "QID": "p3u1-d18",
+      "QuestionType": "FillInBlank",
+      "Question": "My dog loves chasing ______ balls.",
+      "CorrectAnswer": "tennis",
+      "media": "p3u1-d18.mp3"
+    },
+    {
+      "QID": "p3u1-d19",
+      "QuestionType": "FillInBlank",
+      "Question": "Grandpa likes playing _____.",
+      "CorrectAnswer": "chess",
+      "media": "p3u1-d19.mp3"
+    },
+    {
+      "QID": "p3u1-d20",
+      "QuestionType": "FillInBlank",
+      "Question": "John likes to make _______.",
+      "CorrectAnswer": "crafts",
+      "media": "p3u1-d20.mp3"
     }
   ]
 

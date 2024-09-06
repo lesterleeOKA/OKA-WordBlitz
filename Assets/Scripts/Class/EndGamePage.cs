@@ -7,17 +7,29 @@ using UnityEngine.UI;
 public class EndGamePage
 {
     public CanvasGroup EndGameLayer;
+    public GameObject[] PlayerIcons;
     public Image messageBg;
     public Sprite[] messageImages;
     public Sprite[] starsImageSprites;
     public ScoreEnding[] scoreEndings;
 
-    public void init()
+    public void init(int playerNumber)
     {
         this.setStatus(false);
         foreach(var scoreEnding in scoreEndings)
         {
             scoreEnding.init();
+        }
+
+        for(int i =0; i< this.PlayerIcons.Length; i++)
+        {
+            if (this.PlayerIcons[i] != null)
+            {
+                if(i < playerNumber)
+                    this.PlayerIcons[i].SetActive(true);
+                else
+                    this.PlayerIcons[i].SetActive(false);
+            }
         }
     }
     public void setStatus(bool status, bool success=false)

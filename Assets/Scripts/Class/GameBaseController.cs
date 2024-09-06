@@ -7,6 +7,7 @@ public class GameBaseController : MonoBehaviour
     public CanvasGroup GameUILayer, TopUILayer, getScorePopup;
     public Vector2 originalGetScorePos = Vector2.zero;
     public EndGamePage endGamePage;
+    public int playerNumber = 0;
 
     protected virtual void Awake()
     {
@@ -15,10 +16,11 @@ public class GameBaseController : MonoBehaviour
 
     protected virtual void Start()
     {
+        this.playerNumber = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
         SetUI.Set(this.TopUILayer, false, 0f);
         SetUI.Set(this.getScorePopup, false, 0f);
         if (this.getScorePopup != null) this.originalGetScorePos = this.getScorePopup.transform.localPosition;
-        this.endGamePage.init();
+        this.endGamePage.init(this.playerNumber);
     }
 
     public virtual void enterGame()

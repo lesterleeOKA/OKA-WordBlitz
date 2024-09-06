@@ -35,6 +35,7 @@ public enum QuestionType
     Text = 1,
     Picture = 2,
     Audio = 3,
+    FillInBlank = 4
 }
 
 [Serializable]
@@ -43,30 +44,28 @@ public class CurrentQuestion
     public int numberQuestion = 0;
     public QuestionType questiontype = QuestionType.None;
     public QuestionList qa = null;
-    public TextMeshProUGUI questionText;
     public string correctAnswer;
     public string[] answersChoics;
     public CanvasGroup[] questionBgs;
-    public RawImage questionImage;
-    public Button audioPlayBtn;
+    private RawImage questionImage;
+    public CanvasGroup audioPlayBtn = null;
     private AspectRatioFitter aspecRatioFitter = null;
 
     public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0)
     {
         if (qa == null) return;
         this.qa = qa;
-
+        TextMeshProUGUI questionText = null;
         switch (qa.QuestionType)
         {
             case "Picture":
                 SetUI.SetGroup(this.questionBgs, 0, 0f);
+                this.questionImage = this.questionBgs[0].GetComponentInChildren<RawImage>();
                 this.questiontype = QuestionType.Picture;
                 var qaImage = qa.texture;
-                if (this.questionText != null) this.questionText.enabled = false;
-                if (this.questionText != null) this.questionText.text = "";
-                SetUI.Set(this.audioPlayBtn.GetComponent<CanvasGroup>(), false, 0f);
                 this.correctAnswer = qa.CorrectAnswer;
                 this.answersChoics = qa.Answers;
+
                 if (this.questionImage != null && qaImage != null)
                 {
                     this.questionImage.enabled = true;
@@ -86,10 +85,11 @@ public class CurrentQuestion
                 break;
             case "Audio":
                 SetUI.SetGroup(this.questionBgs, 1, 0f);
-                if (this.questionText != null) this.questionText.enabled = false;
-                if (this.questionText != null) this.questionText.text = "";
-                if (this.questionImage != null) this.questionImage.enabled = false;
-                SetUI.Set(this.audioPlayBtn.GetComponent<CanvasGroup>(), true, 0f);
+                this.audioPlayBtn = this.questionBgs[1].GetComponentInChildren<CanvasGroup>();
+                if (this.audioPlayBtn != null)
+                {
+                    SetUI.Set(this.audioPlayBtn, true, 0f);
+                }
                 this.questiontype = QuestionType.Audio;
                 this.correctAnswer = qa.CorrectAnswer;
                 this.answersChoics = qa.Answers;
@@ -97,13 +97,31 @@ public class CurrentQuestion
                 break;
             case "Text":
                 SetUI.SetGroup(this.questionBgs, 2, 0f);
-                SetUI.Set(this.audioPlayBtn.GetComponent<CanvasGroup>(), false, 0f);
                 this.questiontype = QuestionType.Text;
-                if (this.questionText != null) this.questionText.enabled = true;
-                if (this.questionText != null) this.questionText.text = qa.Question;
-                if (this.questionImage != null) this.questionImage.enabled = false;
+                questionText = this.questionBgs[2].GetComponentInChildren<TextMeshProUGUI>();
+                if (questionText != null)
+                {
+                    questionText.text = qa.Question;
+                }
                 this.correctAnswer = qa.CorrectAnswer;
                 this.answersChoics = qa.Answers;
+                break;
+            case "FillInBlank":
+                SetUI.SetGroup(this.questionBgs, 3, 0f);
+                questionText = this.questionBgs[3].GetComponentInChildren<TextMeshProUGUI>();
+                if(questionText != null)
+                {
+                    questionText.text = qa.Question;
+                }
+                this.audioPlayBtn = this.questionBgs[3].GetComponentInChildren<CanvasGroup>();
+                if(this.audioPlayBtn != null)
+                {
+                    SetUI.Set(this.audioPlayBtn, true, 0f);
+                }
+                this.questiontype = QuestionType.FillInBlank;
+                this.correctAnswer = qa.CorrectAnswer;
+                this.answersChoics = qa.Answers;
+                this.playAudio();
                 break;
         }
 
@@ -122,8 +140,8 @@ public class CurrentQuestion
     {
         if(this.audioPlayBtn != null && this.qa.audioClip != null)
         {
-            this.audioPlayBtn.GetComponent<AudioSource>().clip = this.qa.audioClip;
-            this.audioPlayBtn.GetComponent<AudioSource>().Play();
+            this.audioPlayBtn.GetComponentInChildren<AudioSource>().clip = this.qa.audioClip;
+            this.audioPlayBtn.GetComponentInChildren<AudioSource>().Play();
         }
     }
 }

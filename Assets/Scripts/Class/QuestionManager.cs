@@ -161,10 +161,11 @@ public class QuestionManager : MonoBehaviour
                       );
                     break;
                 case "Audio":
+                case "FillInBlank":
                     ExternalCaller.UpdateLoadBarStatus("Loading Audio");
                     StartCoroutine(
                         this.loadAudio.Load(
-                            folderName, qid, (audio) =>
+                            "Audio", qid, (audio) =>
                             {
                                 qa.audioClip = audio;
                                 this.loadedItems++;

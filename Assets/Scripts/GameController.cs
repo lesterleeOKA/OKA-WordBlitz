@@ -4,7 +4,6 @@ public class GameController : GameBaseController
 {
     public static GameController Instance = null;
     public PlayerController[] playerControllers;
-    public int playerNumber = 0;
     private bool showWordHints = false;
 
     protected override void Awake()
@@ -16,8 +15,6 @@ public class GameController : GameBaseController
     protected override void Start()
     {
         base.Start();
-        this.playerNumber = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
-       
     }
 
     private IEnumerator InitialQuestion()
@@ -64,14 +61,17 @@ public class GameController : GameBaseController
         bool showSuccess = false;
         for (int i = 0; i < this.playerControllers.Length; i++)
         {
-            var playerController = this.playerControllers[i];
-            if (playerController != null)
+            if(i < this.playerNumber)
             {
-                if (playerController.Score >= 30)
+                var playerController = this.playerControllers[i];
+                if (playerController != null)
                 {
-                    showSuccess = true;
+                    if (playerController.Score >= 30)
+                    {
+                        showSuccess = true;
+                    }
+                    this.endGamePage.updateFinalScore(i, playerController.Score);
                 }
-                this.endGamePage.updateFinalScore(i, playerController.Score);
             }
         }
         this.endGamePage.setStatus(true, showSuccess);
