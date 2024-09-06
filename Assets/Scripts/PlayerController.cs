@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,7 +18,8 @@ public class PlayerController : UserData
     public void Init(string _word)
     {
         this.scoring.init();
-        this.grid = gridManager.CreateGrid(this.UserId, _word);
+        float frame_width = this.GetComponent<RectTransform>().sizeDelta.x;
+        this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width);
     }
 
     public void NewQuestionWord(string _word)
@@ -53,17 +53,13 @@ public class PlayerController : UserData
     {
         // If there are no selected cells, any cell can be selected
         if (selectedCells.Count == 0) return true;
-
         // Get the last selected cell
         Cell lastSelected = selectedCells[selectedCells.Count - 1];
-
         // Check if the new cell is adjacent to the last selected cell
         bool isAdjacent = (Mathf.Abs(newCell.row - lastSelected.row) <= 1 &&
                            Mathf.Abs(newCell.col - lastSelected.col) <= 1);
-
         // Check if the new cell is already selected
         bool isAlreadySelected = newCell.isSelected;
-
         // Block connection if not adjacent or already selected
         return isAdjacent && !isAlreadySelected;
     }
@@ -83,22 +79,22 @@ public class PlayerController : UserData
             int resultScore = this.scoring.score(lowerUserAns, currentScore, lowerQIDAns);
             this.Score = resultScore;
             this.IsCheckedAnswer = true;
-            StartCoroutine(this.showResult(this.scoring.correct));
+            StartCoroutine(this.showAnswerResult(this.scoring.correct));
         }
-        //LogController.Instance?.debug("Add marks" + this.Score);
     }
 
-    public IEnumerator showResult(bool correct)
+    public IEnumerator showAnswerResult(bool correct)
     {
         float delay = 1f;
         if (correct)
         {
+            LogController.Instance?.debug("Add marks" + this.Score);
             delay = 2f;
-            SetUI.SetMove(GameController.Instance?.getScorePopup, true, new Vector2(0f, 0f), 0.5f);
+            GameController.Instance?.setGetScorePopup(true);
         }
         AudioController.Instance?.PlayAudio(correct ? 1 : 2);
         yield return new WaitForSeconds(delay);
-        SetUI.SetMove(GameController.Instance?.getScorePopup, false, GameController.Instance.originalGetScorePos, 0f);
+        GameController.Instance?.setGetScorePopup(false);
         this.scoring.correct = false;
         this.IsCheckedAnswer = false;
         if(correct) GameController.Instance?.UpdateNextQuestion();

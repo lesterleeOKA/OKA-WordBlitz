@@ -378,7 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7aeaaec4193fb4dbfba870d9a3929c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumbers: 2
   currentURL: 
   gameSetup:
     loadMethod: 1
@@ -389,8 +388,7 @@ MonoBehaviour:
     gameBackground: {fileID: 0}
     gameTime: 0
     showFPS: 0
-  unitKey: 
-  testURL: 
+    playerNumber: 2
   apiManager:
     jwt: 
     gameSettingJson: 
@@ -406,6 +404,8 @@ MonoBehaviour:
     loginName: 
     maxRetries: 10
     debugLayer: {fileID: 1630735626}
+  unitKey: 
+  testURL: 
 --- !u!4 &734659897
 Transform:
   m_ObjectHideFlags: 0

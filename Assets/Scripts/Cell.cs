@@ -21,17 +21,21 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         if (this.cellImage == null) 
             this.cellImage = this.GetComponent<Image>();
 
-        if (_color != default(Color)) 
-            this.cellImage.color = _color;
-        else
-            this.cellImage.color = Color.white;
-
+        this.SetButtonColor(_color);
         this.cellImage.sprite = this.cellSprites[0];
 
         if (this.content != null) {
             this.content.text = letter;
             this.content.color = this.defaultColor;
         }
+    }
+
+    public void SetButtonColor(Color _color = default)
+    {
+        if (_color != default(Color))
+            this.cellImage.color = _color;
+        else
+            this.cellImage.color = Color.white;
     }
 
     public void Selected()

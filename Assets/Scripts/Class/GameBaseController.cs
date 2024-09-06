@@ -39,6 +39,12 @@ public class GameBaseController : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+
+    public void setGetScorePopup(bool status)
+    {
+        SetUI.SetMove(this.getScorePopup, status, status ? Vector2.zero : this.originalGetScorePos, status? 0.5f : 0f);
+    }
+
     public void BackToWebpage()
     {
         ExternalCaller.BackToHomeUrlPage();

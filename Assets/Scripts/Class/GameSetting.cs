@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class GameSetting : MonoBehaviour
 {
-    public int playerNumbers = 1;
     public string currentURL;
     public GameSetup gameSetup;
     protected virtual void Awake()
@@ -51,12 +50,12 @@ public class GameSetting : MonoBehaviour
 
     public int PlayerNumbers
     {
-        get { return this.playerNumbers; }
-        set { this.playerNumbers = value; }
+        get { return this.gameSetup.playerNumber; }
+        set { this.gameSetup.playerNumber = value; }
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class GameSetup: LoadImage
 {
     [Tooltip("Default Game Background Texture")]
@@ -65,6 +64,7 @@ public class GameSetup: LoadImage
     public RawImage gameBackground;
     public float gameTime;
     public bool showFPS = false;
+    public int playerNumber = 1;
 
 
     public void setBackground()

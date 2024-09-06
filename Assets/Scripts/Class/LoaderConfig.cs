@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 public class LoaderConfig : GameSetting
 {
     public static LoaderConfig Instance = null;
+    public APIManager apiManager;
     public string unitKey = string.Empty;
     public string testURL = string.Empty;
-    public APIManager apiManager;
 
     protected override void Awake()
     {
@@ -85,6 +85,10 @@ public class LoaderConfig : GameSetting
                                 this.GameTime = float.Parse(value);
                                 LogController.Instance?.debug("Game Time: " + this.GameTime);
                                 this.ShowFPS = true;
+                                break;
+                            case "playerNumbers":
+                                this.PlayerNumbers = int.Parse(value);
+                                LogController.Instance?.debug("player Numbers: " + this.PlayerNumbers);
                                 break;
                         }
                     }

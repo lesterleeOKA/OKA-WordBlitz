@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class GridManager
@@ -11,16 +12,20 @@ public class GridManager
     public int gridColumn = 4;
     public int maxRetries = 10;
     private Cell[,] cells;
+    private List<Vector2Int> questionCells = new List<Vector2Int>();
     HashSet<Vector2Int> usedPositions = null;
     List<Vector2Int> availablePositions = null;
     HashSet<char> usedLetters = null;
     public bool showQuestionWordPosition = false;
 
-    public Cell[,] CreateGrid(int playerId, string initialWord)
+    public Cell[,] CreateGrid(int playerId, string initialWord, float frame_width)
     {
         this.usedPositions = new HashSet<Vector2Int>();
         this.availablePositions = new List<Vector2Int>();
         this.usedLetters = new HashSet<char>();
+        float grid_width = (frame_width - ((this.gridColumn + 1) * 20f)) / this.gridColumn;
+        var gridLayout = this.playerPanel.GetComponent<GridLayoutGroup>();
+        gridLayout.cellSize = new Vector2(grid_width, grid_width);
 
         cells = new Cell[gridRow, gridColumn];
 
@@ -47,25 +52,18 @@ public class GridManager
 
     public void UpdateGridWithWord(int playerId, string newWord)
     {
+       this.questionCells.Clear();
        this.PlaceWordInGrid(playerId, newWord);
        this.FillRemainingCells(playerId);
     }
 
-    // Clear existing cell content
-    /* private void ClearGrid(int playerId)
-     {
-         if (cells != null)
-         {
-             foreach (Cell cell in cells)
-             {
-                 if (cell != null)
-                 {
-                     cell.DisSelected(); // Optional: Reset selection state if needed
-                     cell.SetTextContent(playerId, ""); // Use -1 for playerId to indicate empty
-                 }
-             }
-         }
-     }*/
+    public void setLetterHint(bool status)
+    {
+        foreach (var wordCellPos in this.questionCells)
+        {
+            cells[wordCellPos.x, wordCellPos.y].SetButtonColor(status? Color.yellow : Color.white);
+        }
+    }
 
     private void PlaceWordInGrid(int playerId, string word)
     {
@@ -92,6 +90,7 @@ public class GridManager
             // Place the first letter
             usedPositions.Add(startPos);
             cells[startPos.x, startPos.y].SetTextContent(playerId, word[0].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
+            this.questionCells.Add(startPos);
 
             // Attempt to place the remaining letters
             if (PlaceLetters(playerId, word, startPos, 1))
@@ -140,7 +139,7 @@ public class GridManager
                 // Place the letter
                 usedPositions.Add(newPos);
                 cells[newPos.x, newPos.y].SetTextContent(playerId, word[index].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
-
+                this.questionCells.Add(newPos);
                 // Recursively attempt to place the next letter
                 if (PlaceLetters(playerId, word, newPos, index + 1))
                     return true;

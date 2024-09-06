@@ -5,6 +5,7 @@ public class GameController : GameBaseController
     public static GameController Instance = null;
     public PlayerController[] playerControllers;
     public int playerNumber = 0;
+    private bool showWordHints = false;
 
     protected override void Awake()
     {
@@ -16,7 +17,6 @@ public class GameController : GameBaseController
     {
         base.Start();
         this.playerNumber = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
-        StartCoroutine(this.InitialQuestion());
        
     }
 
@@ -56,6 +56,7 @@ public class GameController : GameBaseController
     public override void enterGame()
     {
         base.enterGame();
+        StartCoroutine(this.InitialQuestion());
     }
 
     public override void endGame()
@@ -100,6 +101,15 @@ public class GameController : GameBaseController
         if (Input.GetKeyDown(KeyCode.Space))
         {
             this.UpdateNextQuestion();
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            this.showWordHints = !this.showWordHints;
+            for (int i = 0; i < this.playerControllers.Length; i++)
+            {
+                this.playerControllers[i].gridManager.showQuestionWordPosition = this.showWordHints;
+                this.playerControllers[i].gridManager.setLetterHint(this.showWordHints);
+            }
         }
 
         // Handle mouse input

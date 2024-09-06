@@ -7,10 +7,10 @@ public class QuestionController : MonoBehaviour
 {
     public static QuestionController Instance = null;
     public CurrentQuestion currentQuestion;
-    public bool moveTonextQuestion = false;
-    public bool allowCheckingWords = true;
-    public float delayToNextQuestion = 2f;
-    public float count = 0f;
+    //public bool moveTonextQuestion = false;
+    //public bool allowCheckingWords = true;
+    //public float delayToNextQuestion = 2f;
+    //public float count = 0f;
 
     private void Awake()
     {
@@ -19,38 +19,30 @@ public class QuestionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.count = this.delayToNextQuestion;
+       // this.count = this.delayToNextQuestion;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameController.Instance != null && StartGame.Instance != null)
+        /*if (GameController.Instance != null && StartGame.Instance != null)
         {
             if (!GameController.Instance.gameTimer.endGame && StartGame.Instance.startedGame && this.allowCheckingWords)
             {
-               // this.moveTonextQuestion = this.createdWords.All(word => !word.allowMove);
-
                 if (this.moveTonextQuestion)
                 {
                     if (this.count > 0f)
                     {
-                        /* if (GameController.Instance != null && !this.showAnswers) { 
-                             GameController.Instance.showAllCharacterAnswer();
-                             this.showAnswers = true;
-                         }*/
-
                         this.count -= Time.deltaTime;
                     }
                     else
                     {
                         this.count = this.delayToNextQuestion;
-                        //GameController.Instance?.checkPlayerAnswer();
                         this.allowCheckingWords = false;
                     }
                 }
             }
-        }
+        }*/
     }
     public void nextQuestion()
     {
@@ -76,12 +68,16 @@ public class QuestionController : MonoBehaviour
             int questionCount = questionDataList.Data.Count;
             QuestionList qa = questionDataList.Data[this.currentQuestion.numberQuestion];
             this.currentQuestion.setNewQuestion(qa, questionCount);
-            this.moveTonextQuestion = false;
-            //this.randAnswer(); // random grid letter
+            //this.moveTonextQuestion = false;
         }
         catch (Exception e)
         {
             LogController.Instance?.debugError(e.Message);
         }
+    }
+
+    public void PlayCurrentQuestionAudio()
+    {
+        this.currentQuestion.playAudio();
     }
 }
