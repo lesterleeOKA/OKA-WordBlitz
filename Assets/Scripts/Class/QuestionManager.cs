@@ -49,6 +49,10 @@ public class QuestionManager : MonoBehaviour
                     LogController.Instance?.debug("Load Question from API");
                     this.loadQuestionFromAPI(_questionData, onCompleted);
                 }
+                else
+                {
+                   onCompleted?.Invoke();
+                }
                 break;
         }
     }

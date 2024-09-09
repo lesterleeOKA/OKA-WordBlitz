@@ -13,6 +13,15 @@ public static class ExternalCaller
             return url.Host;
         }
     }
+    
+    public static void ReLoadCurrentPage()
+    {
+#if !UNITY_EDITOR
+        Application.ExternalEval("location.reload();");
+#else
+        LoaderConfig.Instance?.changeScene(1);
+#endif
+    }
 
     public static void BackToHomeUrlPage()
     {
@@ -30,6 +39,10 @@ public static class ExternalCaller
         {
             string Production = "https://www.starwishparty.com/";
             Application.ExternalEval($"location.href = '{Production}', '_self'");
+        }
+        else if (hostname.Contains("localhost"))
+        {
+            LoaderConfig.Instance?.changeScene(1);
         }
         else
         {
