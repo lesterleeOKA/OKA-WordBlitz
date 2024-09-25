@@ -58,15 +58,15 @@ public class QuestionController : MonoBehaviour
         try
         {
             var questionDataList = QuestionManager.Instance.questionData;
-            LogController.Instance?.debug("Loaded questions:" + questionDataList.Data.Count);
-            if (questionDataList == null || questionDataList.Data == null || questionDataList.Data.Count == 0)
+            LogController.Instance?.debug("Loaded questions:" + questionDataList.questions.Count);
+            if (questionDataList == null || questionDataList.questions == null || questionDataList.questions.Count == 0)
             {
                 return;
             }
 
             string correctAnswer = this.currentQuestion.correctAnswer;
-            int questionCount = questionDataList.Data.Count;
-            QuestionList qa = questionDataList.Data[this.currentQuestion.numberQuestion];
+            int questionCount = questionDataList.questions.Count;
+            QuestionList qa = questionDataList.questions[this.currentQuestion.numberQuestion];
             this.currentQuestion.setNewQuestion(qa, questionCount);
             //this.moveTonextQuestion = false;
         }

@@ -40,18 +40,15 @@ public class QuestionManager : MonoBehaviour
                 break;
             case LoadMethod.API:
                 var questionJson = LoaderConfig.Instance.apiManager.questionJson;
-                if (!string.IsNullOrEmpty(questionJson)) { 
+                if (!string.IsNullOrEmpty(questionJson))
+                {
                     QuestionDataWrapper wrapper = JsonUtility.FromJson<QuestionDataWrapper>("{\"QuestionDataArray\":" + questionJson + "}");
                     QuestionData _questionData = new QuestionData
                     {
-                        Data = new List<QuestionList>(wrapper.QuestionDataArray)
+                        questions = new List<QuestionList>(wrapper.QuestionDataArray)
                     };
                     LogController.Instance?.debug("Load Question from API");
                     this.loadQuestionFromAPI(_questionData, onCompleted);
-                }
-                else
-                {
-                   onCompleted?.Invoke();
                 }
                 break;
         }
@@ -59,10 +56,10 @@ public class QuestionManager : MonoBehaviour
 
     private void loadQuestionFromAPI(QuestionData _questionData = null, Action onCompleted = null)
     {
-        if(_questionData != null)
+        if (_questionData != null)
         {
             this.questionData = _questionData;
-            LogController.Instance?.debug($"loaded api questions: {this.questionData.Data.Count}");
+            LogController.Instance?.debug($"loaded api questions: {this.questionData.questions.Count}");
             this.GetRandomQuestions(onCompleted);
         }
     }
@@ -71,8 +68,8 @@ public class QuestionManager : MonoBehaviour
     {
         var questionPath = Path.Combine(Application.streamingAssetsPath, this.jsonFileName);
 
-        switch (this.loadMethod) 
-        { 
+        switch (this.loadMethod)
+        {
             case LoadMethod.www:
                 WWW www = new WWW(questionPath);
                 yield return www;
@@ -86,16 +83,17 @@ public class QuestionManager : MonoBehaviour
                     LogController.Instance?.debug(questionPath);
                     var json = www.text;
                     this.questionData = JsonUtility.FromJson<QuestionData>(json);
-                    if (!string.IsNullOrEmpty(unitKey)) { 
-                        this.questionData.Data = this.questionData.Data.Where(q => q.QID != null && q.QID.StartsWith(unitKey)).ToList();
-                    }
-
-                    if (this.questionData.Data[0].QuestionType == "Picture" && this.loadImage.loadImageMethod == LoadImageMethod.AssetsBundle)
+                    if (!string.IsNullOrEmpty(unitKey))
                     {
-                        yield return this.loadImage.loadImageAssetBundleFile(this.questionData.Data[0].QID);
+                        this.questionData.questions = this.questionData.questions.Where(q => q.qid != null && q.qid.StartsWith(unitKey)).ToList();
                     }
 
-                    LogController.Instance?.debug($"loaded filtered questions: {this.questionData.Data.Count}");
+                    if (this.questionData.questions[0].questionType == "picture" && this.loadImage.loadImageMethod == LoadImageMethod.AssetsBundle)
+                    {
+                        yield return this.loadImage.loadImageAssetBundleFile(this.questionData.questions[0].qid);
+                    }
+
+                    LogController.Instance?.debug($"loaded filtered questions: {this.questionData.questions.Count}");
                     this.GetRandomQuestions(onCompleted);
                 }
                 break;
@@ -113,17 +111,18 @@ public class QuestionManager : MonoBehaviour
                         LogController.Instance?.debug(questionPath);
                         var json = uwq.downloadHandler.text;
                         this.questionData = JsonUtility.FromJson<QuestionData>(json);
-                        if (!string.IsNullOrEmpty(unitKey)) { 
-                            this.questionData.Data = this.questionData.Data.Where(q => q.QID != null && q.QID.StartsWith(unitKey)).ToList();
+                        if (!string.IsNullOrEmpty(unitKey))
+                        {
+                            this.questionData.questions = this.questionData.questions.Where(q => q.qid != null && q.qid.StartsWith(unitKey)).ToList();
                         }
 
-                        if (this.questionData.Data[0].QuestionType == "Picture" && this.loadImage.loadImageMethod == LoadImageMethod.AssetsBundle)
+                        if (this.questionData.questions[0].questionType == "picture" && this.loadImage.loadImageMethod == LoadImageMethod.AssetsBundle)
                         {
-                            yield return this.loadImage.loadImageAssetBundleFile(this.questionData.Data[0].QID);
+                            yield return this.loadImage.loadImageAssetBundleFile(this.questionData.questions[0].qid);
                         }
 
                         //LogController.Instance.debug($"loaded questions: {json}");
-                        LogController.Instance?.debug($"loaded filtered questions: {this.questionData.Data.Count}");
+                        LogController.Instance?.debug($"loaded filtered questions: {this.questionData.questions.Count}");
                         this.GetRandomQuestions(onCompleted);
                     }
                 }
@@ -133,43 +132,42 @@ public class QuestionManager : MonoBehaviour
 
     private void ShuffleQuestions(bool rand = true, Action onComplete = null)
     {
-        if(rand) this.questionData.Data.Sort((a, b) => UnityEngine.Random.Range(-1, 2));
+        if (rand) this.questionData.questions.Sort((a, b) => UnityEngine.Random.Range(-1, 2));
 
-        this.totalItems = this.questionData.Data.Count;
+        this.totalItems = this.questionData.questions.Count;
         this.loadedItems = 0;
 
         for (int i = 0; i < this.totalItems; i++)
         {
-            var qa = this.questionData.Data[i];
-            string folderName = qa.QuestionType;
-            string qid = qa.QID;
+            var qa = this.questionData.questions[i];
+            string folderName = qa.questionType;
+            string qid = qa.qid;
 
-            switch (qa.QuestionType)
+            switch (qa.questionType)
             {
-                case "Text":
+                case "text":
                     ExternalCaller.UpdateLoadBarStatus("Loading Question");
                     this.loadedItems++;
                     if (this.loadedItems == this.totalItems) onComplete?.Invoke();
                     break;
-                case "Picture":
+                case "picture":
                     ExternalCaller.UpdateLoadBarStatus("Loading Images");
-                     StartCoroutine(
-                        this.loadImage.Load(
-                            folderName, qid, tex =>
-                            {
-                                qa.texture = tex;
-                                this.loadedItems++;
-                                if (this.loadedItems == this.totalItems) onComplete?.Invoke();
-                            }
-                         )
-                      );
+                    StartCoroutine(
+                       this.loadImage.Load(
+                           folderName, qid, tex =>
+                           {
+                               qa.texture = tex;
+                               this.loadedItems++;
+                               if (this.loadedItems == this.totalItems) onComplete?.Invoke();
+                           }
+                        )
+                     );
                     break;
-                case "Audio":
-                case "FillInBlank":
+                case "audio":
                     ExternalCaller.UpdateLoadBarStatus("Loading Audio");
                     StartCoroutine(
                         this.loadAudio.Load(
-                            "Audio", qid, (audio) =>
+                            folderName, qid, (audio) =>
                             {
                                 qa.audioClip = audio;
                                 this.loadedItems++;
@@ -178,13 +176,18 @@ public class QuestionManager : MonoBehaviour
                         )
                     );
                     break;
+                default:
+                    LogController.Instance?.debug($"Unexpected QuestionType: {qa.questionType}");
+                    this.loadedItems++;
+                    if (this.loadedItems == this.totalItems) onComplete?.Invoke();
+                    break;
             }
         }
     }
 
     private void GetRandomQuestions(Action onCompleted = null)
     {
-        if (this.questionData.Data.Count > 1 && this.questionData.Data[0] != this.questionData.Data[this.questionData.Data.Count - 1])
+        if (this.questionData.questions.Count > 1 && this.questionData.questions[0] != this.questionData.questions[this.questionData.questions.Count - 1])
         {
             this.ShuffleQuestions(true, onCompleted);
         }

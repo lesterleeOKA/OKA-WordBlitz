@@ -1,471 +1,471 @@
 {
-  "Data": [
+  "questions": [
     {
-      "QID": "p1u1-a1",
-      "QuestionType": "Text",
-      "Question": "What is the color of apple?",
-      "Answers": [
+      "qid": "p1u1-a1",
+      "questionType": "text",
+      "question": "What is the color of apple?",
+      "answers": [
         "red",
         "blue",
         "purple",
         "black"
       ],
-      "CorrectAnswer": "red"
+      "correctAnswer": "red"
     },
     {
-      "QID": "p1u1-a2",
-      "QuestionType": "Text",
-      "Question": "What is the color of banana?",
-      "Answers": [
+      "qid": "p1u1-a2",
+      "questionType": "text",
+      "question": "What is the color of banana?",
+      "answers": [
         "red",
         "yellow",
         "purple",
         "black"
       ],
-      "CorrectAnswer": "yellow"
+      "correctAnswer": "yellow"
     },
     {
-      "QID": "p1u1-a3",
-      "QuestionType": "Text",
-      "Question": "What is the color of orange?",
-      "Answers": [
+      "qid": "p1u1-a3",
+      "questionType": "text",
+      "question": "What is the color of orange?",
+      "answers": [
         "red",
         "yellow",
         "purple",
         "orange"
       ],
-      "CorrectAnswer": "orange"
+      "correctAnswer": "orange"
     },
     {
-      "QID": "p1u1-a4",
-      "QuestionType": "Text",
-      "Question": "What is the color of sea?",
-      "Answers": [
+      "qid": "p1u1-a4",
+      "questionType": "text",
+      "question": "What is the color of sea?",
+      "answers": [
         "red",
         "blue",
         "white",
         "orange"
       ],
-      "CorrectAnswer": "blue"
+      "correctAnswer": "blue"
     },
     {
-      "QID": "p2u1-c1",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Supermarket",
+      "qid": "p2u1-c1",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Supermarket",
       "media": "p2u1-c1.mp3"
     },
     {
-      "QID": "p2u1-c2",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Hospital",
+      "qid": "p2u1-c2",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Hospital",
       "media": "p2u1-c2.mp3"
     },
     {
-      "QID": "p2u1-c3",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Museum",
+      "qid": "p2u1-c3",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Museum",
       "media": "p2u1-c3.mp3"
     },
     {
-      "QID": "p2u1-c4",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Cinema",
+      "qid": "p2u1-c4",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Cinema",
       "media": "p2u1-c4.mp3"
     },
     {
-      "QID": "p2u1-c5",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Bakery",
+      "qid": "p2u1-c5",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Bakery",
       "media": "p2u1-c5.mp3"
     },
     {
-      "QID": "p2u1-c6",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Home",
+      "qid": "p2u1-c6",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Home",
       "media": "p2u1-c6.mp3"
     },
     {
-      "QID": "p2u1-c7",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Temple",
+      "qid": "p2u1-c7",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Temple",
       "media": "p2u1-c7.mp3"
     },
     {
-      "QID": "p2u1-c8",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Grocery",
+      "qid": "p2u1-c8",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Grocery",
       "media": "p2u1-c8.mp3"
     },
     {
-      "QID": "p2u1-c9",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Restaurant",
+      "qid": "p2u1-c9",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Restaurant",
       "media": "p2u1-c9.mp3"
     },
     {
-      "QID": "p2u1-c10",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "School",
+      "qid": "p2u1-c10",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "School",
       "media": "p2u1-c10.mp3"
     },
     {
-      "QID": "p2u1-c11",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Bank",
+      "qid": "p2u1-c11",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Bank",
       "media": "p2u1-c11.mp3"
     },
     {
-      "QID": "p2u1-c12",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Clinic",
+      "qid": "p2u1-c12",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Clinic",
       "media": "p2u1-c12.mp3"
     },
     {
-      "QID": "p2u1-c13",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Market",
+      "qid": "p2u1-c13",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Market",
       "media": "p2u1-c13.mp3"
     },
     {
-      "QID": "p2u1-c14",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Cafe",
+      "qid": "p2u1-c14",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Cafe",
       "media": "p2u1-c14.mp3"
     },
     {
-      "QID": "p2u1-c15",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Church",
+      "qid": "p2u1-c15",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Church",
       "media": "p2u1-c15.mp3"
     },
     {
-      "QID": "p2u1-c16",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Post office",
+      "qid": "p2u1-c16",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Post office",
       "media": "p2u1-c16.mp3"
     },
     {
-      "QID": "p2u1-c17",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Police station",
+      "qid": "p2u1-c17",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Police station",
       "media": "p2u1-c17.mp3"
     },
     {
-      "QID": "p2u1-c18",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Fire station",
+      "qid": "p2u1-c18",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Fire station",
       "media": "p2u1-c18.mp3"
     },
     {
-      "QID": "p2u1-c19",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Salon",
+      "qid": "p2u1-c19",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Salon",
       "media": "p2u1-c19.mp3"
     },
     {
-      "QID": "p2u1-c20",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Park",
+      "qid": "p2u1-c20",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Park",
       "media": "p2u1-c20.mp3"
     },
     {
-      "QID": "p2u2-c1",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Games",
+      "qid": "p2u2-c1",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Games",
       "media": "p2u2-c1.mp3"
     },
     {
-      "QID": "p2u2-c2",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Picnic",
+      "qid": "p2u2-c2",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Picnic",
       "media": "p2u2-c2.mp3"
     },
     {
-      "QID": "p2u2-c3",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Sandwiches",
+      "qid": "p2u2-c3",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Sandwiches",
       "media": "p2u2-c3.mp3"
     },
     {
-      "QID": "p2u2-c4",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Scooter",
+      "qid": "p2u2-c4",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Scooter",
       "media": "p2u2-c4.mp3"
     },
     {
-      "QID": "p2u2-c5",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Strawberries",
+      "qid": "p2u2-c5",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Strawberries",
       "media": "p2u2-c5.mp3"
     },
     {
-      "QID": "p2u2-c6",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Football",
+      "qid": "p2u2-c6",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Football",
       "media": "p2u2-c6.mp3"
     },
     {
-      "QID": "p2u2-c7",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Drink",
+      "qid": "p2u2-c7",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Drink",
       "media": "p2u2-c7.mp3"
     },
     {
-      "QID": "p2u2-c8",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Litter",
+      "qid": "p2u2-c8",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Litter",
       "media": "p2u2-c8.mp3"
     },
     {
-      "QID": "p2u2-c9",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Bicycle",
+      "qid": "p2u2-c9",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Bicycle",
       "media": "p2u2-c9.mp3"
     },
     {
-      "QID": "p2u2-c10",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Flowers",
+      "qid": "p2u2-c10",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Flowers",
       "media": "p2u2-c10.mp3"
     },
     {
-      "QID": "p2u2-c11",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Swing",
+      "qid": "p2u2-c11",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Swing",
       "media": "p2u2-c11.mp3"
     },
     {
-      "QID": "p2u2-c12",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Seesaw",
+      "qid": "p2u2-c12",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Seesaw",
       "media": "p2u2-c12.mp3"
     },
     {
-      "QID": "p2u2-c13",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Slide",
+      "qid": "p2u2-c13",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Slide",
       "media": "p2u2-c13.mp3"
     },
     {
-      "QID": "p2u2-c14",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Photos",
+      "qid": "p2u2-c14",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Photos",
       "media": "p2u2-c14.mp3"
     },
     {
-      "QID": "p2u2-c15",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Frisbee",
+      "qid": "p2u2-c15",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Frisbee",
       "media": "p2u2-c15.mp3"
     },
     {
-      "QID": "p2u2-c16",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Barbecues",
+      "qid": "p2u2-c16",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Barbecues",
       "media": "p2u2-c16.mp3"
     },
     {
-      "QID": "p2u2-c17",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Camping",
+      "qid": "p2u2-c17",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Camping",
       "media": "p2u2-c17.mp3"
     },
     {
-      "QID": "p2u2-c18",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Spit",
+      "qid": "p2u2-c18",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Spit",
       "media": "p2u2-c18.mp3"
     },
     {
-      "QID": "p2u2-c19",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Climb",
+      "qid": "p2u2-c19",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Climb",
       "media": "p2u2-c19.mp3"
     },
     {
-      "QID": "p2u2-c20",
-      "QuestionType": "Audio",
-      "Question": "",
-      "CorrectAnswer": "Paint",
+      "qid": "p2u2-c20",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Paint",
       "media": "p2u2-c20.mp3"
     },
     {
-      "QID": "p3u1-d1",
-      "QuestionType": "FillInBlank",
-      "Question": "I play the _____.",
-      "CorrectAnswer": "cello",
+      "qid": "p3u1-d1",
+      "questionType": "fillInBlank",
+      "question": "I play the _____.",
+      "correctAnswer": "cello",
       "media": "p3u1-d1.mp3"
     },
     {
-      "QID": "p3u1-d2",
-      "QuestionType": "FillInBlank",
-      "Question": "He plays the _____.",
-      "CorrectAnswer": "violin",
+      "qid": "p3u1-d2",
+      "questionType": "fillInBlank",
+      "question": "He plays the _____.",
+      "correctAnswer": "violin",
       "media": "p3u1-d2.mp3"
     },
     {
-      "QID": "p3u1-d3",
-      "QuestionType": "FillInBlank",
-      "Question": "Dad plays the ______.",
-      "CorrectAnswer": "guitar",
+      "qid": "p3u1-d3",
+      "questionType": "fillInBlank",
+      "question": "Dad plays the ______.",
+      "correctAnswer": "guitar",
       "media": "p3u1-d3.mp3"
     },
     {
-      "QID": "p3u1-d4",
-      "QuestionType": "FillInBlank",
-      "Question": "She plays ________.",
-      "CorrectAnswer": "badminton",
+      "qid": "p3u1-d4",
+      "questionType": "fillInBlank",
+      "question": "She plays ________.",
+      "correctAnswer": "badminton",
       "media": "p3u1-d4.mp3"
     },
     {
-      "QID": "p3u1-d5",
-      "QuestionType": "FillInBlank",
-      "Question": "Dave kicked the _______.",
-      "CorrectAnswer": "football",
+      "qid": "p3u1-d5",
+      "questionType": "fillInBlank",
+      "question": "Dave kicked the _______.",
+      "correctAnswer": "football",
       "media": "p3u1-d5.mp3"
     },
     {
-      "QID": "p3u1-d6",
-      "QuestionType": "FillInBlank",
-      "Question": "Mum likes solving _____.",
-      "CorrectAnswer": "puzzles",
+      "qid": "p3u1-d6",
+      "questionType": "fillInBlank",
+      "question": "Mum likes solving _____.",
+      "correctAnswer": "puzzles",
       "media": "p3u1-d6.mp3"
     },
     {
-      "QID": "p3u1-d7",
-      "QuestionType": "FillInBlank",
-      "Question": "Ms. Ho collects _______.",
-      "CorrectAnswer": "stamps",
+      "qid": "p3u1-d7",
+      "questionType": "fillInBlank",
+      "question": "Ms. Ho collects _______.",
+      "correctAnswer": "stamps",
       "media": "p3u1-d7.mp3"
     },
     {
-      "QID": "p3u1-d8",
-      "QuestionType": "FillInBlank",
-      "Question": "Keith plays the _______.",
-      "CorrectAnswer": "drum",
+      "qid": "p3u1-d8",
+      "questionType": "fillInBlank",
+      "question": "Keith plays the _______.",
+      "correctAnswer": "drum",
       "media": "p3u1-d8.mp3"
     },
     {
-      "QID": "p3u1-d9",
-      "QuestionType": "FillInBlank",
-      "Question": "They are playing the ________.",
-      "CorrectAnswer": "trumpet",
+      "qid": "p3u1-d9",
+      "questionType": "fillInBlank",
+      "question": "They are playing the ________.",
+      "correctAnswer": "trumpet",
       "media": "p3u1-d9.mp3"
     },
     {
-      "QID": "p3u1-d10",
-      "QuestionType": "FillInBlank",
-      "Question": "He is playing the _______.",
-      "CorrectAnswer": "piano",
+      "qid": "p3u1-d10",
+      "questionType": "fillInBlank",
+      "question": "He is playing the _______.",
+      "correctAnswer": "piano",
       "media": "p3u1-d10.mp3"
     },
     {
-      "QID": "p3u1-d11",
-      "QuestionType": "FillInBlank",
-      "Question": "I can throw a ________.",
-      "CorrectAnswer": "baseball",
+      "qid": "p3u1-d11",
+      "questionType": "fillInBlank",
+      "question": "I can throw a ________.",
+      "correctAnswer": "baseball",
       "media": "p3u1-d11.mp3"
     },
     {
-      "QID": "p3u1-d12",
-      "QuestionType": "FillInBlank",
-      "Question": "He is a _______ player.",
-      "CorrectAnswer": "basketball",
+      "qid": "p3u1-d12",
+      "questionType": "fillInBlank",
+      "question": "He is a _______ player.",
+      "correctAnswer": "basketball",
       "media": "p3u1-d12.mp3"
     },
     {
-      "QID": "p3u1-d13",
-      "QuestionType": "FillInBlank",
-      "Question": "Mr. Chan enjoys ______ to school.",
-      "CorrectAnswer": "cycling",
+      "qid": "p3u1-d13",
+      "questionType": "fillInBlank",
+      "question": "Mr. Chan enjoys ______ to school.",
+      "correctAnswer": "cycling",
       "media": "p3u1-d13.mp3"
     },
     {
-      "QID": "p3u1-d14",
-      "QuestionType": "FillInBlank",
-      "Question": "Ms. Law listens to _______.",
-      "CorrectAnswer": "music",
+      "qid": "p3u1-d14",
+      "questionType": "fillInBlank",
+      "question": "Ms. Law listens to _______.",
+      "correctAnswer": "music",
       "media": "p3u1-d14.mp3"
     },
     {
-      "QID": "p3u1-d15",
-      "QuestionType": "FillInBlank",
-      "Question": "He is playing a ________.",
-      "CorrectAnswer": "recorder",
+      "qid": "p3u1-d15",
+      "questionType": "fillInBlank",
+      "question": "He is playing a ________.",
+      "correctAnswer": "recorder",
       "media": "p3u1-d15.mp3"
     },
     {
-      "QID": "p3u1-d16",
-      "QuestionType": "FillInBlank",
-      "Question": "She is learning the ______.",
-      "CorrectAnswer": "viola",
+      "qid": "p3u1-d16",
+      "questionType": "fillInBlank",
+      "question": "She is learning the ______.",
+      "correctAnswer": "viola",
       "media": "p3u1-d16.mp3"
     },
     {
-      "QID": "p3u1-d17",
-      "QuestionType": "FillInBlank",
-      "Question": "Auntie is a ______ dancer.",
-      "CorrectAnswer": "ballet",
+      "qid": "p3u1-d17",
+      "questionType": "fillInBlank",
+      "question": "Auntie is a ______ dancer.",
+      "correctAnswer": "ballet",
       "media": "p3u1-d17.mp3"
     },
     {
-      "QID": "p3u1-d18",
-      "QuestionType": "FillInBlank",
-      "Question": "My dog loves chasing ______ balls.",
-      "CorrectAnswer": "tennis",
+      "qid": "p3u1-d18",
+      "questionType": "fillInBlank",
+      "question": "My dog loves chasing ______ balls.",
+      "correctAnswer": "tennis",
       "media": "p3u1-d18.mp3"
     },
     {
-      "QID": "p3u1-d19",
-      "QuestionType": "FillInBlank",
-      "Question": "Grandpa likes playing _____.",
-      "CorrectAnswer": "chess",
+      "qid": "p3u1-d19",
+      "questionType": "fillInBlank",
+      "question": "Grandpa likes playing _____.",
+      "correctAnswer": "chess",
       "media": "p3u1-d19.mp3"
     },
     {
-      "QID": "p3u1-d20",
-      "QuestionType": "FillInBlank",
-      "Question": "John likes to make _______.",
-      "CorrectAnswer": "crafts",
+      "qid": "p3u1-d20",
+      "questionType": "fillInBlank",
+      "question": "John likes to make _______.",
+      "correctAnswer": "crafts",
       "media": "p3u1-d20.mp3"
     }
   ]

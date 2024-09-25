@@ -13,17 +13,20 @@ public class QuestionDataWrapper
 [Serializable]
 public class QuestionData
 { 
-    public List<QuestionList> Data;
+    public List<QuestionList> questions;
 }
 [Serializable]
 public class QuestionList
 {
     public int id;
-    public string QID;
-    public string QuestionType;
-    public string Question;
-    public string[] Answers;
-    public string CorrectAnswer;
+    public string qid;
+    public string questionType;
+    public string question;
+    public string[] answers;
+    public string correctAnswer;
+    public int star;
+    public int score;
+    public int correctAnswerIndex;
     public string[] Media;
     public Texture texture;
     public AudioClip audioClip;
@@ -56,15 +59,15 @@ public class CurrentQuestion
         if (qa == null) return;
         this.qa = qa;
         TextMeshProUGUI questionText = null;
-        switch (qa.QuestionType)
+        switch (qa.questionType)
         {
-            case "Picture":
+            case "picture":
                 SetUI.SetGroup(this.questionBgs, 0, 0f);
                 this.questionImage = this.questionBgs[0].GetComponentInChildren<RawImage>();
                 this.questiontype = QuestionType.Picture;
                 var qaImage = qa.texture;
-                this.correctAnswer = qa.CorrectAnswer;
-                this.answersChoics = qa.Answers;
+                this.correctAnswer = qa.correctAnswer;
+                this.answersChoics = qa.answers;
 
                 if (this.questionImage != null && qaImage != null)
                 {
@@ -83,7 +86,7 @@ public class CurrentQuestion
                     this.aspecRatioFitter.aspectRatio = (float)qaImage.width / (float)qaImage.height;
                 }
                 break;
-            case "Audio":
+            case "audio":
                 SetUI.SetGroup(this.questionBgs, 1, 0f);
                 this.audioPlayBtn = this.questionBgs[1].GetComponentInChildren<CanvasGroup>();
                 if (this.audioPlayBtn != null)
@@ -91,27 +94,27 @@ public class CurrentQuestion
                     SetUI.Set(this.audioPlayBtn, true, 0f);
                 }
                 this.questiontype = QuestionType.Audio;
-                this.correctAnswer = qa.CorrectAnswer;
-                this.answersChoics = qa.Answers;
+                this.correctAnswer = qa.correctAnswer;
+                this.answersChoics = qa.answers;
                 this.playAudio();
                 break;
-            case "Text":
+            case "text":
                 SetUI.SetGroup(this.questionBgs, 2, 0f);
                 this.questiontype = QuestionType.Text;
                 questionText = this.questionBgs[2].GetComponentInChildren<TextMeshProUGUI>();
                 if (questionText != null)
                 {
-                    questionText.text = qa.Question;
+                    questionText.text = qa.question;
                 }
-                this.correctAnswer = qa.CorrectAnswer;
-                this.answersChoics = qa.Answers;
+                this.correctAnswer = qa.correctAnswer;
+                this.answersChoics = qa.answers;
                 break;
-            case "FillInBlank":
+            case "fillInBlank":
                 SetUI.SetGroup(this.questionBgs, 3, 0f);
                 questionText = this.questionBgs[3].GetComponentInChildren<TextMeshProUGUI>();
                 if(questionText != null)
                 {
-                    questionText.text = qa.Question;
+                    questionText.text = qa.question;
                 }
                 this.audioPlayBtn = this.questionBgs[3].GetComponentInChildren<CanvasGroup>();
                 if(this.audioPlayBtn != null)
@@ -119,8 +122,8 @@ public class CurrentQuestion
                     SetUI.Set(this.audioPlayBtn, true, 0f);
                 }
                 this.questiontype = QuestionType.FillInBlank;
-                this.correctAnswer = qa.CorrectAnswer;
-                this.answersChoics = qa.Answers;
+                this.correctAnswer = qa.correctAnswer;
+                this.answersChoics = qa.answers;
                 this.playAudio();
                 break;
         }

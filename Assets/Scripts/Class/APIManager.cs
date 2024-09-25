@@ -12,6 +12,8 @@ public class APIManager
 {
     [Tooltip("Account Jwt token, upload data jwt")]
     public string jwt;
+    [Tooltip("Created App/Book current id")]
+    public string appId;
     [Tooltip("Game Setting Json")]
     public string gameSettingJson = string.Empty;
     [Tooltip("Question Json")]
@@ -21,14 +23,15 @@ public class APIManager
     [Tooltip("Account Icon Image Url")]
     public string photoDataUrl = string.Empty;
     public LoadImage loadPeopleIcon;
-    public Texture  peopleIcon;
+    public Texture peopleIcon;
     public string loginName = string.Empty;
+    public string instructionContent = string.Empty;
     public int maxRetries = 10;
     public CanvasGroup debugLayer;
     public CanvasGroup loginErrorBox;
     public TextMeshProUGUI loginErrorMessage;
     private Text debugText = null;
-    private string errorMessage = ""; 
+    private string errorMessage = "";
     private bool isShowLoginErrorBox = false;
     private bool showingDebugBox = false;
 
@@ -36,7 +39,6 @@ public class APIManager
     {
         if (this.debugLayer != null)
         {
-            SetUI.Set(this.debugLayer.GetComponent<CanvasGroup>(), false, 0f);
             this.debugText = this.debugLayer.GetComponentInChildren<Text>();
         }
         this.resetLoginErrorBox();
@@ -53,8 +55,8 @@ public class APIManager
 
     public bool IsShowLoginErrorBox
     {
-        set{this.isShowLoginErrorBox = value;}
-        get{return this.isShowLoginErrorBox;}
+        set { this.isShowLoginErrorBox = value; }
+        get { return this.isShowLoginErrorBox; }
     }
 
     public void resetLoginErrorBox()
@@ -63,18 +65,20 @@ public class APIManager
         SetUI.Set(this.loginErrorBox, false, 0f);
         if (this.loginErrorMessage != null) this.loginErrorMessage.text = "";
     }
+
     public void checkLoginErrorBox()
     {
         var sceneID = SceneManager.GetActiveScene().buildIndex;
         if (sceneID == 1) SetUI.Set(this.loginErrorBox, this.IsShowLoginErrorBox, 0f);
-        //if (this.loginErrorMessage != null) this.loginErrorMessage.text = this.errorMessage;
+        // if (this.loginErrorMessage != null) this.loginErrorMessage.text = this.errorMessage;
     }
 
-    public IEnumerator PostGameSetting(Action getParseURLParams=null, Action onCompleted = null)
+    public IEnumerator PostGameSetting(Action getParseURLParams = null, Action onCompleted = null)
     {
         ExternalCaller.UpdateLoadBarStatus("Loading Data");
         getParseURLParams?.Invoke();
-        string api = APIConstant.GameDataAPI + this.jwt;
+        string api = APIConstant.GameDataAPI(this.appId, this.jwt);
+        LogController.Instance?.debug("called login api: " + api);
         WWWForm form = new WWWForm();
         int retryCount = 0;
         bool requestSuccessful = false;
@@ -88,7 +92,6 @@ public class APIManager
                 www.SetRequestHeader("typ", "jwt");
                 www.SetRequestHeader("alg", "HS256");
                 www.certificateHandler = new WebRequestSkipCert();
-
                 // Send the request and wait for a response
                 yield return www.SendWebRequest();
 
@@ -105,7 +108,9 @@ public class APIManager
                 {
                     requestSuccessful = true;
                     string responseText = www.downloadHandler.text;
-                    int jsonStartIndex = responseText.IndexOf("{\"Data\":");
+                    int jsonStartIndex = responseText.IndexOf("{\"questions\":");
+                    LogController.Instance?.debug("www.downloadHandler.text: " + responseText);
+
                     if (jsonStartIndex != -1)
                     {
                         string jsonData = responseText.Substring(jsonStartIndex);
@@ -115,8 +120,9 @@ public class APIManager
                         this.questionJson = jsonNode[APIConstant.QuestionDataHeaderName].ToString(); // Question json data;
                         this.accountJson = jsonNode["account"].ToString(); // Account json data;
                         this.photoDataUrl = jsonNode["photo"].ToString(); // Account json data;
-                        
-                        if(this.debugText != null) { 
+
+                        if (this.debugText != null)
+                        {
                             this.debugText.text += "Question Data: " + this.questionJson + "\n\n ";
                             this.debugText.text += "Account: " + this.accountJson + "\n\n ";
                             this.debugText.text += "Photo: " + this.photoDataUrl;

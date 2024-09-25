@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -407,11 +407,13 @@ MonoBehaviour:
     allTextures: []
     bgTexture: {fileID: 2800000, guid: a2a73cb2d247a0c47aac5da965c14d29, type: 3}
     gameBackground: {fileID: 0}
+    instructions: {fileID: 0}
     gameTime: 0
     showFPS: 0
     playerNumber: 2
   apiManager:
     jwt: 
+    appId: 
     gameSettingJson: 
     questionJson: 
     accountJson: 
@@ -423,6 +425,7 @@ MonoBehaviour:
       allTextures: []
     peopleIcon: {fileID: 0}
     loginName: 
+    instructionContent: 
     maxRetries: 10
     debugLayer: {fileID: 1630735626}
     loginErrorBox: {fileID: 645755778}
@@ -471,7 +474,7 @@ MonoBehaviour:
     loadAudioMethod: 1
     audioFormat: 1
   questionData:
-    Data: []
+    questions: []
   totalItems: 0
   loadedItems: 0
 --- !u!114 &734659899
