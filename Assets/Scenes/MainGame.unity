@@ -151,9 +151,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20234187}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &20234189
 MonoBehaviour:
@@ -1154,6 +1154,11 @@ MonoBehaviour:
   m_UseGraphicAlpha: 1
   iterations: 10
   shadowSpread: {x: 1, y: 1}
+--- !u!225 &187958484 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 1974500245385353037, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+  m_PrefabInstance: {fileID: 1044600101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &209912698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,11 +1287,14 @@ MonoBehaviour:
     questiontype: 0
     qa:
       id: 0
-      QID: 
-      QuestionType: 
-      Question: 
-      Answers: []
-      CorrectAnswer: 
+      qid: 
+      questionType: 
+      question: 
+      answers: []
+      correctAnswer: 
+      star: 0
+      score: 0
+      correctAnswerIndex: 0
       Media: []
       texture: {fileID: 0}
       audioClip: {fileID: 0}
@@ -3349,8 +3357,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4262437702707137063, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4394616716639748559, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerNameBoxes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394616716639748559, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerNameBoxes.Array.data[0]
+      value: 
+      objectReference: {fileID: 187958484}
     - target: {fileID: 4884978150788173266, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3369,7 +3385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5663865226551917750, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5814362865910661668, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_Sprite
@@ -3395,6 +3411,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 540
       objectReference: {fileID: 0}
+    - target: {fileID: 6882271920690222390, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerNameBoxes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882271920690222390, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerNameBoxes.Array.data[0]
+      value: 
+      objectReference: {fileID: 1248691477}
     - target: {fileID: 8891115048027758453, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3885,6 +3909,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1.439024
+--- !u!225 &1248691477 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 1924677638111557394, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+  m_PrefabInstance: {fileID: 1044600101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1267016443
 GameObject:
   m_ObjectHideFlags: 0
