@@ -27,6 +27,7 @@ public class LoaderConfig : GameSetting
     protected override void Update()
     {
         base.Update();
+        this.apiManager.checkLoginErrorBox();
     }
 
     public void LoadGameData()
