@@ -19,6 +19,8 @@ public class APIManager
     public string questionJson = string.Empty;
     [Tooltip("Account Json")]
     public string accountJson = string.Empty;
+    [Tooltip("Role Account uid")]
+    public int accountUid = -1;
     [Tooltip("Account Icon Image Url")]
     public string photoDataUrl = string.Empty;
     [Tooltip("Payloads Object for data send out")]
@@ -35,6 +37,7 @@ public class APIManager
     private string errorMessage = "";
     public bool isShowLoginErrorBox = false;
     private bool showingDebugBox = false;
+    public Answer answer;
 
     public void Init()
     {
@@ -112,56 +115,82 @@ public class APIManager
 
                     if (jsonStartIndex != -1)
                     {
-                        string jsonData = responseText.Substring(jsonStartIndex);
-                        LogController.Instance?.debug("Response: " + jsonData);
-
-                        var jsonNode = JSONNode.Parse(jsonData);
-                        this.questionJson = jsonNode[APIConstant.QuestionDataHeaderName].ToString(); // Question json data;
-                        this.accountJson = jsonNode["account"].ToString(); // Account json data;
-                        this.photoDataUrl = jsonNode["photo"].ToString(); // Account json data;
-                        this.gameSettingJson = jsonNode["setting"].ToString();
-                        this.payloads = jsonNode["payloads"].ToString();
-
-                        if (this.debugText != null)
+                        if (!string.IsNullOrEmpty(this.appId) && !string.IsNullOrEmpty(this.jwt))
                         {
-                            this.debugText.text += "Question Data: " + this.questionJson + "\n\n ";
-                            this.debugText.text += "Account: " + this.accountJson + "\n\n ";
-                            this.debugText.text += "Photo: " + this.photoDataUrl + "\n\n ";
-                            this.debugText.text += "Setting: " + this.gameSettingJson + "\n\n ";
-                            this.debugText.text += "PayLoad: " + this.payloads;
-                        }
+                            string jsonData = responseText.Substring(jsonStartIndex);
+                            LogController.Instance?.debug("Response: " + jsonData);
 
-                        if (!string.IsNullOrEmpty(this.photoDataUrl) && this.photoDataUrl != "null")
-                        {
-                            string modifiedPhotoDataUrl = photoDataUrl.Replace("\"", "");
+                            var jsonNode = JSONNode.Parse(jsonData);
+                            this.questionJson = jsonNode[APIConstant.QuestionDataHeaderName].ToString(); // Question json data;
+                            this.accountJson = jsonNode["account"].ToString(); // Account json data;
 
-                            string imageUrl = modifiedPhotoDataUrl;
-                            if (!modifiedPhotoDataUrl.StartsWith("https://"))
+                            string accountUidString = jsonNode["account"]["uid"];
+                            int accountUid = int.Parse(accountUidString);
+                            this.accountUid = accountUid;
+
+                            this.photoDataUrl = jsonNode["photo"].ToString(); // Account json data;
+                            this.gameSettingJson = jsonNode["setting"].ToString();
+                            this.payloads = jsonNode["payloads"].ToString();
+
+                            if (this.debugText != null)
                             {
-                                imageUrl = "https:" + modifiedPhotoDataUrl;
+                                this.debugText.text += "Question Data: " + this.questionJson + "\n\n ";
+                                this.debugText.text += "Account: " + this.accountJson + "\n\n ";
+                                this.debugText.text += "Photo: " + this.photoDataUrl + "\n\n ";
+                                this.debugText.text += "Setting: " + this.gameSettingJson + "\n\n ";
+                                this.debugText.text += "PayLoad: " + this.payloads;
                             }
-                            LogController.Instance?.debug($"Downloading People Icon!!{imageUrl}");
-                            yield return this.loadPeopleIcon.Load("", imageUrl, _peopleIcon =>
+
+                            if (!string.IsNullOrEmpty(this.photoDataUrl) && this.photoDataUrl != "null")
                             {
-                                LogController.Instance?.debug($"Downloaded People Icon!!");
-                                this.peopleIcon = _peopleIcon;
-                            });
-                        }
+                                string modifiedPhotoDataUrl = photoDataUrl.Replace("\"", "");
 
-                        if (jsonNode["account"] != null && !string.IsNullOrEmpty(this.accountJson))
+                                string imageUrl = modifiedPhotoDataUrl;
+                                if (!modifiedPhotoDataUrl.StartsWith("https://"))
+                                {
+                                    imageUrl = "https:" + modifiedPhotoDataUrl;
+                                }
+                                LogController.Instance?.debug($"Downloading People Icon!!{imageUrl}");
+                                yield return this.loadPeopleIcon.Load("", imageUrl, _peopleIcon =>
+                                {
+                                    LogController.Instance?.debug($"Downloaded People Icon!!");
+                                    this.peopleIcon = _peopleIcon;
+                                });
+                            }
+
+                            if (jsonNode["account"] != null && !string.IsNullOrEmpty(this.accountJson))
+                            {
+                                var name = jsonNode["account"]["display_name"].ToString();
+                                if (!string.IsNullOrWhiteSpace(name) && name != "null" && name != null)
+                                {
+                                    this.loginName = name.Replace("\"", "");
+                                    LogController.Instance?.debug("Display name: " + this.loginName);
+                                }
+                                else
+                                {
+                                    LogController.Instance?.debug("Display name is empty. use first name and last name");
+                                    var first_name = jsonNode["account"]["first_name"].ToString().Replace("\"", "");
+                                    var last_name = jsonNode["account"]["last_name"].ToString().Replace("\"", "");
+                                    this.loginName = last_name + " " + first_name;
+                                }
+                            }
+
+                            //E.g
+                            //Debug.Log(jsonNode["account"]["display_name"].ToString());
+                            LogController.Instance?.debug(this.questionJson);
+                            onCompleted?.Invoke();
+                        }
+                        else
                         {
-                            var name = jsonNode["account"]["display_name"].ToString();
-                            this.loginName = name.Replace("\"", "");
+                            this.errorMessage = "missing jwt or appid.";
+                            LogController.Instance?.debug(this.errorMessage);
+                            onCompleted?.Invoke();
                         }
 
-                        //E.g
-                        //Debug.Log(jsonNode["account"]["display_name"].ToString());
-                        LogController.Instance?.debug(this.questionJson);
-                        onCompleted?.Invoke();
                     }
                     else
                     {
-                        this.errorMessage = "JSON data not found in the response.";
+                        this.errorMessage = "wrong json start index.";
                         LogController.Instance?.debug(this.errorMessage);
                         this.IsShowLoginErrorBox = true;
                         onCompleted?.Invoke();
@@ -177,5 +206,137 @@ public class APIManager
             this.IsShowLoginErrorBox = true;
             onCompleted?.Invoke();
         }
+    }
+
+    public IEnumerator SubmitAnswer(Action onCompleted = null)
+    {
+        if (string.IsNullOrEmpty(this.payloads) || this.accountUid == -1 || string.IsNullOrEmpty(this.jwt))
+        {
+            LogController.Instance?.debug("Invalid parameters: payloads, accountUid, or jwt is null or empty.");
+            yield break;
+        }
+
+        string api = APIConstant.SubmitAnswerAPI(this.payloads, this.accountUid, this.jwt, LoaderConfig.Instance.apiManager.answer);
+        LogController.Instance?.debug("called submit marks api: " + api);
+        WWWForm form = new WWWForm();
+        int retryCount = 0;
+        bool requestSuccessful = false;
+
+        while (retryCount < this.maxRetries && !requestSuccessful)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Post(api, form))
+            {
+                // Set headers
+                www.SetRequestHeader("Content-Type", "application/json");
+                www.SetRequestHeader("typ", "jwt");
+                www.SetRequestHeader("alg", "HS256");
+                www.certificateHandler = new WebRequestSkipCert();
+                // Send the request and wait for a response
+                yield return www.SendWebRequest();
+
+                // Check for errors
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    this.errorMessage = "Error: " + www.error + "Retrying..." + retryCount;
+                    this.IsShowLoginErrorBox = true;
+                    retryCount++;
+                    LogController.Instance?.debug(this.errorMessage);
+                    yield return new WaitForSeconds(2); // Wait for 2 seconds before retrying
+                }
+                else
+                {
+                    requestSuccessful = true;
+                    string responseText = www.downloadHandler.text;
+
+                    // Format the JSON response for better readability
+                    try
+                    {
+                        var parsedJson = JSONNode.Parse(responseText);
+                        string prettyJson = parsedJson.ToString();
+                        LogController.Instance?.debug("Success to submit answers: " + prettyJson);
+                        onCompleted?.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        LogController.Instance?.debug("Failed to parse JSON: " + ex.Message);
+                    }
+
+                }
+            }
+        }
+
+        if (!requestSuccessful)
+        {
+            this.errorMessage = "Failed to call upload marks response after " + maxRetries + " attempts.";
+            LogController.Instance?.debug(this.errorMessage);
+            this.IsShowLoginErrorBox = true;
+            onCompleted?.Invoke();
+        }
+    }
+
+
+    public IEnumerator ExitGameRecord(Action onCompleted = null)
+    {
+        if (string.IsNullOrEmpty(this.payloads) || this.accountUid == -1 || string.IsNullOrEmpty(this.jwt))
+        {
+            LogController.Instance?.debug("Invalid parameters: payloads, accountUid, or jwt is null or empty.");
+            yield break;
+        }
+
+        string jsonData = $"{{ \"payloads\": {this.payloads} }}";
+        WWWForm formData = new WWWForm();
+        formData.AddField("api", "ROGame.quit_game");
+        formData.AddField("jwt", this.jwt); // Add the JWT to the form
+        formData.AddField("json", jsonData);
+
+        string endGameApi = APIConstant.EndGameAPI();
+        int retryCount = 0;
+        bool requestSuccessful = false;
+
+        while (retryCount < this.maxRetries && !requestSuccessful)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Post(endGameApi, formData))
+            {
+                // Send the request and wait for a response
+                yield return www.SendWebRequest();
+
+                // Handle the response
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    this.errorMessage = "Error: " + www.error + "Retrying..." + retryCount;
+                    this.IsShowLoginErrorBox = true;
+                    retryCount++;
+                    LogController.Instance?.debug(this.errorMessage);
+                    yield return new WaitForSeconds(2); // Wait for 2 seconds before retrying
+                }
+                else
+                {
+                    requestSuccessful = true;
+                    string responseText = www.downloadHandler.text;
+
+                    // Format the JSON response for better readability
+                    try
+                    {
+                        var parsedJson = JSONNode.Parse(responseText);
+                        string prettyJson = parsedJson.ToString();
+                        LogController.Instance?.debug("Success to post end game api: " + prettyJson);
+                        onCompleted?.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        LogController.Instance?.debug("Failed to parse JSON: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        if (!requestSuccessful)
+        {
+            this.errorMessage = "Failed to call endgame api after " + maxRetries + " attempts.";
+            LogController.Instance?.debug(this.errorMessage);
+            this.IsShowLoginErrorBox = true;
+            onCompleted?.Invoke();
+        }
+
     }
 }

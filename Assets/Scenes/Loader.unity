@@ -417,6 +417,7 @@ MonoBehaviour:
     gameSettingJson: 
     questionJson: 
     accountJson: 
+    accountUid: -1
     photoDataUrl: 
     payloads: 
     loadPeopleIcon:
@@ -432,6 +433,21 @@ MonoBehaviour:
     loginErrorBox: {fileID: 645755778}
     loginErrorMessage: {fileID: 254165564}
     isShowLoginErrorBox: 0
+    answer:
+      state:
+        duration: 0
+        score: 0
+        percent: 0
+        progress: 0
+      currentQA:
+        correctId: 0
+        duration: 0
+        qid: 
+        answerId: 0
+        answerText: 
+        correctAnswerText: 
+        score: 0
+        percent: 0
   unitKey: 
   testURL: 
 --- !u!4 &734659897
