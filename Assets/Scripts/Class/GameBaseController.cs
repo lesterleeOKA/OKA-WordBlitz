@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,7 +6,7 @@ public class GameBaseController : MonoBehaviour
 {
     public Timer gameTimer;
     public CanvasGroup GameUILayer, TopUILayer, TopRightUILayer, getScorePopup;
-    public Vector2 originalGetScorePos = Vector2.zero;
+    protected Vector2 originalGetScorePos = Vector2.zero;
     public EndGamePage endGamePage;
     public int playerNumber = 0;
 
@@ -16,7 +17,7 @@ public class GameBaseController : MonoBehaviour
 
     protected virtual void Start()
     {
-        this.playerNumber = LoaderConfig.Instance != null ? LoaderConfig.Instance.PlayerNumbers : 2;
+        if (LoaderConfig.Instance != null) this.playerNumber = LoaderConfig.Instance.PlayerNumbers;
         SetUI.Set(this.TopUILayer, false, 0f);
         SetUI.Set(this.getScorePopup, false, 0f);
         SetUI.Set(this.TopRightUILayer, true, 0f);
@@ -43,14 +44,14 @@ public class GameBaseController : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-
     public void setGetScorePopup(bool status)
     {
-        SetUI.SetMove(this.getScorePopup, status, status ? Vector2.zero : this.originalGetScorePos, status? 0.5f : 0f);
+        SetUI.SetMove(this.getScorePopup, status, status ? Vector2.zero : this.originalGetScorePos, status ? 0.5f : 0f);
     }
+
 
     public void BackToWebpage()
     {
-        ExternalCaller.BackToHomeUrlPage();
+        LoaderConfig.Instance?.exitPage("Leave Game", ExternalCaller.BackToHomeUrlPage);
     }
 }

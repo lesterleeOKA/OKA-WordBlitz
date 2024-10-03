@@ -147,7 +147,7 @@ public class QuestionManager : MonoBehaviour
         for (int i = 0; i < this.totalItems; i++)
         {
             var qa = this.questionData.questions[i];
-            string folderName = qa.questionType;
+            string folderName = qa.questionType == "fillInBlank" ? "audio" : qa.questionType;
             string qid = qa.qid;
 
             switch (qa.questionType)
@@ -171,6 +171,7 @@ public class QuestionManager : MonoBehaviour
                      );
                     break;
                 case "audio":
+                case "fillInBlank":
                     ExternalCaller.UpdateLoadBarStatus("Loading Audio");
                     StartCoroutine(
                         this.loadAudio.Load(

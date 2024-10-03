@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,21 +28,25 @@ public class LoaderConfig : GameSetting
     protected override void Update()
     {
         base.Update();
-        this.apiManager.checkLoginErrorBox();
+
+
     }
 
     public void LoadGameData()
     {
-        StartCoroutine(this.apiManager.PostGameSetting(this.GetParseURLParams, this.LoadQuestions));
+        this.apiManager.PostGameSetting(this.GetParseURLParams,
+                                        () => StartCoroutine(this.apiManager.postGameSetting(this.LoadQuestions)),
+                                        this.LoadQuestions
+                                        );
     }
 
-  
+
     public void LoadQuestions()
     {
-        this.InitialGameSetup(()=>
+        this.InitialGameSetup(() =>
         {
             QuestionManager.Instance?.LoadQuestionFile(this.unitKey, () => this.finishedLoadQuestion());
-        });    
+        });
     }
 
     void finishedLoadQuestion()
@@ -101,6 +106,34 @@ public class LoaderConfig : GameSetting
         }
     }
 
+    public void SubmitAnswer(int duration, int playerScore, float statePercent, int stateProgress,
+                             int correctId, float currentQADuration, string qid, int answerId, string answerText,
+                             string correctAnswerText, float currentQAscore, float currentQAPercent)
+    {
+        /*        string jsonPayload = $"[{{\"payloads\":{playloads}," +
+        $"\"role\":{{\"uid\":{uid}}}," +
+        $"\"state\":{{\"duration\":{stateDuration},\"score\":{stateScore},\"percent\":{statePercent},\"progress\":{stateProgress}}}," +
+        $"\"currentQuestion\":{{\"correct\":{correct},\"duration\":{currentQADuration},\"qid\":\"{currentqid}\",\"answer\":{answerId},\"answerText\":\"{answerText}\",\"correctAnswerText\":\"{correctAnswerText}\",\"score\":{currentQAscore},\"percent\":{currentQAPercent}}}}}]";*/
+
+        var answer = this.apiManager.answer;
+        answer.state.duration = duration;
+        answer.state.score = playerScore;
+        answer.state.percent = statePercent;
+        answer.state.progress = stateProgress;
+
+        answer.currentQA.correctId = correctId;
+        answer.currentQA.duration = currentQADuration;
+        answer.currentQA.qid = qid;
+        answer.currentQA.answerId = answerId;
+        answer.currentQA.answerText = answerText;
+        answer.currentQA.correctAnswerText = correctAnswerText;
+        answer.currentQA.score = currentQAscore;
+        answer.currentQA.percent = currentQAPercent;
+
+
+        StartCoroutine(this.apiManager.SubmitAnswer());
+    }
+
     public void closeLoginErrorBox()
     {
         this.apiManager.resetLoginErrorBox();
@@ -109,6 +142,33 @@ public class LoaderConfig : GameSetting
     public void changeScene(int sceneId)
     {
         SceneManager.LoadScene(sceneId);
+    }
+
+    public void exitPage(string state = "", Action<bool> leavePage = null)
+    {
+        bool isLogined = this.apiManager.IsLogined;
+        if (isLogined)
+        {
+            LogController.Instance?.debug($"{state}, called exit api.");
+            StartCoroutine(this.apiManager.ExitGameRecord(
+                () => leavePage?.Invoke(true)
+            ));
+        }
+        else
+        {
+            leavePage?.Invoke(false);
+            LogController.Instance?.debug($"{state}.");
+        }
+    }
+
+    public void QuitGame()
+    {
+        this.exitPage("Quit Game", null);
+    }
+
+    private void OnApplicationQuit()
+    {
+        this.QuitGame();
     }
 }
 

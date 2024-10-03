@@ -119,7 +119,8 @@ public class GameController : GameBaseController
             {
                 if (this.playerControllers[i] != null && this.playerControllers[i].IsConnectWord)
                 {
-                    this.playerControllers[i].StopConnection();
+                    int currentTime = Mathf.FloorToInt(((this.gameTimer.gameDuration - this.gameTimer.currentTime) / this.gameTimer.gameDuration) * 100);
+                    this.playerControllers[i].StopConnection(currentTime);
                 }
             }
         }
@@ -147,7 +148,8 @@ public class GameController : GameBaseController
                             }
                             break;
                         case TouchPhase.Ended:
-                            player.StopConnection();
+                            int currentTime = Mathf.FloorToInt(((this.gameTimer.gameDuration - this.gameTimer.currentTime) / this.gameTimer.gameDuration) * 100);
+                            player.StopConnection(currentTime);
                             break;
                     }
                 }

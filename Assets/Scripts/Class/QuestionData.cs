@@ -45,8 +45,10 @@ public enum QuestionType
 public class CurrentQuestion
 {
     public int numberQuestion = 0;
+    public int answeredQuestion = 0;
     public QuestionType questiontype = QuestionType.None;
     public QuestionList qa = null;
+    public int correctAnswerId;
     public string correctAnswer;
     public string[] answersChoics;
     public CanvasGroup[] questionBgs;
@@ -68,6 +70,7 @@ public class CurrentQuestion
                 var qaImage = qa.texture;
                 this.correctAnswer = qa.correctAnswer;
                 this.answersChoics = qa.answers;
+                this.correctAnswerId = this.answersChoics != null ? Array.IndexOf(this.answersChoics, this.correctAnswer) : 0;
 
                 if (this.questionImage != null && qaImage != null)
                 {
@@ -96,6 +99,7 @@ public class CurrentQuestion
                 this.questiontype = QuestionType.Audio;
                 this.correctAnswer = qa.correctAnswer;
                 this.answersChoics = qa.answers;
+                this.correctAnswerId = this.answersChoics != null ? Array.IndexOf(this.answersChoics, this.correctAnswer) : 0;
                 this.playAudio();
                 break;
             case "text":
@@ -108,6 +112,7 @@ public class CurrentQuestion
                 }
                 this.correctAnswer = qa.correctAnswer;
                 this.answersChoics = qa.answers;
+                this.correctAnswerId = this.answersChoics != null ? Array.IndexOf(this.answersChoics, this.correctAnswer) : 0;
                 break;
             case "fillInBlank":
                 SetUI.SetGroup(this.questionBgs, 3, 0f);
@@ -124,6 +129,7 @@ public class CurrentQuestion
                 this.questiontype = QuestionType.FillInBlank;
                 this.correctAnswer = qa.correctAnswer;
                 this.answersChoics = qa.answers;
+                this.correctAnswerId = this.answersChoics != null ? Array.IndexOf(this.answersChoics, this.correctAnswer) : 0;
                 this.playAudio();
                 break;
         }
@@ -137,6 +143,11 @@ public class CurrentQuestion
             this.numberQuestion += 1;
         else
             this.numberQuestion = 0;
+
+        if (this.answeredQuestion < totalQuestion)
+        {
+            this.answeredQuestion += 1;
+        }
     }
 
     public void playAudio()

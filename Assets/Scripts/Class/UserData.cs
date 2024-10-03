@@ -15,6 +15,10 @@ public class UserData: MonoBehaviour
     private Color32 playerColor = Color.white;
     [SerializeField]
     private PlayerIcon[] playerIcons;
+    [SerializeField]
+    private int correctedAnswerNumber;
+    [SerializeField]
+    private float correctAnswerPercentage;
 
     public string UserName
     {
@@ -46,4 +50,16 @@ public class UserData: MonoBehaviour
         set { this.playerIcons = value; }
     }
 
+    public int CorrectedAnswerNumber
+    {
+        get { return this.correctedAnswerNumber; }
+        set { this.correctedAnswerNumber = value; }
+    }
+
+    public float AnsweredPercentage(int totalQuestions = 0)
+    {
+        if (totalQuestions == 0) return 0;
+        this.correctAnswerPercentage = ((float)this.CorrectedAnswerNumber / totalQuestions) * 100f;
+        return this.correctAnswerPercentage;
+    }
 }

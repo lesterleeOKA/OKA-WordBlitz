@@ -3,31 +3,27 @@ using UnityEngine;
 public class LogController : MonoBehaviour
 {
     public static LogController Instance = null;
-    public string env = "dev";
-    public string[] environments;
+    [Tooltip("The environment allow to show debug log")]
+    public string showDebugEnv = "dev";
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
+
+        Debug.Log("Current Environment--------------------------------------------------" + LoaderConfig.Instance?.currentHostName.ToString());
     }
 
 
     public void debug(string _message = "")
     {
-        if(LoaderConfig.Instance != null)
+        if (LoaderConfig.Instance != null)
         {
-            for (int i = 0; i < environments.Length; i++)
+            if (this.showDebugEnv == LoaderConfig.Instance?.currentHostName.ToString())
             {
-                if (environments[i] != null)
-                {
-                    if (environments[i] == this.env)
-                    {
-                        Debug.Log(_message);
-                    }
-                }
+                Debug.Log(_message);
             }
         }
     }
@@ -36,15 +32,9 @@ public class LogController : MonoBehaviour
     {
         if (LoaderConfig.Instance != null)
         {
-            for (int i = 0; i < environments.Length; i++)
+            if (this.showDebugEnv == LoaderConfig.Instance?.currentHostName.ToString())
             {
-                if (environments[i] != null)
-                {
-                    if (environments[i] == this.env)
-                    {
-                        Debug.LogError(_message);
-                    }
-                }
+                Debug.Log(_message);
             }
         }
     }

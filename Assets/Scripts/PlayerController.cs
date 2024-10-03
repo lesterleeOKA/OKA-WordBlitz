@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : UserData
 {
     public Scoring scoring;
+    public string answer = string.Empty;
     public GridManager gridManager;
     public LineDrawer lineDrawer;
     public Cell[,] grid;
@@ -70,16 +71,69 @@ public class PlayerController : UserData
         this.lineDrawer?.StartDrawing();
     }
 
-    public void checkAnswer()
+    public void checkAnswer(int currentTime)
     {
-        if(!this.IsCheckedAnswer) { 
+        if(!this.IsCheckedAnswer) {
+            var loader = LoaderConfig.Instance;
+            var currentQuestion = QuestionController.Instance?.currentQuestion;
+            int eachQAScore = currentQuestion.qa.score == 0 ? 10 : currentQuestion.qa.score;
             int currentScore = this.Score;
-            var lowerUserAns = this.answerBox.text.ToLower();
-            var lowerQIDAns = QuestionController.Instance?.currentQuestion.correctAnswer.ToLower();
-            int resultScore = this.scoring.score(lowerUserAns, currentScore, lowerQIDAns);
+            this.answer = this.answerBox.text.ToLower();
+            var lowerQIDAns = currentQuestion.correctAnswer.ToLower();
+            int resultScore = this.scoring.score(this.answer, currentScore, lowerQIDAns, eachQAScore);
             this.Score = resultScore;
             this.IsCheckedAnswer = true;
             StartCoroutine(this.showAnswerResult(this.scoring.correct));
+
+            if (this.UserId == 0 && loader != null && loader.apiManager.IsLogined) // For first player
+            {
+                float currentQAPercent = 0f;
+                int correctId = 0;
+                float score = 0f;
+                float answeredPercentage = 0f;
+                int progress = (int)((float)currentQuestion.answeredQuestion / QuestionManager.Instance.totalItems * 100);
+
+                if (this.answer == currentQuestion.correctAnswer)
+                {
+                    if (this.CorrectedAnswerNumber < QuestionManager.Instance.totalItems)
+                        this.CorrectedAnswerNumber += 1;
+
+                    correctId = 2;
+                    score = eachQAScore; // load from question settings score of each question
+                    currentQAPercent = 100f;
+                }
+                else
+                {
+                    if (this.CorrectedAnswerNumber > 0)
+                    {
+                        this.CorrectedAnswerNumber -= 1;
+                    }
+                }
+
+                if (this.CorrectedAnswerNumber < QuestionManager.Instance.totalItems)
+                {
+                    answeredPercentage = this.AnsweredPercentage(QuestionManager.Instance.totalItems);
+                }
+                else
+                {
+                    answeredPercentage = 100f;
+                }
+
+                loader.SubmitAnswer(
+                           currentTime,
+                           this.Score,
+                           answeredPercentage,
+                           progress,
+                           correctId,
+                           currentTime,
+                           currentQuestion.qa.qid,
+                           currentQuestion.correctAnswerId,
+                           this.answer,
+                           currentQuestion.correctAnswer,
+                           score,
+                           currentQAPercent
+                           );
+            }
         }
     }
 
@@ -100,14 +154,14 @@ public class PlayerController : UserData
         if(correct) GameController.Instance?.UpdateNextQuestion();
     }
 
-    public void StopConnection()
+    public void StopConnection(int currentTime= 0)
     {
         //Check Answer
         if(this.answerBox != null)
         {
-            if (!string.IsNullOrEmpty(this.answerBox.text))
+            if (!string.IsNullOrEmpty(this.answerBox.text) && currentTime > 0)
             {
-                this.checkAnswer();
+                this.checkAnswer(currentTime);
             }
         }
 
