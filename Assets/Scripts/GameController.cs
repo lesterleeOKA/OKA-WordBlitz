@@ -98,6 +98,8 @@ public class GameController : GameBaseController
 
     private void Update()
     {
+        if(!this.playing) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             this.UpdateNextQuestion();
