@@ -56,7 +56,7 @@ public class CurrentQuestion
     public CanvasGroup audioPlayBtn = null;
     private AspectRatioFitter aspecRatioFitter = null;
 
-    public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0)
+    public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0, Action onQuestionCompleted = null)
     {
         if (qa == null) return;
         this.qa = qa;
@@ -147,6 +147,10 @@ public class CurrentQuestion
         if (this.answeredQuestion < totalQuestion)
         {
             this.answeredQuestion += 1;
+        }
+        else
+        {
+            onQuestionCompleted?.Invoke();
         }
     }
 

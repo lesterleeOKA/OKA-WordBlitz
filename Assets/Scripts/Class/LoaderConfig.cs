@@ -144,19 +144,22 @@ public class LoaderConfig : GameSetting
         SceneManager.LoadScene(sceneId);
     }
 
-    public void exitPage(string state = "", Action<bool> leavePage = null)
+    public void exitPage(string state = "", Action<bool> leavePageWithValue = null, Action leavePageWithoutValue = null)
     {
         bool isLogined = this.apiManager.IsLogined;
         if (isLogined)
         {
             LogController.Instance?.debug($"{state}, called exit api.");
-            StartCoroutine(this.apiManager.ExitGameRecord(
-                () => leavePage?.Invoke(true)
-            ));
+            StartCoroutine(this.apiManager.ExitGameRecord(() =>
+            {
+                leavePageWithValue?.Invoke(true);
+                leavePageWithoutValue?.Invoke();
+            }));
         }
         else
         {
-            leavePage?.Invoke(false);
+            leavePageWithValue?.Invoke(false);
+            leavePageWithoutValue?.Invoke();
             LogController.Instance?.debug($"{state}.");
         }
     }

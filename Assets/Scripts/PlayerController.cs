@@ -90,7 +90,7 @@ public class PlayerController : UserData
                 float currentQAPercent = 0f;
                 int correctId = 0;
                 float score = 0f;
-                float answeredPercentage = 0f;
+                float answeredPercentage;
                 int progress = (int)((float)currentQuestion.answeredQuestion / QuestionManager.Instance.totalItems * 100);
 
                 if (this.answer == currentQuestion.correctAnswer)
@@ -151,7 +151,7 @@ public class PlayerController : UserData
         GameController.Instance?.setGetScorePopup(false);
         this.scoring.correct = false;
         this.IsCheckedAnswer = false;
-        if(correct) GameController.Instance?.UpdateNextQuestion();
+        GameController.Instance?.UpdateNextQuestion();
     }
 
     public void StopConnection(int currentTime= 0)

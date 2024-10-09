@@ -7,43 +7,12 @@ public class QuestionController : MonoBehaviour
 {
     public static QuestionController Instance = null;
     public CurrentQuestion currentQuestion;
-    //public bool moveTonextQuestion = false;
-    //public bool allowCheckingWords = true;
-    //public float delayToNextQuestion = 2f;
-    //public float count = 0f;
 
     private void Awake()
     {
         if(Instance == null) Instance = this;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-       // this.count = this.delayToNextQuestion;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        /*if (GameController.Instance != null && StartGame.Instance != null)
-        {
-            if (!GameController.Instance.gameTimer.endGame && StartGame.Instance.startedGame && this.allowCheckingWords)
-            {
-                if (this.moveTonextQuestion)
-                {
-                    if (this.count > 0f)
-                    {
-                        this.count -= Time.deltaTime;
-                    }
-                    else
-                    {
-                        this.count = this.delayToNextQuestion;
-                        this.allowCheckingWords = false;
-                    }
-                }
-            }
-        }*/
-    }
     public void nextQuestion()
     {
         LogController.Instance?.debug("next question");
@@ -67,8 +36,14 @@ public class QuestionController : MonoBehaviour
             string correctAnswer = this.currentQuestion.correctAnswer;
             int questionCount = questionDataList.questions.Count;
             QuestionList qa = questionDataList.questions[this.currentQuestion.numberQuestion];
-            this.currentQuestion.setNewQuestion(qa, questionCount);
-            //this.moveTonextQuestion = false;
+            this.currentQuestion.setNewQuestion(qa, questionCount, () =>
+            {
+                if (LoaderConfig.Instance.apiManager.IsLogined)
+                {
+                    GameController.Instance.endGame();
+                    return;
+                }
+            });
         }
         catch (Exception e)
         {
