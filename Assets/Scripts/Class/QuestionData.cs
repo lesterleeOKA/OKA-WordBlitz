@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -55,9 +56,47 @@ public class CurrentQuestion
     private RawImage questionImage;
     public CanvasGroup audioPlayBtn = null;
     private AspectRatioFitter aspecRatioFitter = null;
+    public CanvasGroup progressiveBar;
+    public Image progressFillImage;
 
-    public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0, Action onQuestionCompleted = null)
+    public void setProgressiveBar(bool status)
     {
+        if (this.progressiveBar != null)
+        {
+            this.progressiveBar.DOFade(status ? 1f : 0f, 0f);
+        }
+    }
+
+    public void updateProgressiveBar(int totalQuestion, bool status, Action onQuestionCompleted = null)
+    {
+        float progress = 0f;
+        if (this.answeredQuestion < totalQuestion)
+        {
+            progress = (float)this.answeredQuestion / totalQuestion;
+            this.answeredQuestion += 1;
+        }
+        else
+        {
+            progress = 1f;
+        }
+
+        progress = Mathf.Clamp(progress, 0f, 1f);
+        if (this.progressFillImage != null && this.progressiveBar != null)
+        {
+            this.progressFillImage.DOFillAmount(progress, 0.5f).OnComplete(() =>
+            {
+                if (progress >= 1f) onQuestionCompleted?.Invoke();
+            });
+
+            int percentage = (int)(progress * 100);
+            this.progressiveBar.GetComponentInChildren<NumberCounter>().Value = percentage;
+        }
+    }
+
+    public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0, bool isLogined = false, Action onQuestionCompleted = null)
+    {
+        this.setProgressiveBar(isLogined);
+
         if (qa == null) return;
         this.qa = qa;
         TextMeshProUGUI questionText = null;
@@ -144,14 +183,7 @@ public class CurrentQuestion
         else
             this.numberQuestion = 0;
 
-        if (this.answeredQuestion < totalQuestion)
-        {
-            this.answeredQuestion += 1;
-        }
-        else
-        {
-            onQuestionCompleted?.Invoke();
-        }
+        this.updateProgressiveBar(totalQuestion, isLogined, onQuestionCompleted);
     }
 
     public void playAudio()
