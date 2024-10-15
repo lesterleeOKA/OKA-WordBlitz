@@ -43,7 +43,7 @@ public class LoaderConfig : GameSetting
 
     public void LoadQuestions()
     {
-        this.InitialGameSetup(() =>
+        this.InitialGameImages(() =>
         {
             QuestionManager.Instance?.LoadQuestionFile(this.unitKey, () => this.finishedLoadQuestion());
         });

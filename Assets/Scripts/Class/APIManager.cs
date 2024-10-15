@@ -34,6 +34,7 @@ public class APIManager
     public LoadImage loadPeopleIcon;
     public Texture peopleIcon;
     public string loginName = string.Empty;
+    public Settings settings;
     public string instructionContent = string.Empty;
     public int maxRetries = 10;
     public CanvasGroup debugLayer;
@@ -42,7 +43,6 @@ public class APIManager
     private Text debugText = null;
     private string errorMessage = "";
     public Answer answer;
-
 
     public void Init()
     {
@@ -347,4 +347,14 @@ public class APIManager
         }
 
     }
+}
+
+[Serializable]
+public class Settings
+{
+    public string chapterUnit = string.Empty;
+    public string previewGameImageUrl;
+    public string backgroundImageUrl;
+    public string instructionContent = string.Empty;
+    public float gameTime = 0f;
 }
