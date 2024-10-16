@@ -35,9 +35,7 @@ public class QuestionManager : MonoBehaviour
         try
         {
             var questionJson = LoaderConfig.Instance.apiManager.questionJson;
-            var jwt = LoaderConfig.Instance.apiManager.jwt;
-            var appId = LoaderConfig.Instance.apiManager.appId;
-            if (!string.IsNullOrEmpty(questionJson) && !string.IsNullOrEmpty(jwt) && !string.IsNullOrEmpty(appId))
+            if (!string.IsNullOrEmpty(questionJson) && LoaderConfig.Instance.apiManager.IsLogined)
             {
                 QuestionDataWrapper wrapper = JsonUtility.FromJson<QuestionDataWrapper>("{\"QuestionDataArray\":" + questionJson + "}");
                 QuestionData _questionData = new QuestionData
@@ -140,7 +138,7 @@ public class QuestionManager : MonoBehaviour
     private void ShuffleQuestions(bool rand = true, Action onComplete = null)
     {
         if (rand) this.questionData.questions.Sort((a, b) => UnityEngine.Random.Range(-1, 2));
-
+        var isLogined = LoaderConfig.Instance.apiManager.IsLogined;
         this.totalItems = this.questionData.questions.Count;
         this.loadedItems = 0;
 
@@ -149,6 +147,7 @@ public class QuestionManager : MonoBehaviour
             var qa = this.questionData.questions[i];
             string folderName = qa.questionType == "fillInBlank" ? "audio" : qa.questionType;
             string qid = qa.qid;
+            string mediaUrl = qa.Media != null && qa.Media.Length > 0 ? qa.Media[0] : "";
 
             switch (qa.questionType)
             {
@@ -161,7 +160,9 @@ public class QuestionManager : MonoBehaviour
                     ExternalCaller.UpdateLoadBarStatus("Loading Images");
                     StartCoroutine(
                        this.loadImage.Load(
-                           folderName, qid, tex =>
+                           isLogined ? "" : folderName,
+                           isLogined ? mediaUrl : qid,
+                           tex =>
                            {
                                qa.texture = tex;
                                this.loadedItems++;
@@ -175,7 +176,9 @@ public class QuestionManager : MonoBehaviour
                     ExternalCaller.UpdateLoadBarStatus("Loading Audio");
                     StartCoroutine(
                         this.loadAudio.Load(
-                            folderName, qid, (audio) =>
+                            isLogined ? "" : folderName,
+                            isLogined ? mediaUrl : qid,
+                            audio =>
                             {
                                 qa.audioClip = audio;
                                 this.loadedItems++;

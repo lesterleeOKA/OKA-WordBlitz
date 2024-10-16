@@ -31,7 +31,7 @@ public class APIManager
     private bool isShowLoginErrorBox = false;
     [SerializeField]
     private bool showingDebugBox = false;
-    public LoadImage loadPeopleIcon;
+    public LoadImage loadImage;
     public Texture peopleIcon;
     public string loginName = string.Empty;
     public Settings settings;
@@ -162,6 +162,24 @@ public class APIManager
                         this.gameSettingJson = jsonNode["setting"].ToString();
                         this.payloads = jsonNode["payloads"].ToString();
 
+                        if (!string.IsNullOrEmpty(this.gameSettingJson) && this.gameSettingJson != "{}")
+                        {
+                            string bgImagUrl = jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "");
+                            if (!bgImagUrl.StartsWith("https://"))
+                            {
+                                this.settings.backgroundImageUrl = "https:" + bgImagUrl;
+                            }
+
+                            yield return this.loadImage.Load("", this.settings.backgroundImageUrl, _backgroundImage =>
+                            {
+                                LogController.Instance?.debug($"Downloaded Background Image from api!!");
+                                LoaderConfig.Instance.gameSetup.bgTexture = _backgroundImage;
+                            });
+
+                            //remain settings
+                            //...
+                        }
+
                         if (this.debugText != null)
                         {
                             this.debugText.text += "Question Data: " + this.questionJson + "\n\n ";
@@ -181,7 +199,7 @@ public class APIManager
                                 imageUrl = "https:" + modifiedPhotoDataUrl;
                             }
                             LogController.Instance?.debug($"Downloading People Icon!!{imageUrl}");
-                            yield return this.loadPeopleIcon.Load("", imageUrl, _peopleIcon =>
+                            yield return this.loadImage.Load("", imageUrl, _peopleIcon =>
                             {
                                 LogController.Instance?.debug($"Downloaded People Icon!!");
                                 this.peopleIcon = _peopleIcon;
