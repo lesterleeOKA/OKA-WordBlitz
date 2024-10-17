@@ -33,8 +33,10 @@ public class PlayerController : UserData
     {
         for (int i = 0; i < this.PlayerIcons.Length; i++)
         {
-            if (this.PlayerIcons[i] != null)
+            if (this.PlayerIcons[i] != null) { 
+                this.PlayerIcons[i].playerColor = this.PlayerColor;
                 this.PlayerIcons[i].SetStatus(_status, _playerName, _icon);
+            }
         }
 
     }

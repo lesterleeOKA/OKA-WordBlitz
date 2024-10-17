@@ -2298,7 +2298,7 @@ MonoBehaviour:
   score: 0
   playerColor:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190335
   playerIcons:
   - {fileID: 1044600103}
   correctedAnswerNumber: 0
@@ -2442,6 +2442,28 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &846071144 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9205811101738698197, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+  m_PrefabInstance: {fileID: 154309625}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &846071145 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8384619251964724505, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+  m_PrefabInstance: {fileID: 154309625}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &871167190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3329,19 +3351,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3135583157355082823, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_fontColor.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3135583157355082823, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.5294118
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3135583157355082823, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.08627451
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3135583157355082823, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4294936342
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 3536217906335014944, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3367,6 +3389,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4394616716639748559, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerIcons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394616716639748559, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerIcons.Array.data[1]
+      value: 
+      objectReference: {fileID: 846071145}
     - target: {fileID: 4394616716639748559, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: playerNameBoxes.Array.size
       value: 1
@@ -3420,6 +3450,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6882271920690222390, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerIcons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882271920690222390, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
+      propertyPath: playerIcons.Array.data[1]
+      value: 
+      objectReference: {fileID: 846071144}
+    - target: {fileID: 6882271920690222390, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: playerNameBoxes.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3457,11 +3495,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9213806089020610984, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_fontColor.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9213806089020610984, guid: 327f124e2bd7112499ce3ae6029e65c0, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278190335
+      value: 4278782217
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4133,7 +4171,7 @@ MonoBehaviour:
   score: 0
   playerColor:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4294936342
   playerIcons:
   - {fileID: 1044600104}
   correctedAnswerNumber: 0

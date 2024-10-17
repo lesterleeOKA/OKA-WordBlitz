@@ -36,6 +36,10 @@ public class GameController : GameBaseController
                         var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
                         this.playerControllers[i].updatePlayerIcon(true, _playerName, icon);
                     }
+                    else
+                    {
+                        this.playerControllers[i].updatePlayerIcon(true);
+                    }
 
                     this.playerControllers[i].gameObject.SetActive(true);
                     this.playerControllers[i].Init(word);

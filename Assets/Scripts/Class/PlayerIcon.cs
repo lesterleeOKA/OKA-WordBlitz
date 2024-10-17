@@ -54,18 +54,18 @@ public class PlayerIcon : MonoBehaviour
 
             for (int i = 0; i < this.PlayerIcons.Length; i++)
             {
-                if (this.PlayerIcons[i] != null)
+                if (this.PlayerIcons[i] != null && _icon != null)
                 {
                     this.PlayerIcons[i].sprite = _icon;
                 }
             }
+        }
 
-            for (int i = 0; i < this.PlayerNos.Length; i++)
+        for (int i = 0; i < this.PlayerNos.Length; i++)
+        {
+            if (this.PlayerNos[i] != null)
             {
-                if (this.PlayerNos[i] != null)
-                {
-                    this.PlayerNos[i].color = playerColor;
-                }
+                this.PlayerNos[i].color = playerColor;
             }
         }
     }
