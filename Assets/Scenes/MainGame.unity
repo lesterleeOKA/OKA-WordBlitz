@@ -708,6 +708,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 3319000435792375893, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319000435792375893, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319000435792375893, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319000435792375893, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3588252911741027788, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -751,6 +767,22 @@ PrefabInstance:
     - target: {fileID: 5412996830018927169, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
       propertyPath: m_Name
       value: ResultUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5703655147902983169, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5703655147902983169, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5703655147902983169, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5703655147902983169, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
+      propertyPath: textColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5825877972210962311, guid: 0017e1a7dfbb96e4eb9744e32abb05b8, type: 3}
       propertyPath: m_AnchorMax.y
