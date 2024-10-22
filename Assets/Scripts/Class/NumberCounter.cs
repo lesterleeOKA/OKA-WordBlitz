@@ -12,6 +12,8 @@ public class NumberCounter : MonoBehaviour
     public string Unit="";
     private int _value;
     public AudioSource scoringEffect;
+    public Color textColor = default;
+    public bool isAnimatedColor = true;
 
     public int Value
     {
@@ -23,7 +25,10 @@ public class NumberCounter : MonoBehaviour
 
     private void Awake()
     {
-        if(this.Text == null) Text = GetComponent<TextMeshProUGUI>();
+        if(this.Text == null) { 
+            Text = GetComponent<TextMeshProUGUI>();
+            Text.color = this.textColor;
+        }
     }
 
     private void UpdateText(int newValue)
@@ -34,7 +39,7 @@ public class NumberCounter : MonoBehaviour
 
     private IEnumerator CountText(int newValue)
     {
-        Text.color = Color.yellow;
+        if(this.isAnimatedColor) Text.color = Color.yellow;
 
         WaitForSeconds Wait = new WaitForSeconds(1f / CountFPS);
 
@@ -91,6 +96,6 @@ public class NumberCounter : MonoBehaviour
             }
         }
 
-        Text.color = Color.white;
+        Text.color = this.textColor;
     }
 }

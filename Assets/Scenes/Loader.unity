@@ -176,7 +176,7 @@ AudioSource:
   m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d3a548b6b2e1b104ebd00709842f69ca, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 97d645d14f1a6024c8f05a9c71f58299, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -406,7 +406,7 @@ MonoBehaviour:
     loadImageMethod: 1
     imageType: 2
     allTextures: []
-    bgTexture: {fileID: 2800000, guid: a2a73cb2d247a0c47aac5da965c14d29, type: 3}
+    bgTexture: {fileID: 2800000, guid: 3cc7789d54dcd82419947d0d21e928c2, type: 3}
     previewTexture: {fileID: 2800000, guid: 86f53beb6c38b3b4f9f81a9ebd4eeb01, type: 3}
     gameBackground: {fileID: 0}
     gamePreview: {fileID: 0}

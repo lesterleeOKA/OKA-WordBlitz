@@ -141,16 +141,22 @@ public class PlayerController : UserData
 
     public IEnumerator showAnswerResult(bool correct)
     {
-        float delay = 1f;
+        float delay = 2f;
         if (correct)
         {
             LogController.Instance?.debug("Add marks" + this.Score);
-            delay = 2f;
             GameController.Instance?.setGetScorePopup(true);
+            AudioController.Instance?.PlayAudio(1);
+            yield return new WaitForSeconds(delay);
+            GameController.Instance?.setGetScorePopup(false);
         }
-        AudioController.Instance?.PlayAudio(correct ? 1 : 2);
-        yield return new WaitForSeconds(delay);
-        GameController.Instance?.setGetScorePopup(false);
+        else
+        {
+            GameController.Instance?.setWrongPopup(true);
+            AudioController.Instance?.PlayAudio(2);
+            yield return new WaitForSeconds(delay);
+            GameController.Instance?.setWrongPopup(false);
+        }
         this.scoring.correct = false;
         this.IsCheckedAnswer = false;
         GameController.Instance?.UpdateNextQuestion();
