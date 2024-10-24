@@ -439,7 +439,6 @@ MonoBehaviour:
       backgroundImageUrl: 
       instructionContent: 
       gameTime: 0
-    instructionContent: 
     maxRetries: 10
     debugLayer: {fileID: 1630735626}
     loginErrorBox: {fileID: 645755778}

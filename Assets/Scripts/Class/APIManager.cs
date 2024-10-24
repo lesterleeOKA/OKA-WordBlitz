@@ -35,7 +35,6 @@ public class APIManager
     public Texture peopleIcon;
     public string loginName = string.Empty;
     public Settings settings;
-    public string instructionContent = string.Empty;
     public int maxRetries = 10;
     public CanvasGroup debugLayer;
     public CanvasGroup loginErrorBox;
@@ -43,6 +42,7 @@ public class APIManager
     private Text debugText = null;
     private string errorMessage = "";
     public Answer answer;
+
 
     public void Init()
     {
@@ -148,9 +148,9 @@ public class APIManager
                     if (jsonStartIndex != -1)
                     {
                         string jsonData = responseText.Substring(jsonStartIndex);
-                        LogController.Instance?.debug("Response: " + jsonData);
-
                         var jsonNode = JSONNode.Parse(jsonData);
+                        LogController.Instance?.debug("jsonNode: " + jsonNode.ToString());
+
                         this.questionJson = jsonNode[APIConstant.QuestionDataHeaderName].ToString(); // Question json data;
                         this.accountJson = jsonNode["account"].ToString(); // Account json data;
 
@@ -164,10 +164,15 @@ public class APIManager
 
                         if (!string.IsNullOrEmpty(this.gameSettingJson) && this.gameSettingJson != "{}")
                         {
+                            this.settings.gameTime = jsonNode["setting"]["game_time"];
                             string bgImagUrl = jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "");
+                            string gamePreviewUrl = jsonNode["setting"]["game_preview_image"].ToString().Replace("\"", "");
+                            LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
+
                             if (!bgImagUrl.StartsWith("https://"))
                             {
-                                this.settings.backgroundImageUrl = "https:" + bgImagUrl;
+                                this.settings.backgroundImageUrl = APIConstant.blobServerRelativePath + bgImagUrl;
+                                this.settings.previewGameImageUrl = APIConstant.blobServerRelativePath + gamePreviewUrl;
                             }
 
                             yield return this.loadImage.Load("", this.settings.backgroundImageUrl, _backgroundImage =>
@@ -186,7 +191,8 @@ public class APIManager
                             this.debugText.text += "Account: " + this.accountJson + "\n\n ";
                             this.debugText.text += "Photo: " + this.photoDataUrl + "\n\n ";
                             this.debugText.text += "Setting: " + this.gameSettingJson + "\n\n ";
-                            this.debugText.text += "PayLoad: " + this.payloads;
+                            this.debugText.text += "PayLoad: " + this.payloads + "\n\n ";
+                            this.debugText.text += "Is Logined: " + this.IsLogined;
                         }
 
                         if (!string.IsNullOrEmpty(this.photoDataUrl) && this.photoDataUrl != "null")
@@ -363,7 +369,54 @@ public class APIManager
         {
             this.HandleError("Failed to call endgame api after " + maxRetries + " attempts.", onCompleted, true);
         }
+    }
+}
 
+public static class APIConstant
+{
+    public static string QuestionDataHeaderName = "questions";
+    public static string GameDataAPI(LoaderConfig loader, string _bookId = "", string _jwt = "")
+    {
+        string jsonParameter = string.IsNullOrEmpty(_bookId) ? "[1]" : $"[\"{_bookId}\"]";
+        return $"{loader.CurrentHostName}/RainbowOne/index.php/PHPGateway/proxy/2.8/?api=ROGame.get_game_setting&json={jsonParameter}&jwt=" + _jwt;
+    }
+
+    public static string blobServerRelativePath = "https://oka.blob.core.windows.net/media/";
+
+    public static string SubmitAnswerAPI(LoaderConfig loader, string playloads, int uid, string _jwt)
+    {
+        if (loader == null) return null;
+        var hostName = loader.CurrentHostName;
+        var answer = loader.apiManager.answer;
+
+
+        int stateDuration = answer.state.duration;
+        float stateScore = answer.state.score;
+        float statePercent = answer.state.percent;
+        float stateProgress = answer.state.progress;
+
+        int correct = answer.currentQA.correctId;
+        float currentQADuration = answer.currentQA.duration;
+        string currentqid = answer.currentQA.qid;
+        int answerId = answer.currentQA.answerId;
+        string answerText = answer.currentQA.answerText;
+        string correctAnswerText = answer.currentQA.correctAnswerText;
+        float currentQAscore = answer.currentQA.score;
+        float currentQAPercent = answer.currentQA.percent;
+
+        string jsonPayload = $"[{{\"payloads\":{playloads}," +
+        $"\"role\":{{\"uid\":{uid}}}," +
+        $"\"state\":{{\"duration\":{stateDuration},\"score\":{stateScore},\"percent\":{statePercent},\"progress\":{stateProgress}}}," +
+        $"\"currentQuestion\":{{\"correct\":{correct},\"duration\":{currentQADuration},\"qid\":\"{currentqid}\",\"answer\":{answerId},\"answerText\":\"{answerText}\",\"correctAnswerText\":\"{correctAnswerText}\",\"score\":{currentQAscore},\"percent\":{currentQAPercent}}}}}]";
+
+        string submitAPI = $"{hostName}/RainbowOne/index.php/PHPGateway/proxy/2.8/?api=ROGame.submit_answer&json={jsonPayload}&jwt=" + _jwt;
+        return submitAPI;
+    }
+
+    public static string EndGameAPI(LoaderConfig loader)
+    {
+        string endAPI = $"{loader.CurrentHostName}/RainbowOne/index.php/PHPGateway/proxy/2.8/?api=ROGame.quit_game";
+        return endAPI;
     }
 }
 
@@ -374,5 +427,5 @@ public class Settings
     public string previewGameImageUrl;
     public string backgroundImageUrl;
     public string instructionContent = string.Empty;
-    public float gameTime = 0f;
+    public int gameTime = 0;
 }
