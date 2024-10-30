@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.Impl;
 
 [Serializable]
 public class QuestionDataWrapper
@@ -26,12 +27,36 @@ public class QuestionList
     public string[] answers;
     public string correctAnswer;
     public int star;
-    public int score;
+    public score score;
     public int correctAnswerIndex;
-    public string[] Media;
+    public int maxScore;
+    public learningObjective learningObjective;
+    //public media[] media; 
+    public string[] media;
     public Texture texture;
     public AudioClip audioClip;
 }
+
+[Serializable]
+public class media
+{
+    public string url;
+    public string name;
+}
+
+[Serializable]
+public class score
+{
+    public int full;
+    public int n;
+    public int unit;
+}
+
+[Serializable]
+public class learningObjective
+{
+}
+
 
 public enum QuestionType
 {
@@ -67,17 +92,20 @@ public class CurrentQuestion
         }
     }
 
-    public void updateProgressiveBar(int totalQuestion, bool status, Action onQuestionCompleted = null)
+    public bool updateProgressiveBar(int totalQuestion, Action onQuestionCompleted = null)
     {
+        bool updating = true;
         float progress = 0f;
         if (this.answeredQuestion < totalQuestion)
         {
             progress = (float)this.answeredQuestion / totalQuestion;
             this.answeredQuestion += 1;
+            updating = true;
         }
         else
         {
             progress = 1f;
+            updating = false;
         }
 
         progress = Mathf.Clamp(progress, 0f, 1f);
@@ -91,11 +119,21 @@ public class CurrentQuestion
             int percentage = (int)(progress * 100);
             this.progressiveBar.GetComponentInChildren<NumberCounter>().Value = percentage;
         }
+        return updating;
     }
 
     public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0, bool isLogined = false, Action onQuestionCompleted = null)
     {
         this.setProgressiveBar(isLogined);
+
+        if (isLogined)
+        {
+            bool updating = this.updateProgressiveBar(totalQuestion, onQuestionCompleted);
+            if (!updating)
+            {
+                return;
+            }
+        }
 
         if (qa == null) return;
         this.qa = qa;
@@ -182,8 +220,6 @@ public class CurrentQuestion
             this.numberQuestion += 1;
         else
             this.numberQuestion = 0;
-
-        this.updateProgressiveBar(totalQuestion, isLogined, onQuestionCompleted);
     }
 
     public void playAudio()

@@ -75,16 +75,17 @@ public class PlayerController : UserData
 
     public void checkAnswer(int currentTime)
     {
-        if(!this.IsCheckedAnswer) {
+        if (!this.IsCheckedAnswer) {
             var loader = LoaderConfig.Instance;
             var currentQuestion = QuestionController.Instance?.currentQuestion;
-            int eachQAScore = currentQuestion.qa.score == 0 ? 10 : currentQuestion.qa.score;
+            int eachQAScore = currentQuestion.qa.score.full == 0 ? 10 : currentQuestion.qa.score.full;
             int currentScore = this.Score;
             this.answer = this.answerBox.text.ToLower();
             var lowerQIDAns = currentQuestion.correctAnswer.ToLower();
             int resultScore = this.scoring.score(this.answer, currentScore, lowerQIDAns, eachQAScore);
             this.Score = resultScore;
             this.IsCheckedAnswer = true;
+
             StartCoroutine(this.showAnswerResult(this.scoring.correct));
 
             if (this.UserId == 0 && loader != null && loader.apiManager.IsLogined) // For first player
@@ -167,7 +168,7 @@ public class PlayerController : UserData
         //Check Answer
         if(this.answerBox != null)
         {
-            if (!string.IsNullOrEmpty(this.answerBox.text) && currentTime > 0)
+            if (!string.IsNullOrEmpty(this.answerBox.text))
             {
                 this.checkAnswer(currentTime);
             }

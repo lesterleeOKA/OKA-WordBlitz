@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using System.Text.RegularExpressions;
 
 [Serializable]
-public class LoadImage: Downloader
+public class LoadImage : Downloader
 {
     [SerializeField] public LoadImageMethod loadImageMethod = LoadImageMethod.StreamingAssets;
     [SerializeField] private ImageType imageType = ImageType.jpg;
@@ -30,17 +30,22 @@ public class LoadImage: Downloader
 
     public IEnumerator Load(string folderName = "", string fileName = "", Action<Texture> callback = null)
     {
+        if (LoaderConfig.Instance.apiManager.IsLogined)
+        {
+            this.loadImageMethod = LoadImageMethod.Url;
+        }
+
         switch (this.loadImageMethod)
         {
-            case LoadImageMethod.StreamingAssets: 
+            case LoadImageMethod.StreamingAssets:
                 yield return this.LoadImageFromStreamingAssets(folderName, fileName, callback); break;
-            case LoadImageMethod.Resources: 
-                yield return this.LoadImageFromResources(folderName, fileName, callback);break;
-            case LoadImageMethod.AssetsBundle: 
+            case LoadImageMethod.Resources:
+                yield return this.LoadImageFromResources(folderName, fileName, callback); break;
+            case LoadImageMethod.AssetsBundle:
                 yield return this.LoadImageFromAssetsBundle(fileName, callback); break;
-            case LoadImageMethod.Url: 
-                yield return this.LoadImageFromURL(fileName, callback);break;
-            default: 
+            case LoadImageMethod.Url:
+                yield return this.LoadImageFromURL(fileName, callback); break;
+            default:
                 yield return this.LoadImageFromStreamingAssets(folderName, fileName, callback); break;
 
         }
@@ -103,7 +108,7 @@ public class LoadImage: Downloader
                 }
                 break;
         }
-        
+
 
     }
 
@@ -205,6 +210,7 @@ public class LoadImage: Downloader
             {
                 // Get the texture and apply it to the target renderer
                 Texture2D texture = DownloadHandlerTexture.GetContent(www);
+                Debug.Log("loaded api qa texture: " + texture.texelSize);
                 if (texture != null)
                 {
                     texture.filterMode = FilterMode.Bilinear;
