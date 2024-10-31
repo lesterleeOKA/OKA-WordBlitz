@@ -34,6 +34,7 @@ public class GameController : GameBaseController
                     {
                         var _playerName = LoaderConfig.Instance?.apiManager.loginName;
                         var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
+                        this.playerControllers[i].UserName = _playerName;
                         this.playerControllers[i].updatePlayerIcon(true, _playerName, icon);
                     }
                     else

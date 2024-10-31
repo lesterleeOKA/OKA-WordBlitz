@@ -108,7 +108,7 @@ public class LoaderConfig : GameSetting
 
     public void SubmitAnswer(int duration, int playerScore, float statePercent, int stateProgress,
                              int correctId, float currentQADuration, string qid, int answerId, string answerText,
-                             string correctAnswerText, float currentQAscore, float currentQAPercent)
+                             string correctAnswerText, float currentQAscore, float currentQAPercent, Action onCompleted = null)
     {
         /*        string jsonPayload = $"[{{\"payloads\":{playloads}," +
         $"\"role\":{{\"uid\":{uid}}}," +
@@ -131,7 +131,7 @@ public class LoaderConfig : GameSetting
         answer.currentQA.percent = currentQAPercent;
 
 
-        StartCoroutine(this.apiManager.SubmitAnswer());
+        StartCoroutine(this.apiManager.SubmitAnswer(onCompleted));
     }
 
     public void closeLoginErrorBox()

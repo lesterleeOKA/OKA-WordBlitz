@@ -3,38 +3,20 @@
     {
       "qid": "p1u1-a1",
       "questionType": "text",
-      "question": "What is the color of apple?",
-      "answers": [
-        "red",
-        "blue",
-        "purple",
-        "black"
-      ],
-      "correctAnswer": "red"
+      "question": "Classmate",
+      "correctAnswer": "Classmate"
     },
     {
       "qid": "p1u1-a2",
       "questionType": "text",
-      "question": "What is the color of banana?",
-      "answers": [
-        "red",
-        "yellow",
-        "purple",
-        "black"
-      ],
-      "correctAnswer": "yellow"
+      "question": "Goodbye",
+      "correctAnswer": "Goodbye"
     },
     {
       "qid": "p1u1-a3",
       "questionType": "text",
-      "question": "What is the color of orange?",
-      "answers": [
-        "red",
-        "yellow",
-        "purple",
-        "orange"
-      ],
-      "correctAnswer": "orange"
+      "question": "Greet",
+      "correctAnswer": "Greet"
     },
     {
       "qid": "p1u1-a4",
@@ -467,6 +449,126 @@
       "question": "John likes to make _______.",
       "correctAnswer": "crafts",
       "media": "p3u1-d20.mp3"
+    },
+    {
+      "qid": "p5u3-d1",
+      "questionType": "text",
+      "question": "Skinny sticks used for eating in some Asian cuisines.",
+      "correctAnswer": "chopsticks"
+    },
+    {
+      "qid": "p5u3-d2",
+      "questionType": "text",
+      "question": "To keep or make oneself fresh, neat and clean.",
+      "correctAnswer": "groom"
+    },
+    {
+      "qid": "p5u3-d3",
+      "questionType": "text",
+      "question": "To fasten the small flat metal or plastic object, usually round on a shirt, jacket, or other clothing.",
+      "correctAnswer": "button"
+    },
+    {
+      "qid": "p5u3-d4",
+      "questionType": "text",
+      "question": "The hard coverings on the tips of the fingers.",
+      "correctAnswer": "fingernails"
+    },
+    {
+      "qid": "p5u3-d5",
+      "questionType": "text",
+      "question": "Tasks or duties that need to be done regularly at home.",
+      "correctAnswer": "chores"
+    },
+    {
+      "qid": "p5u3-d6",
+      "questionType": "text",
+      "question": "The first meal of the day, eaten in the morning.",
+      "correctAnswer": "breakfast"
+    },
+    {
+      "qid": "p5u3-d7",
+      "questionType": "text",
+      "question": "Matching clothes worn by members of a group, e.g. the students at the same school.",
+      "correctAnswer": "uniform"
+    },
+    {
+      "qid": "p5u3-d8",
+      "questionType": "text",
+      "question": "Clothes or linens that need to be washed.",
+      "correctAnswer": "laundry"
+    },
+    {
+      "qid": "p5u3-d9",
+      "questionType": "text",
+      "question": "To clean something using a brush.",
+      "correctAnswer": "brush"
+    },
+    {
+      "qid": "p5u3-d10",
+      "questionType": "text",
+      "question": "A doctor who takes care of people's teeth.",
+      "correctAnswer": "dentist"
+    },
+    {
+      "qid": "p5u3-d11",
+      "questionType": "text",
+      "question": "To fasten or secure something with a string, rope, or similar material.",
+      "correctAnswer": "tie"
+    },
+    {
+      "qid": "p5u3-d12",
+      "questionType": "text",
+      "question": "To put on your clothes.",
+      "correctAnswer": "get dressed"
+    },
+    {
+      "qid": "p5u3-d13",
+      "questionType": "text",
+      "question": "A bag carried on the back with shoulder straps.",
+      "correctAnswer": "backpack"
+    },
+    {
+      "qid": "p5u3-d14",
+      "questionType": "text",
+      "question": "A tool for arranging or cleaning hair.",
+      "correctAnswer": "comb"
+    },
+    {
+      "qid": "p5u3-d15",
+      "questionType": "text",
+      "question": "A small cloth for wiping hands after washing.",
+      "correctAnswer": "handkerchief"
+    },
+    {
+      "qid": "p5u3-d16",
+      "questionType": "text",
+      "question": "To attach something to a higher place or surface.",
+      "correctAnswer": "hang"
+    },
+    {
+      "qid": "p5u3-d17",
+      "questionType": "text",
+      "question": "Something that used to close or open an opening, such as on a jacket, bag, or pair of pants.",
+      "correctAnswer": "zip"
+    },
+    {
+      "qid": "p5u3-d18",
+      "questionType": "text",
+      "question": "To put items into a bag or container, often for travel.",
+      "correctAnswer": "pack"
+    },
+    {
+      "qid": "p5u3-d19",
+      "questionType": "text",
+      "question": "To get ready for something.",
+      "correctAnswer": "prepare"
+    },
+    {
+      "qid": "p5u3-d20",
+      "questionType": "text",
+      "question": "Strings used to secure shoes to the feet.",
+      "correctAnswer": "shoelaces"
     }
   ]
 

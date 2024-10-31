@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -73,7 +74,13 @@ public class PlayerController : UserData
         this.lineDrawer?.StartDrawing();
     }
 
-    public void checkAnswer(int currentTime)
+    string CapitalizeFirstLetter(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return str; // Return if the string is empty or null
+        return char.ToUpper(str[0]) + str.Substring(1).ToLower();
+    }
+
+    public void checkAnswer(int currentTime, Action onCompleted = null)
     {
         if (!this.IsCheckedAnswer) {
             var loader = LoaderConfig.Instance;
@@ -96,13 +103,15 @@ public class PlayerController : UserData
                 float answeredPercentage;
                 int progress = (int)((float)currentQuestion.answeredQuestion / QuestionManager.Instance.totalItems * 100);
 
-                if (this.answer == currentQuestion.correctAnswer)
+                if (this.answer == lowerQIDAns)
                 {
                     if (this.CorrectedAnswerNumber < QuestionManager.Instance.totalItems)
                         this.CorrectedAnswerNumber += 1;
 
                     correctId = 2;
                     score = eachQAScore; // load from question settings score of each question
+
+                    Debug.Log("Each QA Score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + eachQAScore + "______answer" + this.answer);
                     currentQAPercent = 100f;
                 }
                 else
@@ -131,11 +140,16 @@ public class PlayerController : UserData
                            currentTime,
                            currentQuestion.qa.qid,
                            currentQuestion.correctAnswerId,
-                           this.answer,
+                           this.CapitalizeFirstLetter(this.answer),
                            currentQuestion.correctAnswer,
                            score,
-                           currentQAPercent
+                           currentQAPercent,
+                           onCompleted
                            );
+            }
+            else
+            {
+                onCompleted?.Invoke();
             }
         }
     }
@@ -170,10 +184,13 @@ public class PlayerController : UserData
         {
             if (!string.IsNullOrEmpty(this.answerBox.text))
             {
-                this.checkAnswer(currentTime);
+                this.checkAnswer(currentTime, ()=> resetConnection());
             }
         }
+    }
 
+    private void resetConnection()
+    {
         this.IsConnectWord = false;  // Stop drawing
         this.lineDrawer?.FinishDrawing();
 
