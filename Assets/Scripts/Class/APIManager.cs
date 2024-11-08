@@ -183,8 +183,8 @@ public class APIManager
                             string grid_image = jsonNode["setting"]["grid_image"] != null ?
                                 jsonNode["setting"]["grid_image"].ToString().Replace("\"", "") : null;
 
-                            this.settings.instructionContent = jsonNode["setting"]["description"] != null ?
-                                jsonNode["setting"]["description"].ToString().Replace("\"", "") : null;
+                            this.settings.instructionContent = jsonNode["setting"]["hint"] != null ?
+                                jsonNode["setting"]["hint"].ToString().Replace("\"", "") : null;
 
                             LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
                             LoaderConfig.Instance.gameSetup.playerNumber = this.settings.playerNumber;
