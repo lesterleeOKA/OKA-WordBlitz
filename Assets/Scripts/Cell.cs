@@ -15,8 +15,9 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public int col;
     public bool isSelected = false;
 
-    public void SetTextContent(int _playerId=0, string letter="", Color _color = default)
+    public void SetTextContent(int _playerId=0, string letter="", Color _color = default, Sprite gridSprite = null)
     {
+        if(gridSprite != null) this.cellSprites[0] = gridSprite;
         this.playerId = _playerId;
         if (this.cellImage == null) 
             this.cellImage = this.GetComponent<Image>();
@@ -45,7 +46,8 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         {
             this.content.color = this.selectedColor;
         }
-        this.cellImage.sprite = this.cellSprites[1];
+        this.cellImage.color = this.defaultColor;
+        //this.cellImage.sprite = this.cellSprites[1];
     }
 
     public void DisSelected()
@@ -55,7 +57,8 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         {
             this.content.color = this.defaultColor;
         }
-        this.cellImage.sprite = this.cellSprites[0];
+        this.cellImage.color = this.selectedColor;
+        //this.cellImage.sprite = this.cellSprites[0];
     }
 
     public void OnPointerDown(PointerEventData eventData)

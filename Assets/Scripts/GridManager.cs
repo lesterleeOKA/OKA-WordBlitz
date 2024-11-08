@@ -18,7 +18,7 @@ public class GridManager
     HashSet<char> usedLetters = null;
     public bool showQuestionWordPosition = false;
 
-    public Cell[,] CreateGrid(int playerId, string initialWord, float frame_width)
+    public Cell[,] CreateGrid(int playerId, string initialWord, float frame_width, Sprite cellSprite = null)
     {
         this.usedPositions = new HashSet<Vector2Int>();
         this.availablePositions = new List<Vector2Int>();
@@ -36,7 +36,7 @@ public class GridManager
                 GameObject cellObject = GameObject.Instantiate(cellPrefab, this.playerPanel != null ? this.playerPanel : null);
                 cellObject.name = "Cell_" + i + "_" +j;
                 Cell cell = cellObject.GetComponent<Cell>();
-                cell.SetTextContent(playerId, "");
+                cell.SetTextContent(playerId, "", default, cellSprite);
                 cell.row = i;
                 cell.col = j;
                 cells[i, j] = cell;

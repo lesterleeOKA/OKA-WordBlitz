@@ -407,13 +407,22 @@ MonoBehaviour:
     imageType: 2
     allTextures: []
     bgTexture: {fileID: 2800000, guid: 3cc7789d54dcd82419947d0d21e928c2, type: 3}
-    previewTexture: {fileID: 2800000, guid: 86f53beb6c38b3b4f9f81a9ebd4eeb01, type: 3}
+    previewTexture: {fileID: 2800000, guid: a2a6dcd861f69074fb49045958b02c0a, type: 3}
+    frameTexture_p1: {fileID: 0}
+    frameTexture_p2: {fileID: 0}
+    gridTexture: {fileID: 0}
     gameBackground: {fileID: 0}
     gamePreview: {fileID: 0}
     instructions: {fileID: 0}
     gameTime: 0
     showFPS: 0
     playerNumber: 2
+    gridNormalColor:
+      serializedVersion: 2
+      rgba: 0
+    gridPressedColor:
+      serializedVersion: 2
+      rgba: 0
   apiManager:
     jwt: 
     appId: 
@@ -439,6 +448,11 @@ MonoBehaviour:
       backgroundImageUrl: 
       instructionContent: 
       gameTime: 0
+      frameImageUrl_P1: 
+      frameImageUrl_P2: 
+      grid_image: 
+      normal_color: 
+      pressed_color: 
     maxRetries: 10
     debugLayer: {fileID: 1630735626}
     loginErrorBox: {fileID: 645755778}

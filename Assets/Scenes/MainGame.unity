@@ -1332,9 +1332,13 @@ MonoBehaviour:
       answers: []
       correctAnswer: 
       star: 0
-      score: 0
+      score:
+        full: 0
+        n: 0
+        unit: 0
       correctAnswerIndex: 0
-      Media: []
+      maxScore: 0
+      media: []
       texture: {fileID: 0}
       audioClip: {fileID: 0}
     correctAnswerId: 0
@@ -2361,6 +2365,7 @@ MonoBehaviour:
   IsCheckedAnswer: 0
   IsConnectWord: 0
   answerBox: {fileID: 465243503}
+  frame: {fileID: 415474735}
 --- !u!114 &661857448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4387,6 +4392,7 @@ MonoBehaviour:
   IsCheckedAnswer: 0
   IsConnectWord: 0
   answerBox: {fileID: 438958169}
+  frame: {fileID: 187877588}
 --- !u!114 &1288097028
 MonoBehaviour:
   m_ObjectHideFlags: 0

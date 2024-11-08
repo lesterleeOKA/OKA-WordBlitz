@@ -153,34 +153,76 @@ public class APIManager
 
                         this.questionJson = jsonNode[APIConstant.QuestionDataHeaderName].ToString(); // Question json data;
                         this.accountJson = jsonNode["account"].ToString(); // Account json data;
-
+                        LogController.Instance?.debug("accountJson: " + this.accountJson);
                         string accountUidString = jsonNode["account"]["uid"];
                         int accountUid = int.Parse(accountUidString);
                         this.accountUid = accountUid;
 
                         this.photoDataUrl = jsonNode["photo"].ToString(); // Account json data;
                         this.gameSettingJson = jsonNode["setting"].ToString();
+                        LogController.Instance?.debug("gameSettingJson: " + this.gameSettingJson);
                         this.payloads = jsonNode["payloads"].ToString();
+                        LogController.Instance?.debug("payloads: " + this.payloads);
 
                         if (!string.IsNullOrEmpty(this.gameSettingJson) && this.gameSettingJson != "{}")
                         {
-                            this.settings.gameTime = jsonNode["setting"]["game_time"];
-                            string bgImagUrl = jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "");
-                            string gamePreviewUrl = jsonNode["setting"]["game_preview_image"].ToString().Replace("\"", "");
-                            this.settings.instructionContent = jsonNode["setting"]["description"].ToString().Replace("\"", "");
+                            this.settings.gameTime = jsonNode["setting"]["game_time"] != null ? jsonNode["setting"]["game_time"] : null;
+                            string bgImagUrl = jsonNode["setting"]["background_image_url"] != null ?
+                                jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "") : null;
+                            string gamePreviewUrl = jsonNode["setting"]["game_preview_image"] != null ?
+                                jsonNode["setting"]["game_preview_image"].ToString().Replace("\"", "") : null;
+
+                            string frameImageUrl_P1 = jsonNode["setting"]["frame_p1"] != null ?
+                                jsonNode["setting"]["frame_p1"].ToString().Replace("\"", "") : null;
+
+                            string frameImageUrl_P2 = jsonNode["setting"]["frame_p2"] != null ?
+                                jsonNode["setting"]["frame_p2"].ToString().Replace("\"", "") : null;
+
+                            string grid_image = jsonNode["setting"]["grid_image"] != null ?
+                                jsonNode["setting"]["grid_image"].ToString().Replace("\"", "") : null;
+
+                            this.settings.instructionContent = jsonNode["setting"]["description"] != null ?
+                                jsonNode["setting"]["description"].ToString().Replace("\"", "") : null;
+
                             LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
 
-                            if (!bgImagUrl.StartsWith("https://"))
+                            /*this.settings.normal_color = jsonNode["setting"]["normal_color"] != null ?
+                                jsonNode["setting"]["normal_color"].ToString().Replace("\"", "") : null;
+
+                            this.settings.pressed_color = jsonNode["setting"]["pressed_color"] != null ? 
+                                jsonNode["setting"]["pressed_color"].ToString().Replace("\"", "") : null;*/
+
+                            /*LoaderConfig.Instance.gameSetup.gridNormalColor = ColorUtility.TryParseHtmlString(this.settings.normal_color, out Color normalColor) ? normalColor : Color.clear;
+
+                            LoaderConfig.Instance.gameSetup.gridPressedColor = ColorUtility.TryParseHtmlString(this.settings.pressed_color, out Color pressedColor) ? pressedColor : Color.clear;*/
+
+                            if (bgImagUrl != null)
                             {
-                                this.settings.backgroundImageUrl = APIConstant.blobServerRelativePath + bgImagUrl;
-                                this.settings.previewGameImageUrl = APIConstant.blobServerRelativePath + gamePreviewUrl;
+                                if (!bgImagUrl.StartsWith("https://") || !bgImagUrl.StartsWith(APIConstant.blobServerRelativePath))
+                                    this.settings.backgroundImageUrl = APIConstant.blobServerRelativePath + bgImagUrl;
+                            }
+                            if (gamePreviewUrl != null)
+                            {
+                                if (!gamePreviewUrl.StartsWith("https://") || !gamePreviewUrl.StartsWith(APIConstant.blobServerRelativePath))
+                                    this.settings.previewGameImageUrl = APIConstant.blobServerRelativePath + gamePreviewUrl;
+                            }
+                            if (frameImageUrl_P1 != null)
+                            {
+                                if (!frameImageUrl_P1.StartsWith("https://") || !frameImageUrl_P1.StartsWith(APIConstant.blobServerRelativePath))
+                                    this.settings.frameImageUrl_P1 = APIConstant.blobServerRelativePath + frameImageUrl_P1;
                             }
 
-                            yield return this.loadImage.Load("", this.settings.backgroundImageUrl, _backgroundImage =>
+                            if (frameImageUrl_P2 != null)
                             {
-                                LogController.Instance?.debug($"Downloaded Background Image from api!!");
-                                LoaderConfig.Instance.gameSetup.bgTexture = _backgroundImage;
-                            });
+                                if (!frameImageUrl_P2.StartsWith("https://") || !frameImageUrl_P2.StartsWith(APIConstant.blobServerRelativePath))
+                                    this.settings.frameImageUrl_P2 = APIConstant.blobServerRelativePath + frameImageUrl_P2;
+                            }
+
+                            if (grid_image != null)
+                            {
+                                if (!grid_image.StartsWith("https://") || !grid_image.StartsWith(APIConstant.blobServerRelativePath))
+                                    this.settings.grid_image = APIConstant.blobServerRelativePath + grid_image;
+                            }
 
                             //remain settings
                             //...
@@ -429,4 +471,9 @@ public class Settings
     public string backgroundImageUrl;
     public string instructionContent = string.Empty;
     public int gameTime = 0;
+    public string frameImageUrl_P1;
+    public string frameImageUrl_P2;
+    public string grid_image;
+    public string normal_color;
+    public string pressed_color;
 }

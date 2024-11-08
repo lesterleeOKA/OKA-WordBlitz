@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : UserData
 {
@@ -15,13 +16,39 @@ public class PlayerController : UserData
     public bool IsCheckedAnswer = false;
     public bool IsConnectWord = false;
     public TextMeshProUGUI answerBox;
+    public Image frame;
     // Start is called before the first frame update
 
     public void Init(string _word)
     {
         this.scoring.init();
         float frame_width = this.GetComponent<RectTransform>().sizeDelta.x;
-        this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width);
+
+        Sprite gridTexture = LoaderConfig.Instance.gameSetup.gridTexture != null ? 
+            SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.gridTexture as Texture2D) : null;
+        this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width, gridTexture);
+
+
+        if(this.frame != null)
+        {
+            switch (this.UserId)
+            {
+                case 0:
+                    if(LoaderConfig.Instance.gameSetup.frameTexture_p1 != null)
+                    {
+                        Sprite frameTexture_p1 = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.frameTexture_p1 as Texture2D);
+                        this.frame.sprite = frameTexture_p1;
+                    }
+                    break;
+                case 1:
+                    if (LoaderConfig.Instance.gameSetup.frameTexture_p2 != null)
+                    {
+                        Sprite frameTexture_p2 = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.frameTexture_p2 as Texture2D);
+                        this.frame.sprite = frameTexture_p2;
+                    }
+                    break;
+            }
+        }
     }
 
     public void NewQuestionWord(string _word)
