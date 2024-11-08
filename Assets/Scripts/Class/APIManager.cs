@@ -167,6 +167,8 @@ public class APIManager
                         if (!string.IsNullOrEmpty(this.gameSettingJson) && this.gameSettingJson != "{}")
                         {
                             this.settings.gameTime = jsonNode["setting"]["game_time"] != null ? jsonNode["setting"]["game_time"] : null;
+                            this.settings.playerNumber = jsonNode["setting"]["player_number"] != null ? jsonNode["setting"]["player_number"] : null;
+
                             string bgImagUrl = jsonNode["setting"]["background_image_url"] != null ?
                                 jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "") : null;
                             string gamePreviewUrl = jsonNode["setting"]["game_preview_image"] != null ?
@@ -185,6 +187,7 @@ public class APIManager
                                 jsonNode["setting"]["description"].ToString().Replace("\"", "") : null;
 
                             LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
+                            LoaderConfig.Instance.gameSetup.playerNumber = this.settings.playerNumber;
 
                             /*this.settings.normal_color = jsonNode["setting"]["normal_color"] != null ?
                                 jsonNode["setting"]["normal_color"].ToString().Replace("\"", "") : null;
@@ -471,6 +474,7 @@ public class Settings
     public string backgroundImageUrl;
     public string instructionContent = string.Empty;
     public int gameTime = 0;
+    public int playerNumber = 0;
     public string frameImageUrl_P1;
     public string frameImageUrl_P2;
     public string grid_image;
