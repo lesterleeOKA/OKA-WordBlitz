@@ -167,12 +167,13 @@ public class APIManager
                         if (!string.IsNullOrEmpty(this.gameSettingJson) && this.gameSettingJson != "{}")
                         {
                             this.settings.gameTime = jsonNode["setting"]["game_time"] != null ? jsonNode["setting"]["game_time"] : null;
-                            LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
-
                             string bgImagUrl = jsonNode["setting"]["background_image_url"] != null ?
                                 jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "") : null;
                             string gamePreviewUrl = jsonNode["setting"]["game_preview_image"] != null ?
                                 jsonNode["setting"]["game_preview_image"].ToString().Replace("\"", "") : null;
+                            this.settings.instructionContent = jsonNode["setting"]["hint"] != null ?
+                                jsonNode["setting"]["hint"].ToString().Replace("\"", "") : null;
+                            LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
 
                             if (bgImagUrl != null)
                             {
@@ -184,9 +185,6 @@ public class APIManager
                                 if (!gamePreviewUrl.StartsWith("https://") || !gamePreviewUrl.StartsWith(APIConstant.blobServerRelativePath))
                                     this.settings.previewGameImageUrl = APIConstant.blobServerRelativePath + gamePreviewUrl;
                             }
-                            this.settings.instructionContent = jsonNode["setting"]["hint"] != null ?
-                                jsonNode["setting"]["hint"].ToString().Replace("\"", "") : null;
-
                             ////////Game Customization params/////////
                             SetParams.setCustomParameters(this.settings, jsonNode);
                         }
