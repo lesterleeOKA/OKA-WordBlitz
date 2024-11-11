@@ -34,7 +34,7 @@ public class APIManager
     public LoadImage loadImage;
     public Texture peopleIcon;
     public string loginName = string.Empty;
-    public Settings settings;
+    public GameSettings settings;
     public int maxRetries = 10;
     public CanvasGroup debugLayer;
     public CanvasGroup loginErrorBox;
@@ -167,37 +167,12 @@ public class APIManager
                         if (!string.IsNullOrEmpty(this.gameSettingJson) && this.gameSettingJson != "{}")
                         {
                             this.settings.gameTime = jsonNode["setting"]["game_time"] != null ? jsonNode["setting"]["game_time"] : null;
-                            this.settings.playerNumber = jsonNode["setting"]["player_number"] != null ? jsonNode["setting"]["player_number"] : null;
+                            LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
 
                             string bgImagUrl = jsonNode["setting"]["background_image_url"] != null ?
                                 jsonNode["setting"]["background_image_url"].ToString().Replace("\"", "") : null;
                             string gamePreviewUrl = jsonNode["setting"]["game_preview_image"] != null ?
                                 jsonNode["setting"]["game_preview_image"].ToString().Replace("\"", "") : null;
-
-                            string frameImageUrl_P1 = jsonNode["setting"]["frame_p1"] != null ?
-                                jsonNode["setting"]["frame_p1"].ToString().Replace("\"", "") : null;
-
-                            string frameImageUrl_P2 = jsonNode["setting"]["frame_p2"] != null ?
-                                jsonNode["setting"]["frame_p2"].ToString().Replace("\"", "") : null;
-
-                            string grid_image = jsonNode["setting"]["grid_image"] != null ?
-                                jsonNode["setting"]["grid_image"].ToString().Replace("\"", "") : null;
-
-                            this.settings.instructionContent = jsonNode["setting"]["hint"] != null ?
-                                jsonNode["setting"]["hint"].ToString().Replace("\"", "") : null;
-
-                            LoaderConfig.Instance.gameSetup.gameTime = this.settings.gameTime;
-                            LoaderConfig.Instance.gameSetup.playerNumber = this.settings.playerNumber;
-
-                            /*this.settings.normal_color = jsonNode["setting"]["normal_color"] != null ?
-                                jsonNode["setting"]["normal_color"].ToString().Replace("\"", "") : null;
-
-                            this.settings.pressed_color = jsonNode["setting"]["pressed_color"] != null ? 
-                                jsonNode["setting"]["pressed_color"].ToString().Replace("\"", "") : null;*/
-
-                            /*LoaderConfig.Instance.gameSetup.gridNormalColor = ColorUtility.TryParseHtmlString(this.settings.normal_color, out Color normalColor) ? normalColor : Color.clear;
-
-                            LoaderConfig.Instance.gameSetup.gridPressedColor = ColorUtility.TryParseHtmlString(this.settings.pressed_color, out Color pressedColor) ? pressedColor : Color.clear;*/
 
                             if (bgImagUrl != null)
                             {
@@ -209,26 +184,11 @@ public class APIManager
                                 if (!gamePreviewUrl.StartsWith("https://") || !gamePreviewUrl.StartsWith(APIConstant.blobServerRelativePath))
                                     this.settings.previewGameImageUrl = APIConstant.blobServerRelativePath + gamePreviewUrl;
                             }
-                            if (frameImageUrl_P1 != null)
-                            {
-                                if (!frameImageUrl_P1.StartsWith("https://") || !frameImageUrl_P1.StartsWith(APIConstant.blobServerRelativePath))
-                                    this.settings.frameImageUrl_P1 = APIConstant.blobServerRelativePath + frameImageUrl_P1;
-                            }
+                            this.settings.instructionContent = jsonNode["setting"]["hint"] != null ?
+                                jsonNode["setting"]["hint"].ToString().Replace("\"", "") : null;
 
-                            if (frameImageUrl_P2 != null)
-                            {
-                                if (!frameImageUrl_P2.StartsWith("https://") || !frameImageUrl_P2.StartsWith(APIConstant.blobServerRelativePath))
-                                    this.settings.frameImageUrl_P2 = APIConstant.blobServerRelativePath + frameImageUrl_P2;
-                            }
-
-                            if (grid_image != null)
-                            {
-                                if (!grid_image.StartsWith("https://") || !grid_image.StartsWith(APIConstant.blobServerRelativePath))
-                                    this.settings.grid_image = APIConstant.blobServerRelativePath + grid_image;
-                            }
-
-                            //remain settings
-                            //...
+                            ////////Game Customization params/////////
+                            SetParams.setCustomParameters(this.settings, jsonNode);
                         }
 
                         if (this.debugText != null)
@@ -474,10 +434,4 @@ public class Settings
     public string backgroundImageUrl;
     public string instructionContent = string.Empty;
     public int gameTime = 0;
-    public int playerNumber = 0;
-    public string frameImageUrl_P1;
-    public string frameImageUrl_P2;
-    public string grid_image;
-    public string normal_color;
-    public string pressed_color;
 }
