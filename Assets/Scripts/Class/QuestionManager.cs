@@ -215,4 +215,10 @@ public class QuestionManager : MonoBehaviour
             this.ShuffleQuestions(false, onCompleted);
         }
     }
+
+    public void ReorderTheQuestionList()
+    {
+        LogController.Instance?.debug("Re order the questions list!");
+        this.questionData.questions = this.questionData.questions.OrderBy(q => UnityEngine.Random.Range(0f, 1f)).ToList();
+    }
 }
