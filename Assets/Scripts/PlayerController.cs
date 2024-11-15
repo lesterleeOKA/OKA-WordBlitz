@@ -231,4 +231,14 @@ public class PlayerController : UserData
         this.selectedCells.Clear();
         if (this.answerBox != null) this.answerBox.text = "";
     }
+
+    public void showHintOfFirstLetter()
+    {
+        this.gridManager.setFirstLetterHint(true);
+    }
+
+    public void hiddenHintOfFirstLetter()
+    {
+        this.gridManager.setFirstLetterHint(false);
+    }
 }

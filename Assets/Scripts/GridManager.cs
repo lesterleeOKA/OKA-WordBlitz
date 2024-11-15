@@ -61,7 +61,18 @@ public class GridManager
     {
         foreach (var wordCellPos in this.questionCells)
         {
-            cells[wordCellPos.x, wordCellPos.y].SetButtonColor(status? Color.yellow : Color.white);
+            this.cells[wordCellPos.x, wordCellPos.y].SetButtonColor(status? Color.yellow : Color.white);
+        }
+    }
+
+    public void setFirstLetterHint(bool status)
+    {
+        for(int i=0; i< this.questionCells.Count; i++)
+        {
+            if (i == 0)
+            {
+                this.cells[this.questionCells[i].x, this.questionCells[i].y].SetButtonColor(status ? Color.yellow : Color.white);
+            }
         }
     }
 
@@ -75,8 +86,8 @@ public class GridManager
         {
             for (int y = 0; y < gridColumn; y++)
             {
-                availablePositions.Add(new Vector2Int(x, y));
-                cells[x, y].SetTextContent(playerId, "");
+                this.availablePositions.Add(new Vector2Int(x, y));
+                this.cells[x, y].SetTextContent(playerId, "");
             }
         }
 
@@ -85,11 +96,11 @@ public class GridManager
         {
             // Randomly select the starting position for the first letter
             Vector2Int startPos = availablePositions[Random.Range(0, availablePositions.Count)];
-            availablePositions.Remove(startPos);
+            this.availablePositions.Remove(startPos);
 
             // Place the first letter
-            usedPositions.Add(startPos);
-            cells[startPos.x, startPos.y].SetTextContent(playerId, word[0].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
+            this.usedPositions.Add(startPos);
+            this.cells[startPos.x, startPos.y].SetTextContent(playerId, word[0].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
             this.questionCells.Add(startPos);
 
             // Attempt to place the remaining letters
@@ -101,7 +112,7 @@ public class GridManager
             else
             {
                 // Backtrack: Clean up if placement failed
-                usedPositions.Remove(startPos);
+                this.usedPositions.Remove(startPos);
                 cells[startPos.x, startPos.y].SetTextContent(playerId, ""); // Clear the cell
             }
         }
@@ -134,19 +145,19 @@ public class GridManager
 
             // Check if the new position is within bounds and not already used
             if (newPos.x >= 0 && newPos.x < gridRow && newPos.y >= 0 && newPos.y < gridColumn &&
-                !usedPositions.Contains(newPos))
+                !this.usedPositions.Contains(newPos))
             {
                 // Place the letter
-                usedPositions.Add(newPos);
-                cells[newPos.x, newPos.y].SetTextContent(playerId, word[index].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
+                this.usedPositions.Add(newPos);
+                this.cells[newPos.x, newPos.y].SetTextContent(playerId, word[index].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
                 this.questionCells.Add(newPos);
                 // Recursively attempt to place the next letter
                 if (PlaceLetters(playerId, word, newPos, index + 1))
                     return true;
 
                 // Backtrack
-                usedPositions.Remove(newPos);
-                cells[newPos.x, newPos.y].SetTextContent(playerId, ""); // Clear the cell
+                this.usedPositions.Remove(newPos);
+                this.cells[newPos.x, newPos.y].SetTextContent(playerId, ""); // Clear the cell
             }
         }
 
