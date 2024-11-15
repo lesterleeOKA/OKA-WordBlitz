@@ -71,7 +71,7 @@ public class GridManager
         {
             if (i == 0)
             {
-                this.cells[this.questionCells[i].x, this.questionCells[i].y].SetButtonColor(status ? Color.yellow : Color.white);
+                this.cells[this.questionCells[i].x, this.questionCells[i].y].SetTextColor(status ? Color.yellow : Color.black);
             }
         }
     }

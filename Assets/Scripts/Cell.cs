@@ -39,6 +39,17 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             this.cellImage.color = Color.white;
     }
 
+    public void SetTextColor(Color _color = default)
+    {
+        if (this.content != null)
+        {
+            if (_color != default(Color))
+                this.content.color = _color;
+            else
+                this.content.color = Color.black;
+        }
+    }
+
     public void Selected()
     {
         this.isSelected = true;
