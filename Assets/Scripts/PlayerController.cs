@@ -15,6 +15,7 @@ public class PlayerController : UserData
     private List<Cell> selectedCells = new List<Cell>();
     public bool IsCheckedAnswer = false;
     public bool IsConnectWord = false;
+    public bool IsShowHintLetter = false;
     public TextMeshProUGUI answerBox;
     public Image frame;
     // Start is called before the first frame update
@@ -55,6 +56,7 @@ public class PlayerController : UserData
     {
         this.StopConnection();
         this.gridManager.UpdateGridWithWord(this.UserId, _word);
+        this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
     }
 
     public void updatePlayerIcon(bool _status = false, string _playerName = "", Sprite _icon= null)
@@ -232,9 +234,11 @@ public class PlayerController : UserData
         if (this.answerBox != null) this.answerBox.text = "";
     }
 
-    public void showHintOfFirstLetter()
+    public void showHintOfFirstLetter(Button hintBtn = null)
     {
-        this.gridManager.setFirstLetterHint(true);
+        this.IsShowHintLetter = !this.IsShowHintLetter;
+        if(hintBtn != null) hintBtn.GetComponent<Image>().color = this.IsShowHintLetter ?  Color.gray: Color.white;
+        this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
     }
 
     public void hiddenHintOfFirstLetter()
