@@ -83,11 +83,12 @@ public class CurrentQuestion
     public CanvasGroup progressiveBar;
     public Image progressFillImage;
 
-    public void setProgressiveBar(bool status)
+    public void setProgressiveBar(bool status, int totalQuestion)
     {
         if (this.progressiveBar != null)
         {
             this.progressiveBar.DOFade(status ? 1f : 0f, 0f);
+            this.progressiveBar.GetComponentInChildren<NumberCounter>().Init(this.numberQuestion.ToString(), "/" + totalQuestion);
         }
     }
 
@@ -95,10 +96,10 @@ public class CurrentQuestion
     {
         bool updating = true;
         float progress = 0f;
-        if (this.answeredQuestion < totalQuestion)
+        if (this.answeredQuestion < totalQuestion - 1)
         {
-            progress = (float)this.answeredQuestion / totalQuestion;
             this.answeredQuestion += 1;
+            progress = (float)this.answeredQuestion / totalQuestion;
             updating = true;
         }
         else
@@ -115,15 +116,17 @@ public class CurrentQuestion
                 if (progress >= 1f) onQuestionCompleted?.Invoke();
             });
 
-            int percentage = (int)(progress * 100);
-            this.progressiveBar.GetComponentInChildren<NumberCounter>().Value = percentage;
+            //int percentage = (int)(progress * 100);
+            //this.progressiveBar.GetComponentInChildren<NumberCounter>().Value = percentage;
+            this.progressiveBar.GetComponentInChildren<NumberCounter>().Unit = "/" + totalQuestion;
+            this.progressiveBar.GetComponentInChildren<NumberCounter>().Value = this.answeredQuestion;
         }
         return updating;
     }
 
     public void setNewQuestion(QuestionList qa = null, int totalQuestion = 0, bool isLogined = false, Action onQuestionCompleted = null)
     {
-        this.setProgressiveBar(isLogined);
+        this.setProgressiveBar(isLogined, totalQuestion);
 
         if (isLogined)
         {
