@@ -1,9 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public class GameController : GameBaseController
 {
     public static GameController Instance = null;
-    public PlayerController[] playerControllers;
+    public GameObject playerPanelPrefab;
+    public Transform parent;
+    public Color[] playersColor;
+    public Sprite[] defaultAnswerBox, defaultFrames;
+    public List<PlayerController> playerControllers = new List<PlayerController>();
     private bool showWordHints = false;
 
     protected override void Awake()
@@ -24,32 +29,24 @@ public class GameController : GameBaseController
 
         yield return new WaitForEndOfFrame();
 
-        for (int i = 0; i < this.playerControllers.Length; i++)
+        for (int i = 0; i < this.playerNumber; i++)
         {
-            if (this.playerControllers[i] != null)
-            {
-                if (i < this.playerNumber)
-                {
-                    if (i == 0 && LoaderConfig.Instance != null && LoaderConfig.Instance.apiManager.peopleIcon != null)
-                    {
-                        var _playerName = LoaderConfig.Instance?.apiManager.loginName;
-                        var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
-                        this.playerControllers[i].UserName = _playerName;
-                        this.playerControllers[i].updatePlayerIcon(true, _playerName, icon);
-                    }
-                    else
-                    {
-                        this.playerControllers[i].updatePlayerIcon(true);
-                    }
+            var playerController = GameObject.Instantiate(this.playerPanelPrefab, this.parent).GetComponent<PlayerController>();
+            playerController.gameObject.name = "Player" + i + "_Panel";
+            playerController.UserId = i;
+            this.playerControllers.Add(playerController);
+            this.playerControllers[i].Init(word, this.defaultAnswerBox, this.defaultFrames);
 
-                    this.playerControllers[i].gameObject.SetActive(true);
-                    this.playerControllers[i].Init(word);
-                }
-                else
-                {
-                    this.playerControllers[i].gameObject.SetActive(false);
-                    this.playerControllers[i].updatePlayerIcon(false);
-                }
+            if (i == 0 && LoaderConfig.Instance != null && LoaderConfig.Instance.apiManager.peopleIcon != null)
+            {
+                var _playerName = LoaderConfig.Instance?.apiManager.loginName;
+                var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
+                this.playerControllers[i].UserName = _playerName;
+                this.playerControllers[i].updatePlayerIcon(true, _playerName, icon, this.playersColor[i]);
+            }
+            else
+            {
+                this.playerControllers[i].updatePlayerIcon(true, null, null, this.playersColor[i]);
             }
         }
     }
@@ -64,7 +61,7 @@ public class GameController : GameBaseController
     public override void endGame()
     {
         bool showSuccess = false;
-        for (int i = 0; i < this.playerControllers.Length; i++)
+        for (int i = 0; i < this.playerControllers.Count; i++)
         {
             if(i < this.playerNumber)
             {
@@ -112,7 +109,7 @@ public class GameController : GameBaseController
         else if (Input.GetKeyDown(KeyCode.W))
         {
             this.showWordHints = !this.showWordHints;
-            for (int i = 0; i < this.playerControllers.Length; i++)
+            for (int i = 0; i < this.playerControllers.Count; i++)
             {
                 this.playerControllers[i].gridManager.showQuestionWordPosition = this.showWordHints;
                 this.playerControllers[i].gridManager.setLetterHint(this.showWordHints);
@@ -122,7 +119,7 @@ public class GameController : GameBaseController
         // Handle mouse input
         if (Input.GetMouseButtonUp(0))
         {
-            for (int i = 0; i < this.playerControllers.Length; i++)
+            for (int i = 0; i < this.playerControllers.Count; i++)
             {
                 if (this.playerControllers[i] != null && this.playerControllers[i].IsConnectWord)
                 {
@@ -165,7 +162,7 @@ public class GameController : GameBaseController
 
         if (Input.GetMouseButton(0))
         {
-            for (int i = 0; i < this.playerControllers.Length; i++)
+            for (int i = 0; i < this.playerControllers.Count; i++)
             {
                 if (this.playerControllers[i] != null && this.playerControllers[i].IsConnectWord)
                 {
@@ -178,7 +175,7 @@ public class GameController : GameBaseController
     private PlayerController GetPlayerByTouchIndex(int touchIndex)
     {
         // Map touch index to player index (assuming two players)
-        if (touchIndex < playerControllers.Length)
+        if (touchIndex < playerControllers.Count)
         {
             return playerControllers[touchIndex];
         }

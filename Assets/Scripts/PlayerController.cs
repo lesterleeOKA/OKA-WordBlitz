@@ -17,11 +17,28 @@ public class PlayerController : UserData
     public bool IsConnectWord = false;
     public bool IsShowHintLetter = false;
     public TextMeshProUGUI answerBox;
+    public Image answerBoxFrame;
     public Image frame;
     // Start is called before the first frame update
 
-    public void Init(string _word)
+    public void Init(string _word, Sprite[] defaultAnswerBoxes=null, Sprite[] defaultFrames = null)
     {
+        if(this.PlayerIcons[0] == null)
+        {
+            this.PlayerIcons[0] = GameObject.FindGameObjectWithTag("P" + this.RealUserId + "_Icon").GetComponent<PlayerIcon>();
+        }
+
+        if(this.scoring.scoreTxt == null)
+        {
+            this.scoring.scoreTxt = GameObject.FindGameObjectWithTag("P" + this.RealUserId + "_Score").GetComponent<TextMeshProUGUI>();
+        }
+
+        if (this.scoring.resultScoreTxt == null)
+        {
+            this.scoring.resultScoreTxt = GameObject.FindGameObjectWithTag("P" + this.RealUserId + "_ResultScore").GetComponent<TextMeshProUGUI>();
+        }
+
+
         this.scoring.init();
         float frame_width = this.GetComponent<RectTransform>().sizeDelta.x;
 
@@ -35,17 +52,27 @@ public class PlayerController : UserData
             switch (this.UserId)
             {
                 case 0:
-                    if(LoaderConfig.Instance.gameSetup.frameTexture_p1 != null)
+                    this.answerBoxFrame.sprite = defaultAnswerBoxes[0];
+                    if (LoaderConfig.Instance.gameSetup.frameTexture_p1 != null)
                     {
                         Sprite frameTexture_p1 = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.frameTexture_p1 as Texture2D);
                         this.frame.sprite = frameTexture_p1;
                     }
+                    else
+                    {
+                        this.frame.sprite = defaultFrames[0];
+                    }
                     break;
                 case 1:
+                    this.answerBoxFrame.sprite = defaultAnswerBoxes[1];
                     if (LoaderConfig.Instance.gameSetup.frameTexture_p2 != null)
                     {
                         Sprite frameTexture_p2 = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.frameTexture_p2 as Texture2D);
                         this.frame.sprite = frameTexture_p2;
+                    }
+                    else
+                    {
+                        this.frame.sprite = defaultFrames[1];
                     }
                     break;
             }
@@ -59,12 +86,13 @@ public class PlayerController : UserData
         this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
     }
 
-    public void updatePlayerIcon(bool _status = false, string _playerName = "", Sprite _icon= null)
+    public void updatePlayerIcon(bool _status = false, string _playerName = "", Sprite _icon= null, Color32 _color=default)
     {
         for (int i = 0; i < this.PlayerIcons.Length; i++)
         {
             if (this.PlayerIcons[i] != null) { 
-                this.PlayerIcons[i].playerColor = this.PlayerColor;
+                this.PlayerColor = _color;
+                this.PlayerIcons[i].playerColor = _color;
                 this.PlayerIcons[i].SetStatus(_status, _playerName, _icon);
             }
         }
