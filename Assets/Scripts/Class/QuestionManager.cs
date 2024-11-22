@@ -165,6 +165,9 @@ public class QuestionManager : MonoBehaviour
                     if (this.loadedItems == this.totalItems) onComplete?.Invoke();
                     break;
                 case "picture":
+                    if(string.IsNullOrEmpty(qa.correctAnswer) && !string.IsNullOrEmpty(qa.question))
+                        qa.correctAnswer = qa.question;
+
                     ExternalCaller.UpdateLoadBarStatus("Loading Images");
                     StartCoroutine(
                        this.loadImage.Load(
