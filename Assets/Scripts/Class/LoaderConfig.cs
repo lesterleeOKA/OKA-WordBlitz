@@ -28,8 +28,6 @@ public class LoaderConfig : GameSetting
     protected override void Update()
     {
         base.Update();
-
-
     }
 
     public void LoadGameData()

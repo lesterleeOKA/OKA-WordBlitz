@@ -1,34 +1,214 @@
 {
   "questions": [
     {
-      "qid": "p1u1-a1",
-      "questionType": "text",
-      "question": "Classmate",
-      "correctAnswer": "Classmate"
+      "qid": "p1u2-e1",
+      "questionType": "fillInBlank",
+      "question": "Amy and Leo are ________. They love playing with Legos at home.",
+      "correctAnswer": "siblings",
+      "media": "p1u2-e1.mp3"
     },
     {
-      "qid": "p1u1-a2",
-      "questionType": "text",
-      "question": "Goodbye",
-      "correctAnswer": "Goodbye"
+      "qid": "p1u2-e2",
+      "questionType": "fillInBlank",
+      "question": "I love seeing my _________ during holidays!",
+      "correctAnswer": "cousins",
+      "media": "p1u2-e2.mp3"
     },
     {
-      "qid": "p1u1-a3",
-      "questionType": "text",
-      "question": "Greet",
-      "correctAnswer": "Greet"
+      "qid": "p1u2-e3",
+      "questionType": "fillInBlank",
+      "question": "I call this little baby my _______.",
+      "correctAnswer": "niece",
+      "media": "p1u2-e3.mp3"
     },
     {
-      "qid": "p1u1-a4",
-      "questionType": "text",
-      "question": "What is the color of sea?",
-      "answers": [
-        "red",
-        "blue",
-        "white",
-        "orange"
-      ],
-      "correctAnswer": "blue"
+      "qid": "p1u2-e4",
+      "questionType": "fillInBlank",
+      "question": "My _________ wants to be a doctor in the future.",
+      "correctAnswer": "sister",
+      "media": "p1u2-e4.mp3"
+    },
+    {
+      "qid": "p1u2-e5",
+      "questionType": "fillInBlank",
+      "question": "That is Mimi's ________ over there.",
+      "correctAnswer": "brother",
+      "media": "p1u2-e5.mp3"
+    },
+    {
+      "qid": "p1u2-e6",
+      "questionType": "fillInBlank",
+      "question": "They are _______ so they look the same.",
+      "correctAnswer": "twins",
+      "media": "p1u2-e6.mp3"
+    },
+    {
+      "qid": "p1u2-e7",
+      "questionType": "fillInBlank",
+      "question": "Aunt Mary gave birth to ________. She is amazing.",
+      "correctAnswer": "triplets",
+      "media": "p1u2-e7.mp3"
+    },
+    {
+      "qid": "p1u2-e8",
+      "questionType": "fillInBlank",
+      "question": "Lisa and Leslie are Uncle Joe's _____________ too.",
+      "correctAnswer": "daughters",
+      "media": "p1u2-e8.mp3"
+    },
+    {
+      "qid": "p1u2-e9",
+      "questionType": "fillInBlank",
+      "question": "The old lady has ten _____________ in total. What a big family!",
+      "correctAnswer": "grandchildren",
+      "media": "p1u2-e9.mp3"
+    },
+    {
+      "qid": "p1u2-e10",
+      "questionType": "fillInBlank",
+      "question": "He is reading books to his ____________.",
+      "correctAnswer": "nephew",
+      "media": "p1u2-e10.mp3"
+    },
+    {
+      "qid": "p1u4-d1",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Shelf",
+      "media": "p1u4-d1.jpg"
+    },
+    {
+      "qid": "p1u4-d2",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Whiteboard",
+      "media": "p1u4-d2.jpg"
+    },
+    {
+      "qid": "p1u4-d3",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Window",
+      "media": "p1u4-d3.jpg"
+    },
+    {
+      "qid": "p1u4-d4",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Door",
+      "media": "p1u4-d4.jpg"
+    },
+    {
+      "qid": "p1u4-d5",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Posters",
+      "media": "p1u4-d5.jpg"
+    },
+    {
+      "qid": "p1u4-d6",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Blackboard",
+      "media": "p1u4-d6.jpg"
+    },
+    {
+      "qid": "p1u4-d7",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Fan",
+      "media": "p1u4-d7.jpg"
+    },
+    {
+      "qid": "p1u4-d8",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Clock",
+      "media": "p1u4-d8.jpg"
+    },
+    {
+      "qid": "p1u4-d9",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Storybook",
+      "media": "p1u4-d9.jpg"
+    },
+    {
+      "qid": "p1u4-d10",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Screen",
+      "media": "p1u4-d10.jpg"
+    },
+    {
+      "qid": "p1u4-d11",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Chair",
+      "media": "p1u4-d11.jpg"
+    },
+    {
+      "qid": "p1u4-d12",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Chalks",
+      "media": "p1u4-d12.jpg"
+    },
+    {
+      "qid": "p1u4-d13",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Light",
+      "media": "p1u4-d13.jpg"
+    },
+    {
+      "qid": "p1u4-d14",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Computer",
+      "media": "p1u4-d14.jpg"
+    },
+    {
+      "qid": "p1u4-d15",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Drawers",
+      "media": "p1u4-d15.jpg"
+    },
+    {
+      "qid": "p1u4-d16",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Bin",
+      "media": "p1u4-d16.jpg"
+    },
+    {
+      "qid": "p1u4-d17",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Desk",
+      "media": "p1u4-d17.jpg"
+    },
+    {
+      "qid": "p1u4-d18",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Duster",
+      "media": "p1u4-d18.jpg"
+    },
+    {
+      "qid": "p1u4-d19",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Board",
+      "media": "p1u4-d19.jpg"
+    },
+    {
+      "qid": "p1u4-d20",
+      "questionType": "picture",
+      "question": "",
+      "correctAnswer": "Marker",
+      "media": "p1u4-d20.jpg"
     },
     {
       "qid": "p2u1-c1",

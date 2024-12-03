@@ -8,6 +8,7 @@ public class GameBaseController : MonoBehaviour
     protected Vector2 originalGetScorePos = Vector2.zero;
     public EndGamePage endGamePage;
     public int playerNumber = 0;
+    public int maxPlayers = 2;
     public bool playing = false;
 
     protected virtual void Awake()

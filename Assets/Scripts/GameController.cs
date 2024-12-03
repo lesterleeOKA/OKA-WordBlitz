@@ -29,25 +29,35 @@ public class GameController : GameBaseController
 
         yield return new WaitForEndOfFrame();
 
-        for (int i = 0; i < this.playerNumber; i++)
+        for (int i = 0; i < this.maxPlayers; i++)
         {
-            var playerController = GameObject.Instantiate(this.playerPanelPrefab, this.parent).GetComponent<PlayerController>();
-            playerController.gameObject.name = "Player" + i + "_Panel";
-            playerController.UserId = i;
-            this.playerControllers.Add(playerController);
-            this.playerControllers[i].Init(word, this.defaultAnswerBox, this.defaultFrames);
-
-            if (i == 0 && LoaderConfig.Instance != null && LoaderConfig.Instance.apiManager.peopleIcon != null)
+            if(i< this.playerNumber)
             {
-                var _playerName = LoaderConfig.Instance?.apiManager.loginName;
-                var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
-                this.playerControllers[i].UserName = _playerName;
-                this.playerControllers[i].updatePlayerIcon(true, _playerName, icon, this.playersColor[i]);
+                var playerController = GameObject.Instantiate(this.playerPanelPrefab, this.parent).GetComponent<PlayerController>();
+                playerController.gameObject.name = "Player" + i + "_Panel";
+                playerController.UserId = i;
+                this.playerControllers.Add(playerController);
+                this.playerControllers[i].Init(word, this.defaultAnswerBox, this.defaultFrames);
+
+                if (i == 0 && LoaderConfig.Instance != null && LoaderConfig.Instance.apiManager.peopleIcon != null)
+                {
+                    var _playerName = LoaderConfig.Instance?.apiManager.loginName;
+                    var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
+                    this.playerControllers[i].UserName = _playerName;
+                    this.playerControllers[i].updatePlayerIcon(true, _playerName, icon, this.playersColor[i]);
+                }
+                else
+                {
+                    this.playerControllers[i].updatePlayerIcon(true, null, null, this.playersColor[i]);
+                }
             }
             else
             {
-                this.playerControllers[i].updatePlayerIcon(true, null, null, this.playersColor[i]);
-            }
+                //this.playerControllers[i].updatePlayerIcon(false);
+                int notUsedId = i + 1;
+                var notUsedPlayerIcon = GameObject.FindGameObjectWithTag("P" + notUsedId + "_Icon");
+                if(notUsedPlayerIcon != null) notUsedPlayerIcon.SetActive(false);
+            }      
         }
     }
 
