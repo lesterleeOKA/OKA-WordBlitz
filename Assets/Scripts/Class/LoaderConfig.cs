@@ -95,11 +95,6 @@ public class LoaderConfig : GameSetting
         this.apiManager.resetLoginErrorBox();
     }
 
-    public void changeScene(int sceneId)
-    {
-        SceneManager.LoadScene(sceneId);
-    }
-
     public void exitPage(string state = "", Action<bool> leavePageWithValue = null, Action leavePageWithoutValue = null)
     {
         bool isLogined = this.apiManager.IsLogined;

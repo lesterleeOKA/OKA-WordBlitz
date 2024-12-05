@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameSetting : MonoBehaviour
 {
@@ -15,6 +16,14 @@ public class GameSetting : MonoBehaviour
     protected private Dictionary<string, ParameterHandler> customHandlers = new Dictionary<string, ParameterHandler>();
     public string unitKey = string.Empty;
     public string testURL = string.Empty;
+
+    protected virtual void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+        Application.runInBackground = true;
+        DontDestroyOnLoad(this);
+    }
 
     protected virtual void GetParseURLParams()
     {
@@ -79,14 +88,6 @@ public class GameSetting : MonoBehaviour
         {
             this.customHandlers[key] = handler;
         }
-    }
-
-    protected virtual void Awake()
-    {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-        Application.runInBackground = true;
-        DontDestroyOnLoad(this);
     }
 
     protected virtual void Start()
@@ -240,6 +241,11 @@ public class GameSetting : MonoBehaviour
     public void Reload()
     {
         ExternalCaller.ReLoadCurrentPage();
+    }
+
+    public void changeScene(int sceneId)
+    {
+        SceneManager.LoadScene(sceneId);
     }
 }
 
