@@ -8,6 +8,7 @@ public class GameSettings : Settings
     public string frameImageUrl_P1;
     public string frameImageUrl_P2;
     public string grid_image;
+    public int gridWordFormat;
     //public string normal_color;
     //public string pressed_color;
 }
@@ -29,8 +30,15 @@ public static class SetParams
                 jsonNode["setting"]["grid_image"].ToString().Replace("\"", "") : null;
 
             settings.playerNumber = jsonNode["setting"]["player_number"] != null ? jsonNode["setting"]["player_number"] : null;
+            settings.gridWordFormat = jsonNode["setting"]["grid_word_format"] != null ? jsonNode["setting"]["grid_word_format"] : null;
 
             LoaderConfig.Instance.gameSetup.playerNumber = settings.playerNumber;
+
+            if (Enum.IsDefined(typeof(GridWordFormat), settings.gridWordFormat))
+            {
+                LoaderConfig.Instance.gameSetup.gridWordFormat = (GridWordFormat)settings.gridWordFormat;
+                LogController.Instance?.debug("GridWordFormat: " + LoaderConfig.Instance.gameSetup.gridWordFormat);
+            }
 
             /*this.settings.normal_color = jsonNode["setting"]["normal_color"] != null ?
                 jsonNode["setting"]["normal_color"].ToString().Replace("\"", "") : null;

@@ -21,7 +21,7 @@ public class PlayerController : UserData
     public Image frame;
     // Start is called before the first frame update
 
-    public void Init(string _word, Sprite[] defaultAnswerBoxes=null, Sprite[] defaultFrames = null)
+    public void Init(string _word, Sprite[] defaultAnswerBoxes=null, Sprite[] defaultFrames = null, GridWordFormat gridWordFormat = GridWordFormat.AllUpper)
     {
         if(this.PlayerIcons[0] == null)
         {
@@ -44,7 +44,7 @@ public class PlayerController : UserData
 
         Sprite gridTexture = LoaderConfig.Instance.gameSetup.gridTexture != null ? 
             SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.gridTexture as Texture2D) : null;
-        this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width, gridTexture);
+        this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width, gridTexture, gridWordFormat);
 
 
         if(this.frame != null)
@@ -79,10 +79,10 @@ public class PlayerController : UserData
         }
     }
 
-    public void NewQuestionWord(string _word)
+    public void NewQuestionWord(string _word, GridWordFormat gridWordFormat)
     {
         this.StopConnection();
-        this.gridManager.UpdateGridWithWord(this.UserId, _word);
+        this.gridManager.UpdateGridWithWord(this.UserId, _word, gridWordFormat);
         this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
     }
 

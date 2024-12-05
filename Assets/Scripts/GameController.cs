@@ -10,6 +10,7 @@ public class GameController : GameBaseController
     public Sprite[] defaultAnswerBox, defaultFrames;
     public List<PlayerController> playerControllers = new List<PlayerController>();
     private bool showWordHints = false;
+    public GridWordFormat gridWordFormat = GridWordFormat.AllUpper;
 
     protected override void Awake()
     {
@@ -37,18 +38,24 @@ public class GameController : GameBaseController
                 playerController.gameObject.name = "Player" + i + "_Panel";
                 playerController.UserId = i;
                 this.playerControllers.Add(playerController);
-                this.playerControllers[i].Init(word, this.defaultAnswerBox, this.defaultFrames);
 
-                if (i == 0 && LoaderConfig.Instance != null && LoaderConfig.Instance.apiManager.peopleIcon != null)
+                var loader = LoaderConfig.Instance;
+                if (loader != null)
                 {
-                    var _playerName = LoaderConfig.Instance?.apiManager.loginName;
-                    var icon = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.apiManager.peopleIcon as Texture2D);
-                    this.playerControllers[i].UserName = _playerName;
-                    this.playerControllers[i].updatePlayerIcon(true, _playerName, icon, this.playersColor[i]);
-                }
-                else
-                {
-                    this.playerControllers[i].updatePlayerIcon(true, null, null, this.playersColor[i]);
+                    this.gridWordFormat = loader.gameSetup.gridWordFormat;
+                    this.playerControllers[i].Init(word, this.defaultAnswerBox, this.defaultFrames, this.gridWordFormat);
+
+                    if (loader.apiManager.peopleIcon != null && loader.apiManager.IsLogined && i==0)
+                    {
+                        var _playerName = loader.apiManager.loginName;
+                        var icon = SetUI.ConvertTextureToSprite(loader.apiManager.peopleIcon as Texture2D);
+                        this.playerControllers[i].UserName = _playerName;
+                        this.playerControllers[i].updatePlayerIcon(true, _playerName, icon, this.playersColor[i]);
+                    }
+                    else
+                    {
+                        this.playerControllers[i].updatePlayerIcon(true, null, null, this.playersColor[i]);
+                    }
                 }
             }
             else
@@ -101,7 +108,7 @@ public class GameController : GameBaseController
         {
             if (this.playerControllers[i] != null)
             {
-                this.playerControllers[i].NewQuestionWord(word);
+                this.playerControllers[i].NewQuestionWord(word, this.gridWordFormat);
             }
         }
     }
@@ -122,7 +129,7 @@ public class GameController : GameBaseController
             for (int i = 0; i < this.playerControllers.Count; i++)
             {
                 this.playerControllers[i].gridManager.showQuestionWordPosition = this.showWordHints;
-                this.playerControllers[i].gridManager.setLetterHint(this.showWordHints);
+                this.playerControllers[i].gridManager.setLetterHint(this.showWordHints, Color.green);
             }
         }
 

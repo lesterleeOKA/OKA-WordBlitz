@@ -406,6 +406,7 @@ MonoBehaviour:
     loadImageMethod: 1
     imageType: 2
     allTextures: []
+    useGCCollect: 1
     bgTexture: {fileID: 2800000, guid: 3cc7789d54dcd82419947d0d21e928c2, type: 3}
     previewTexture: {fileID: 2800000, guid: a2a6dcd861f69074fb49045958b02c0a, type: 3}
     frameTexture_p1: {fileID: 0}
@@ -417,6 +418,7 @@ MonoBehaviour:
     gameTime: 0
     showFPS: 0
     playerNumber: 2
+    gridWordFormat: 0
     gridNormalColor:
       serializedVersion: 2
       rgba: 0
@@ -440,6 +442,7 @@ MonoBehaviour:
       loadImageMethod: 3
       imageType: 1
       allTextures: []
+      useGCCollect: 1
     peopleIcon: {fileID: 0}
     loginName: 
     settings:
@@ -452,6 +455,7 @@ MonoBehaviour:
       frameImageUrl_P1: 
       frameImageUrl_P2: 
       grid_image: 
+      gridWordFormat: 0
     maxRetries: 10
     debugLayer: {fileID: 1630735626}
     loginErrorBox: {fileID: 645755778}
@@ -510,6 +514,7 @@ MonoBehaviour:
     loadImageMethod: 1
     imageType: 1
     allTextures: []
+    useGCCollect: 1
   loadAudio:
     loadMethod: 1
     loadAudioMethod: 1
@@ -756,7 +761,7 @@ PrefabInstance:
       objectReference: {fileID: 12800000, guid: 65e0021e32122fe4eafa107cecf8fd43, type: 3}
     - target: {fileID: 1761761257498461912, guid: bc74bb1d218bbcc4daf665d7ff132001, type: 3}
       propertyPath: m_Text
-      value: Ver 1.02
+      value: Ver 1.03
       objectReference: {fileID: 0}
     - target: {fileID: 1761761257498461912, guid: bc74bb1d218bbcc4daf665d7ff132001, type: 3}
       propertyPath: m_FontData.m_Font

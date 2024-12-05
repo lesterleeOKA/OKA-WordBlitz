@@ -18,7 +18,7 @@ public class GridManager
     HashSet<char> usedLetters = null;
     public bool showQuestionWordPosition = false;
 
-    public Cell[,] CreateGrid(int playerId, string initialWord, float frame_width, Sprite cellSprite = null)
+    public Cell[,] CreateGrid(int playerId, string initialWord, float frame_width, Sprite cellSprite = null, GridWordFormat gridWordFormat = GridWordFormat.AllUpper)
     {
         this.usedPositions = new HashSet<Vector2Int>();
         this.availablePositions = new List<Vector2Int>();
@@ -44,24 +44,24 @@ public class GridManager
         }
 
         // If an initial word is provided, place it in the grid
-        this.PlaceWordInGrid(playerId, initialWord);
-        this.FillRemainingCells(playerId);
+        this.PlaceWordInGrid(playerId, initialWord, gridWordFormat);
+        this.FillRemainingCells(playerId, gridWordFormat);
 
         return cells;
     }
 
-    public void UpdateGridWithWord(int playerId, string newWord)
+    public void UpdateGridWithWord(int playerId, string newWord, GridWordFormat gridWordFormat)
     {
        this.questionCells.Clear();
-       this.PlaceWordInGrid(playerId, newWord);
-       this.FillRemainingCells(playerId);
+       this.PlaceWordInGrid(playerId, newWord, gridWordFormat);
+       this.FillRemainingCells(playerId, gridWordFormat);
     }
 
-    public void setLetterHint(bool status)
+    public void setLetterHint(bool status, Color32 toColor=default)
     {
         foreach (var wordCellPos in this.questionCells)
         {
-            this.cells[wordCellPos.x, wordCellPos.y].SetButtonColor(status? Color.yellow : Color.white);
+            this.cells[wordCellPos.x, wordCellPos.y].SetButtonColor(status? toColor : Color.white);
         }
     }
 
@@ -76,10 +76,22 @@ public class GridManager
         }
     }
 
-    private void PlaceWordInGrid(int playerId, string word)
+    private void PlaceWordInGrid(int playerId, string word, GridWordFormat gridWordFormat)
     {
         this.usedPositions.Clear();
         this.availablePositions.Clear();
+
+        string firstLetter = "";
+        switch (gridWordFormat)
+        {
+            case GridWordFormat.AllUpper:
+            case GridWordFormat.FirstUpper:
+                firstLetter = word[0].ToString().ToUpper();
+                break;
+            case GridWordFormat.AllLower:
+                firstLetter = word[0].ToString().ToLower();
+                break;
+        }
 
         // Populate available positions and reset cells
         for (int x = 0; x < gridRow; x++)
@@ -100,11 +112,11 @@ public class GridManager
 
             // Place the first letter
             this.usedPositions.Add(startPos);
-            this.cells[startPos.x, startPos.y].SetTextContent(playerId, word[0].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
+            this.cells[startPos.x, startPos.y].SetTextContent(playerId, firstLetter, this.showQuestionWordPosition ? Color.yellow : Color.white);
             this.questionCells.Add(startPos);
 
             // Attempt to place the remaining letters
-            if (PlaceLetters(playerId, word, startPos, 1))
+            if (PlaceLetters(playerId, word, startPos, 1, gridWordFormat))
             {
                 placed = true; // Successfully placed the word
                 break; // Exit the retry loop
@@ -124,7 +136,7 @@ public class GridManager
         }
     }
 
-    private bool PlaceLetters(int playerId, string word, Vector2Int lastPos, int index)
+    private bool PlaceLetters(int playerId, string word, Vector2Int lastPos, int index, GridWordFormat gridWordFormat)
     {
         if (index >= word.Length) return true; // All letters placed successfully
 
@@ -134,7 +146,7 @@ public class GridManager
         new Vector2Int(1, 0),   // Down
         new Vector2Int(0, -1),  // Left
         new Vector2Int(-1, 0)   // Up
-    };
+        };
 
         // Shuffle directions
         directions = directions.OrderBy(x => Random.value).ToArray();
@@ -147,12 +159,25 @@ public class GridManager
             if (newPos.x >= 0 && newPos.x < gridRow && newPos.y >= 0 && newPos.y < gridColumn &&
                 !this.usedPositions.Contains(newPos))
             {
+
+                string remainLetter = "";
+                switch (gridWordFormat)
+                {
+                    case GridWordFormat.AllUpper:
+                        remainLetter = word[index].ToString().ToUpper();
+                        break;
+                    case GridWordFormat.AllLower:
+                    case GridWordFormat.FirstUpper:
+                        remainLetter = word[index].ToString().ToLower();
+                        break;
+                }
+
                 // Place the letter
                 this.usedPositions.Add(newPos);
-                this.cells[newPos.x, newPos.y].SetTextContent(playerId, word[index].ToString().ToUpper(), this.showQuestionWordPosition ? Color.yellow : Color.white);
+                this.cells[newPos.x, newPos.y].SetTextContent(playerId, remainLetter, this.showQuestionWordPosition ? Color.yellow : Color.white);
                 this.questionCells.Add(newPos);
                 // Recursively attempt to place the next letter
-                if (PlaceLetters(playerId, word, newPos, index + 1))
+                if (PlaceLetters(playerId, word, newPos, index + 1, gridWordFormat))
                     return true;
 
                 // Backtrack
@@ -164,7 +189,7 @@ public class GridManager
         return false; // Failed to place the word
     }
 
-    private void FillRemainingCells(int playerId)
+    private void FillRemainingCells(int playerId, GridWordFormat gridWordFormat)
     {
         this.usedLetters.Clear();
 
@@ -176,8 +201,6 @@ public class GridManager
                 usedLetters.Add(cell.content.text[0]);
             }
         }
-
-        char randomLetter;
 
         // Create a list of available letters
         List<char> availableLetters = new List<char>();
@@ -202,8 +225,20 @@ public class GridManager
                 if (string.IsNullOrEmpty(cells[i, j].content.text)) // If cell is empty
                 {
                     // Pick a random letter from the available letters
-                    randomLetter = availableLetters[Random.Range(0, availableLetters.Count)];
-                    cells[i, j].SetTextContent(playerId, randomLetter.ToString());
+
+                    string randLetter = availableLetters[Random.Range(0, availableLetters.Count)].ToString();
+                    switch (gridWordFormat)
+                    {
+                        case GridWordFormat.AllUpper:
+                            randLetter = randLetter.ToUpper();
+                            break;
+                        case GridWordFormat.AllLower:
+                        case GridWordFormat.FirstUpper:
+                            randLetter = randLetter.ToLower();
+                            break;
+                    }
+
+                    cells[i, j].SetTextContent(playerId, randLetter);
                 }
             }
         }
@@ -221,4 +256,12 @@ public class GridManager
         }
     }
 
+}
+
+
+public enum GridWordFormat
+{
+    AllUpper = 0,
+    AllLower = 1,
+    FirstUpper = 2
 }

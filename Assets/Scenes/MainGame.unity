@@ -1254,6 +1254,7 @@ MonoBehaviour:
       - {fileID: 154309630}
       - {fileID: 154309628}
   playerNumber: 0
+  maxPlayers: 2
   playing: 0
   playerPanelPrefab: {fileID: 860337805945006429, guid: d7fde11b287b99e428a7d2e60775f6c5, type: 3}
   parent: {fileID: 1145258092}
@@ -1267,6 +1268,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bf379a7e43fe3754f9cda7be07a9c0db, type: 3}
   - {fileID: 21300000, guid: dce15b1aa055e83469334806b7363f0d, type: 3}
   playerControllers: []
+  gridWordFormat: 0
 --- !u!114 &209912702
 MonoBehaviour:
   m_ObjectHideFlags: 0
