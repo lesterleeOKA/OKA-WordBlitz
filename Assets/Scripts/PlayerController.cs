@@ -205,7 +205,7 @@ public class PlayerController : UserData
             this.IsCorrect = this.scoring.correct;
             StartCoroutine(this.showAnswerResult(this.scoring.correct));
 
-            if (this.UserId == 0 /*&& this.loader != null && this.loader.apiManager.IsLogined*/) // For first player
+            if (this.UserId == 0 && this.loader != null && this.loader.apiManager.IsLogined) // For first player
             {
                 float currentQAPercent = 0f;
                 int correctId = 0;
