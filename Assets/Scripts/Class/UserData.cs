@@ -1,6 +1,4 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class UserData: MonoBehaviour
@@ -19,6 +17,10 @@ public class UserData: MonoBehaviour
     private int correctedAnswerNumber;
     [SerializeField]
     private float correctAnswerPercentage;
+    [SerializeField]
+    private int retry = 0;
+    [SerializeField]
+    private int numberOfRetry = 3;
 
     public string UserName
     {
@@ -66,5 +68,18 @@ public class UserData: MonoBehaviour
         if (totalQuestions == 0) return 0;
         this.correctAnswerPercentage = ((float)this.CorrectedAnswerNumber / totalQuestions) * 100f;
         return this.correctAnswerPercentage;
+    }
+
+
+    public int Retry
+    {
+        get { return this.retry; }
+        set { this.retry = value; }
+    }
+
+    public int NumberOfRetry
+    {
+        get { return this.numberOfRetry;}
+        set { this.numberOfRetry = value; }
     }
 }

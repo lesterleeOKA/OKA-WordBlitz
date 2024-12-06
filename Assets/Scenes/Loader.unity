@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -417,7 +417,7 @@ MonoBehaviour:
     instructions: {fileID: 0}
     gameTime: 0
     showFPS: 0
-    playerNumber: 2
+    playerNumber: 1
     gridWordFormat: 0
     gridNormalColor:
       serializedVersion: 2
@@ -476,7 +476,7 @@ MonoBehaviour:
         score: 0
         percent: 0
   unitKey: 
-  testURL: 
+  testURL: https://dev.openknowledge.hk/RainbowOne/webapp/2.8/gamefile/OKAGames/WordBlitz/?jwt=eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dfZW5hYmxlZCI6IjEiLCJ0b2tlbiI6IjUxMi02YWI4YmMwZDUwMTJiMWJkMDdjZTM3ZDVhMjNlOTZlMzk2MzIwYmZiNTYwMjQ1ZmI1ODM2OTU5YzFlZWM3MDRlIiwiZXhwaXJlcyI6MTczNDA5MDAwOCwicmVuZXdfZW5hYmxlZCI6MSwidGltZSI6IjIwMjQtMTItMDYgMTE6NDA6MDggR01UIiwidWlkIjoiNTEyIiwidXNlcl9yb2xlIjoiMiIsInNjaG9vbF9pZCI6IjI3MiIsImlwIjoiMTY5LjI1NC4xMjkuNCIsInZlcnNpb24iOm51bGwsImRldmljZSI6IndpbmRvd3MifQ.ojas4oCqe14H77xsZUdbGMNucB_1FBcDmbHT4smA6nA&lang=tc&id=book-689013-3226897&gameTime=9999
 --- !u!4 &734659897
 Transform:
   m_ObjectHideFlags: 0

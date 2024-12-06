@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,17 +14,29 @@ public class PlayerController : UserData
     public LineDrawer lineDrawer;
     public Cell[,] grid;
     private List<Cell> selectedCells = new List<Cell>();
+    public bool IsAnswered = false;
     public bool IsCheckedAnswer = false;
     public bool IsConnectWord = false;
     public bool IsShowHintLetter = false;
-    public TextMeshProUGUI answerBox;
+    public bool IsCorrect = false;
+    public CanvasGroup correctAnswerBox;
+    public TextMeshProUGUI answerBox, countDownText, retryTimesUIText;
     public Image answerBoxFrame;
-    public Image frame;
+    public Image frame, coverBlank;
+    protected Vector2 originalGetScorePos = Vector2.zero;
+    public CanvasGroup correctPopup, wrongPopup;
+    private LoaderConfig loader = null;
+    private Tween timerScaleTween = null;
+
     // Start is called before the first frame update
 
     public void Init(string _word, Sprite[] defaultAnswerBoxes=null, Sprite[] defaultFrames = null, GridWordFormat gridWordFormat = GridWordFormat.AllUpper)
     {
-        if(this.PlayerIcons[0] == null)
+        this.updateRetryTimes(false);
+        this.loader = LoaderConfig.Instance;
+        if (this.correctPopup != null) this.originalGetScorePos = this.correctPopup.transform.localPosition;
+
+        if (this.PlayerIcons[0] == null)
         {
             this.PlayerIcons[0] = GameObject.FindGameObjectWithTag("P" + this.RealUserId + "_Icon").GetComponent<PlayerIcon>();
         }
@@ -37,13 +50,11 @@ public class PlayerController : UserData
         {
             this.scoring.resultScoreTxt = GameObject.FindGameObjectWithTag("P" + this.RealUserId + "_ResultScore").GetComponent<TextMeshProUGUI>();
         }
-
-
         this.scoring.init();
         float frame_width = this.GetComponent<RectTransform>().sizeDelta.x;
 
-        Sprite gridTexture = LoaderConfig.Instance.gameSetup.gridTexture != null ? 
-            SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.gridTexture as Texture2D) : null;
+        Sprite gridTexture = this.loader.gameSetup.gridTexture != null ? 
+            SetUI.ConvertTextureToSprite(this.loader.gameSetup.gridTexture as Texture2D) : null;
         this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width, gridTexture, gridWordFormat);
 
 
@@ -53,9 +64,9 @@ public class PlayerController : UserData
             {
                 case 0:
                     this.answerBoxFrame.sprite = defaultAnswerBoxes[0];
-                    if (LoaderConfig.Instance.gameSetup.frameTexture_p1 != null)
+                    if (this.loader.gameSetup.frameTexture_p1 != null)
                     {
-                        Sprite frameTexture_p1 = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.frameTexture_p1 as Texture2D);
+                        Sprite frameTexture_p1 = SetUI.ConvertTextureToSprite(this.loader.gameSetup.frameTexture_p1 as Texture2D);
                         this.frame.sprite = frameTexture_p1;
                     }
                     else
@@ -65,9 +76,9 @@ public class PlayerController : UserData
                     break;
                 case 1:
                     this.answerBoxFrame.sprite = defaultAnswerBoxes[1];
-                    if (LoaderConfig.Instance.gameSetup.frameTexture_p2 != null)
+                    if (this.loader.gameSetup.frameTexture_p2 != null)
                     {
-                        Sprite frameTexture_p2 = SetUI.ConvertTextureToSprite(LoaderConfig.Instance.gameSetup.frameTexture_p2 as Texture2D);
+                        Sprite frameTexture_p2 = SetUI.ConvertTextureToSprite(this.loader.gameSetup.frameTexture_p2 as Texture2D);
                         this.frame.sprite = frameTexture_p2;
                     }
                     else
@@ -79,9 +90,30 @@ public class PlayerController : UserData
         }
     }
 
+    void updateRetryTimes(bool deduct = false)
+    {          
+        if(deduct)
+        {
+            if(this.Retry > 0)
+            {
+                this.Retry--;
+            }
+        }
+        else
+        {
+            this.Retry = this.NumberOfRetry;
+        }
+
+        if (this.retryTimesUIText != null)
+        {
+            this.retryTimesUIText.text = this.Retry + "/" + this.NumberOfRetry;
+        }
+    }
+
     public void NewQuestionWord(string _word, GridWordFormat gridWordFormat)
     {
-        this.StopConnection();
+        SetUI.Set(this.correctAnswerBox, false);
+        this.updateRetryTimes(false);
         this.gridManager.UpdateGridWithWord(this.UserId, _word, gridWordFormat);
         this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
     }
@@ -103,6 +135,7 @@ public class PlayerController : UserData
     {
         if (IsAdjacent(cell))
         {
+            GameController.Instance.resetIdling();
             cell.Selected();
             this.selectedCells.Add(cell);
             if(this.answerBox != null) this.answerBox.text += cell.content.text;
@@ -127,6 +160,7 @@ public class PlayerController : UserData
 
     public void StartConnection()
     {
+        GameController.Instance.resetIdling();
         this.IsConnectWord = true; // Start drawing
         this.lineDrawer?.StartDrawing();
     }
@@ -140,19 +174,38 @@ public class PlayerController : UserData
     public void checkAnswer(int currentTime, Action onCompleted = null)
     {
         if (!this.IsCheckedAnswer) {
-            var loader = LoaderConfig.Instance;
+            this.setCoverBlank(false);
             var currentQuestion = QuestionController.Instance?.currentQuestion;
             int eachQAScore = currentQuestion.qa.score.full == 0 ? 10 : currentQuestion.qa.score.full;
             int currentScore = this.Score;
             this.answer = this.answerBox.text.ToLower();
+
+            if(this.correctAnswerBox != null && !string.IsNullOrEmpty(currentQuestion.correctAnswer))
+            {
+                switch (GameController.Instance.gridWordFormat)
+                {
+                    case GridWordFormat.AllUpper:
+                        this.correctAnswerBox.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion.correctAnswer.ToUpper();
+                        break;
+                    case GridWordFormat.AllLower:
+                        this.correctAnswerBox.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion.correctAnswer.ToLower();
+                        break;
+                    case GridWordFormat.FirstUpper:
+                        char firstLetter = char.ToUpper(currentQuestion.correctAnswer[0]);
+                        string remainingLetters = currentQuestion.correctAnswer.Substring(1).ToLower();
+                        this.correctAnswerBox.GetComponentInChildren<TextMeshProUGUI>().text = firstLetter + remainingLetters;
+                        break;
+                }
+            }
+            
             var lowerQIDAns = currentQuestion.correctAnswer.ToLower();
             int resultScore = this.scoring.score(this.answer, currentScore, lowerQIDAns, eachQAScore);
             this.Score = resultScore;
             this.IsCheckedAnswer = true;
-
+            this.IsCorrect = this.scoring.correct;
             StartCoroutine(this.showAnswerResult(this.scoring.correct));
 
-            if (this.UserId == 0 && loader != null && loader.apiManager.IsLogined) // For first player
+            if (this.UserId == 0 /*&& this.loader != null && this.loader.apiManager.IsLogined*/) // For first player
             {
                 float currentQAPercent = 0f;
                 int correctId = 0;
@@ -168,7 +221,7 @@ public class PlayerController : UserData
                     correctId = 2;
                     score = eachQAScore; // load from question settings score of each question
 
-                    Debug.Log("Each QA Score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + eachQAScore + "______answer" + this.answer);
+                    //Debug.Log("Each QA Score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + eachQAScore + "______answer" + this.answer);
                     currentQAPercent = 100f;
                 }
                 else
@@ -188,7 +241,7 @@ public class PlayerController : UserData
                     answeredPercentage = 100f;
                 }
 
-                loader.SubmitAnswer(
+                this.loader.SubmitAnswer(
                            currentTime,
                            this.Score,
                            answeredPercentage,
@@ -201,11 +254,16 @@ public class PlayerController : UserData
                            currentQuestion.correctAnswer,
                            score,
                            currentQAPercent,
-                           onCompleted
+                           ()=>
+                           {
+                               this.resetConnection();
+                               onCompleted?.Invoke();
+                           }
                            );
             }
             else
             {
+                this.resetConnection();
                 onCompleted?.Invoke();
             }
         }
@@ -213,42 +271,114 @@ public class PlayerController : UserData
 
     public IEnumerator showAnswerResult(bool correct)
     {
-        float delay = 2f;
+        this.IsConnectWord = false;
+        float delay = 2.5f;
         if (correct)
         {
             LogController.Instance?.debug("Add marks" + this.Score);
-            GameController.Instance?.setGetScorePopup(true);
+            this.setGetScorePopup(true);
             AudioController.Instance?.PlayAudio(1);
             yield return new WaitForSeconds(delay);
-            GameController.Instance?.setGetScorePopup(false);
+            this.setGetScorePopup(false);
         }
         else
         {
-            GameController.Instance?.setWrongPopup(true);
+            this.updateRetryTimes(true);
+            if (this.Retry == 0)
+            {
+                SetUI.Set(this.correctAnswerBox, true);
+            }
+
+            this.setWrongPopup(true);
             AudioController.Instance?.PlayAudio(2);
             yield return new WaitForSeconds(delay);
-            GameController.Instance?.setWrongPopup(false);
+            this.setWrongPopup(false);
         }
         this.scoring.correct = false;
         this.IsCheckedAnswer = false;
-        GameController.Instance?.UpdateNextQuestion();
+        this.IsAnswered = false;
+        this.resetAnswer();
+
+        if (this.loader.gameSetup.playerNumber == 1)
+        {
+            if (this.IsCorrect)
+            {
+                GameController.Instance?.UpdateNextQuestion();
+            }
+            else
+            {
+                if (this.Retry <= 0) GameController.Instance?.UpdateNextQuestion();
+            }
+        }
+        this.IsCorrect = false;
     }
 
     public void StopConnection(int currentTime= 0)
     {
         //Check Answer
-        if(this.answerBox != null)
+        this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
+        if (this.answerBox != null && this.IsConnectWord)
         {
             if (!string.IsNullOrEmpty(this.answerBox.text))
             {
-                this.checkAnswer(currentTime, ()=> resetConnection());
+                if(this.loader.gameSetup.playerNumber > 1)
+                {
+                    this.setCoverBlank(true);
+                }
+                else
+                {
+                    this.checkAnswer(currentTime);
+                }
+            }
+            this.IsConnectWord = false;
+        }
+    }
+
+    public void setCoverBlank(bool status)
+    {
+        GameController.Instance.checkBattleIdling = status;
+        this.IsAnswered = status;
+        if (this.lineDrawer != null) this.lineDrawer.lineRenderer.enabled = !status;
+        if (this.coverBlank != null)
+        {
+            this.coverBlank.raycastTarget = status;
+            this.coverBlank.DOFillAmount(status ? 1f : 0f, 0.5f);
+        }
+    }
+
+    public void setCountDown(float count=0f)
+    {
+        if (this.countDownText != null)
+        {
+            if(count < 5.99f)
+            {
+                string countDown = Mathf.FloorToInt(count).ToString();
+
+                if (string.IsNullOrEmpty(this.countDownText.text) && this.timerScaleTween == null)
+                {
+                    this.timerScaleTween = this.countDownText.transform.DOScale(0.8f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                }
+                this.countDownText.text = countDown;
+            }
+            else
+            {
+                this.countDownText.text = "";
             }
         }
     }
 
-    private void resetConnection()
+    public void resetAnswer()
+    {   if(this.timerScaleTween != null) {
+           this.countDownText.transform.DOScale(1.0f, 0f);
+           this.timerScaleTween.Kill();
+           this.timerScaleTween = null;
+        }
+        this.answer = "";
+        if (this.answerBox != null) this.answerBox.text = "";
+    }
+
+    public void resetConnection()
     {
-        this.IsConnectWord = false;  // Stop drawing
         this.lineDrawer?.FinishDrawing();
 
         for (int i = 0; i < this.selectedCells.Count; i++)
@@ -259,7 +389,7 @@ public class PlayerController : UserData
             }
         }
         this.selectedCells.Clear();
-        if (this.answerBox != null) this.answerBox.text = "";
+        this.gridManager.setFirstLetterHint(this.IsShowHintLetter);
     }
 
     public void showHintOfFirstLetter(Button hintBtn = null)
@@ -272,5 +402,15 @@ public class PlayerController : UserData
     public void hiddenHintOfFirstLetter()
     {
         this.gridManager.setFirstLetterHint(false);
+    }
+
+    public void setGetScorePopup(bool status)
+    {
+        SetUI.SetMove(this.correctPopup, status, status ? Vector2.zero : this.originalGetScorePos, status ? 0.5f : 0f);
+    }
+
+    public void setWrongPopup(bool status)
+    {
+        SetUI.SetMove(this.wrongPopup, status, status ? Vector2.zero : this.originalGetScorePos, status ? 0.5f : 0f);
     }
 }

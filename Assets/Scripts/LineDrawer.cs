@@ -4,7 +4,8 @@ using UnityEngine;
 public class LineDrawer : MonoBehaviour
 {
     public static LineDrawer Instance = null;
-    private LineRenderer lineRenderer;
+    [HideInInspector]
+    public LineRenderer lineRenderer;
     private Vector3[] positions;
     public float lineWidth = 0.1f;
     private int index = 0;
@@ -14,12 +15,17 @@ public class LineDrawer : MonoBehaviour
     {
         if(Instance == null) Instance = this;
     }
-    void Start()
+
+    public void Init(Color32 color = default)
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 0;
-        lineRenderer.startWidth = this.lineWidth;
-        lineRenderer.endWidth = this.lineWidth;
+        if(this.lineRenderer == null) this.lineRenderer = GetComponent<LineRenderer>();
+        if (this.lineRenderer != null) {
+            this.lineRenderer.startColor = color;
+            this.lineRenderer.endColor = color;
+            this.lineRenderer.positionCount = 0;
+            this.lineRenderer.startWidth = this.lineWidth;
+            this.lineRenderer.endWidth = this.lineWidth;
+        }
     }
 
     public void StartDrawing()

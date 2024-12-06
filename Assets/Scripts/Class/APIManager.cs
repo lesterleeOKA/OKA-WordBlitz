@@ -295,19 +295,22 @@ public class APIManager
                 {
                     requestSuccessful = true;
                     string responseText = www.downloadHandler.text;
-
+                    var parsedJson = JSONNode.Parse(responseText);
+                    string prettyJson = parsedJson.ToString();
+                    LogController.Instance?.debug("Success to submit answers: " + prettyJson);
+                    onCompleted?.Invoke();
                     // Format the JSON response for better readability
-                    try
+                    /*try
                     {
                         var parsedJson = JSONNode.Parse(responseText);
                         string prettyJson = parsedJson.ToString();
                         LogController.Instance?.debug("Success to submit answers: " + prettyJson);
-                        onCompleted?.Invoke();
+                        if(onCompleted != null) onCompleted.Invoke();
                     }
                     catch (Exception ex)
                     {
                         this.HandleError("Failed to parse JSON: " + ex.Message, null, true);
-                    }
+                    }*/
                 }
             }
         }

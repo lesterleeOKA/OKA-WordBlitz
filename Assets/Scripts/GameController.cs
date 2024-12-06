@@ -11,16 +11,31 @@ public class GameController : GameBaseController
     public List<PlayerController> playerControllers = new List<PlayerController>();
     private bool showWordHints = false;
     public GridWordFormat gridWordFormat = GridWordFormat.AllUpper;
+    public bool hasCheckedAnswers = false;
+    public bool checkBattleIdling = false;
+    public float idlingCounts = 10f;
+    public float count = 0f;
+    public AnswerStatus answerStatus = AnswerStatus.waiting;
 
     protected override void Awake()
     {
         if (Instance == null) Instance = this;
         base.Awake();
+        this.resetIdling();
     }
 
     protected override void Start()
     {
         base.Start();
+    }
+
+    public enum AnswerStatus
+    {
+        waiting,
+        bothAnswered,
+        oneCorrected,
+        bothWrong,
+        finished
     }
 
     private IEnumerator InitialQuestion()
@@ -44,7 +59,7 @@ public class GameController : GameBaseController
                 {
                     this.gridWordFormat = loader.gameSetup.gridWordFormat;
                     this.playerControllers[i].Init(word, this.defaultAnswerBox, this.defaultFrames, this.gridWordFormat);
-
+                    this.playerControllers[i].lineDrawer.Init(this.playersColor[i]);
                     if (loader.apiManager.peopleIcon != null && loader.apiManager.IsLogined && i==0)
                     {
                         var _playerName = loader.apiManager.loginName;
@@ -185,6 +200,155 @@ public class GameController : GameBaseController
                 {
                     HandleMouse(this.playerControllers[i]);
                 }
+            }
+        }
+
+        this.handleBattleCheckCase();
+    }
+
+
+    private IEnumerator DelayedNextQuestion(float delay)
+    {
+        this.answerStatus = AnswerStatus.waiting;
+        yield return new WaitForSeconds(delay);
+        this.UpdateNextQuestion();
+    }
+
+    void handleBattleCheckCase()
+    {
+        if (this.playerNumber > 1) // Battle Mode
+        {
+            switch (this.answerStatus)
+            {
+                case AnswerStatus.waiting:
+                    bool bothAnswered = true;
+                    for (int i = 0; i < this.playerControllers.Count; i++)
+                    {
+                        if (this.playerControllers[i] == null || !this.playerControllers[i].IsAnswered)
+                        {
+                            bothAnswered = false;
+                            break;
+                        }
+                    }
+                    if (bothAnswered)
+                    {
+                        int answersChecked = 0; // To track how many answers have been checked
+                        for (int i = 0; i < this.playerControllers.Count; i++)
+                        {
+                            int currentTime = Mathf.FloorToInt(((this.gameTimer.gameDuration - this.gameTimer.currentTime) / this.gameTimer.gameDuration) * 100);
+                            this.playerControllers[i].checkAnswer(currentTime, () =>
+                            {
+                                answersChecked++;
+                                if (answersChecked == this.playerControllers.Count)
+                                {
+                                    this.answerStatus = AnswerStatus.bothAnswered; // Move to next status
+                                }
+                            });
+                        }
+                    }
+                    break;
+                case AnswerStatus.bothAnswered:
+                    bool anyPlayerCorrect = false;
+                    for (int i = 0; i < this.playerControllers.Count; i++)
+                    {
+                        if (this.playerControllers[i] != null && this.playerControllers[i].IsCorrect)
+                        {
+                            anyPlayerCorrect = true;
+                            break; 
+                        }
+                    }
+                    if (anyPlayerCorrect)
+                    {
+                        this.answerStatus = AnswerStatus.finished;
+                    }
+                    else
+                    {
+                        this.answerStatus = AnswerStatus.bothWrong;
+                    }
+                    break;
+                case AnswerStatus.bothWrong:
+                    bool anyPlayerFinishedRetry = false;
+                    for (int i = 0; i < this.playerControllers.Count; i++)
+                    {
+                        if (this.playerControllers[i] != null && this.playerControllers[i].Retry == 0)
+                        {
+                            anyPlayerFinishedRetry = true;
+                            break; 
+                        }
+                    }
+
+                    if (anyPlayerFinishedRetry)
+                    {
+                        this.answerStatus = AnswerStatus.finished;
+                    }
+                    else
+                    {
+                        this.answerStatus = AnswerStatus.waiting;
+                    }
+                    break;
+                case AnswerStatus.finished:
+                    StartCoroutine(this.DelayedNextQuestion(2.5f));
+                    break;
+
+            }
+
+            
+           
+            if (this.checkBattleIdling)
+            {
+                if (this.count > 0f)
+                {
+                    for (int i = 0; i < this.playerControllers.Count; i++)
+                    {
+                        if (this.playerControllers[i] != null && this.playerControllers[i].IsAnswered)
+                        {
+                            this.playerControllers[i].setCountDown(this.count);
+                        }
+                    }
+                    this.count -= Time.deltaTime;
+                }
+                else
+                {
+                    this.hasCheckedAnswers = true;
+                    int answersChecked = 0; // To track how many answers have been checked
+                    for (int i = 0; i < this.playerControllers.Count; i++)
+                    {
+                        int currentTime = Mathf.FloorToInt(((this.gameTimer.gameDuration - this.gameTimer.currentTime) / this.gameTimer.gameDuration) * 100);
+                        this.playerControllers[i].checkAnswer(currentTime, () =>
+                        {
+                            answersChecked++;
+                            if (answersChecked == this.playerControllers.Count)
+                            {
+                                this.answerStatus = AnswerStatus.bothAnswered; // Move to next status
+                            }
+                        });
+                    }
+                    this.resetIdling();
+                    this.checkBattleIdling = false;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < this.playerControllers.Count; i++)
+                {
+                    if (this.playerControllers[i] != null)
+                    {
+                        this.playerControllers[i].countDownText.text = "";
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void resetIdling()
+    {
+        this.count = this.idlingCounts;
+        for (int i = 0; i < this.playerControllers.Count; i++)
+        {
+            if (this.playerControllers[i] != null && this.playerControllers[i].IsAnswered)
+            {
+                this.playerControllers[i].setCountDown(this.count);
             }
         }
     }
