@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+
 public class GameController : GameBaseController
 {
     public static GameController Instance = null;
@@ -11,11 +13,13 @@ public class GameController : GameBaseController
     public List<PlayerController> playerControllers = new List<PlayerController>();
     private bool showWordHints = false;
     public GridWordFormat gridWordFormat = GridWordFormat.AllUpper;
-    public bool hasCheckedAnswers = false;
     public bool checkBattleIdling = false;
     public float idlingCounts = 10f;
     public float count = 0f;
     public AnswerStatus answerStatus = AnswerStatus.waiting;
+    public float answeredDelay = 1.5f;
+    public bool resetAnswerState = false;
+    public int answerChecked = 0;
 
     protected override void Awake()
     {
@@ -206,17 +210,41 @@ public class GameController : GameBaseController
         this.handleBattleCheckCase();
     }
 
+    private IEnumerator DelayedResetProcess(float delay)
+    {
+        foreach (var controller in this.playerControllers)
+        {
+            if (controller != null)
+            {
+                controller.setCoverBlank(false);
+            }
+        }
+        yield return new WaitForSeconds(delay);
+        foreach (var controller in this.playerControllers)
+        {
+            if (controller != null)
+            {
+                controller.resetAnswer();
+            }
+        }
+        this.answerStatus = AnswerStatus.waiting;
+        this.resetAnswerState = false;
+    }
 
     private IEnumerator DelayedNextQuestion(float delay)
     {
-        this.answerStatus = AnswerStatus.waiting;
-        yield return new WaitForSeconds(delay);
+        yield return DelayedResetProcess(delay);
         this.UpdateNextQuestion();
+    }
+
+    private IEnumerator DelayedResetAnswers(float delay)
+    {
+        yield return this.DelayedResetProcess(delay);
     }
 
     void handleBattleCheckCase()
     {
-        if (this.playerNumber > 1) // Battle Mode
+        if (this.playerNumber > 1 && this.playerControllers.Count > 1) // Battle Mode
         {
             switch (this.answerStatus)
             {
@@ -232,19 +260,7 @@ public class GameController : GameBaseController
                     }
                     if (bothAnswered)
                     {
-                        int answersChecked = 0; // To track how many answers have been checked
-                        for (int i = 0; i < this.playerControllers.Count; i++)
-                        {
-                            int currentTime = Mathf.FloorToInt(((this.gameTimer.gameDuration - this.gameTimer.currentTime) / this.gameTimer.gameDuration) * 100);
-                            this.playerControllers[i].checkAnswer(currentTime, () =>
-                            {
-                                answersChecked++;
-                                if (answersChecked == this.playerControllers.Count)
-                                {
-                                    this.answerStatus = AnswerStatus.bothAnswered; // Move to next status
-                                }
-                            });
-                        }
+                        this.answerStatus = AnswerStatus.bothAnswered; // Move to the next status
                     }
                     break;
                 case AnswerStatus.bothAnswered:
@@ -257,8 +273,17 @@ public class GameController : GameBaseController
                             break; 
                         }
                     }
+
                     if (anyPlayerCorrect)
                     {
+                        for (int i = 0; i < this.playerControllers.Count; i++)
+                        {
+                            if (this.playerControllers[i] != null && !this.playerControllers[i].IsCorrect)
+                            {
+                               var correctBox = this.playerControllers[i].correctAnswerBox;
+                               SetUI.Set(correctBox, true);
+                            }
+                        }
                         this.answerStatus = AnswerStatus.finished;
                     }
                     else
@@ -283,24 +308,32 @@ public class GameController : GameBaseController
                     }
                     else
                     {
-                        this.answerStatus = AnswerStatus.waiting;
+                        if (!this.resetAnswerState)
+                        {
+                            StartCoroutine(this.DelayedResetAnswers(this.answeredDelay - 1f));
+                            this.resetAnswerState = true;
+                        }
                     }
                     break;
                 case AnswerStatus.finished:
-                    StartCoroutine(this.DelayedNextQuestion(2.5f));
+                    if (!this.resetAnswerState)
+                    {
+                        StartCoroutine(this.DelayedNextQuestion(this.answeredDelay));
+                        this.resetAnswerState = true;
+                    }
                     break;
 
             }
 
             
            
-            if (this.checkBattleIdling)
+            if (this.checkBattleIdling && !this.resetAnswerState)
             {
                 if (this.count > 0f)
                 {
                     for (int i = 0; i < this.playerControllers.Count; i++)
                     {
-                        if (this.playerControllers[i] != null && this.playerControllers[i].IsAnswered)
+                        if (this.playerControllers[i] != null && !this.playerControllers[i].IsAnswered)
                         {
                             this.playerControllers[i].setCountDown(this.count);
                         }
@@ -309,22 +342,33 @@ public class GameController : GameBaseController
                 }
                 else
                 {
-                    this.hasCheckedAnswers = true;
-                    int answersChecked = 0; // To track how many answers have been checked
+                    this.answerChecked = 0;
                     for (int i = 0; i < this.playerControllers.Count; i++)
                     {
+                        var player = this.playerControllers[i];
                         int currentTime = Mathf.FloorToInt(((this.gameTimer.gameDuration - this.gameTimer.currentTime) / this.gameTimer.gameDuration) * 100);
-                        this.playerControllers[i].checkAnswer(currentTime, () =>
+
+                        if (player.IsCheckedAnswer)
                         {
-                            answersChecked++;
-                            if (answersChecked == this.playerControllers.Count)
+                            this.answerChecked += 1;
+                        }
+                        else
+                        {
+                            this.playerControllers[i].checkAnswer(currentTime, () =>
                             {
-                                this.answerStatus = AnswerStatus.bothAnswered; // Move to next status
-                            }
-                        });
+                                this.answerChecked += 1;
+                            });
+                        }                
                     }
-                    this.resetIdling();
-                    this.checkBattleIdling = false;
+
+
+                    if (this.answerChecked == this.playerControllers.Count)
+                    {
+                        this.resetIdling();
+                        this.checkBattleIdling = false;
+                        this.answerChecked = 0;
+                        this.answerStatus = AnswerStatus.bothAnswered;
+                    }
                 }
             }
             else
@@ -333,9 +377,11 @@ public class GameController : GameBaseController
                 {
                     if (this.playerControllers[i] != null)
                     {
+                        this.playerControllers[i].countDownBox.DOFade(0f, 0f);
                         this.playerControllers[i].countDownText.text = "";
                     }
                 }
+                this.resetIdling();
             }
         }
     }
@@ -387,3 +433,4 @@ public class GameController : GameBaseController
         }
     }
 }
+

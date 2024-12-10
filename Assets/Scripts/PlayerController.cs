@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,14 +20,15 @@ public class PlayerController : UserData
     public bool IsConnectWord = false;
     public bool IsShowHintLetter = false;
     public bool IsCorrect = false;
-    public CanvasGroup correctAnswerBox;
-    public TextMeshProUGUI answerBox, countDownText, retryTimesUIText;
+    public CanvasGroup correctAnswerBox, countDownBox;
+    public TextMeshProUGUI answerBox, retryTimesUIText;
     public Image answerBoxFrame;
     public Image frame, coverBlank;
     protected Vector2 originalGetScorePos = Vector2.zero;
     public CanvasGroup correctPopup, wrongPopup;
     private LoaderConfig loader = null;
     private Tween timerScaleTween = null;
+    public TextMeshProUGUI countDownText = null;
 
     // Start is called before the first frame update
 
@@ -174,7 +176,6 @@ public class PlayerController : UserData
     public void checkAnswer(int currentTime, Action onCompleted = null)
     {
         if (!this.IsCheckedAnswer) {
-            this.setCoverBlank(false);
             var currentQuestion = QuestionController.Instance?.currentQuestion;
             int eachQAScore = currentQuestion.qa.score.full == 0 ? 10 : currentQuestion.qa.score.full;
             int currentScore = this.Score;
@@ -271,46 +272,44 @@ public class PlayerController : UserData
 
     public IEnumerator showAnswerResult(bool correct)
     {
+        bool isBattleMode = this.loader.gameSetup.playerNumber > 1;
+        if(isBattleMode) this.setCoverBlank(true);
         this.IsConnectWord = false;
-        float delay = 2.5f;
+        float delay = GameController.Instance.answeredDelay;
         if (correct)
         {
             LogController.Instance?.debug("Add marks" + this.Score);
             this.setGetScorePopup(true);
             AudioController.Instance?.PlayAudio(1);
-            yield return new WaitForSeconds(delay);
-            this.setGetScorePopup(false);
+            yield return new WaitForSeconds(delay - 1f);
+            if (!isBattleMode)
+            {
+                GameController.Instance?.UpdateNextQuestion();
+                this.resetAnswer();
+            }
         }
         else
         {
             this.updateRetryTimes(true);
-            if (this.Retry == 0)
-            {
-                SetUI.Set(this.correctAnswerBox, true);
-            }
-
             this.setWrongPopup(true);
             AudioController.Instance?.PlayAudio(2);
+            if (!isBattleMode)
+            {
+                if (this.Retry <= 0)
+                {
+                    SetUI.Set(this.correctAnswerBox, true);
+                }
+            }
             yield return new WaitForSeconds(delay);
-            this.setWrongPopup(false);
-        }
-        this.scoring.correct = false;
-        this.IsCheckedAnswer = false;
-        this.IsAnswered = false;
-        this.resetAnswer();
-
-        if (this.loader.gameSetup.playerNumber == 1)
-        {
-            if (this.IsCorrect)
+            if (!isBattleMode)
             {
-                GameController.Instance?.UpdateNextQuestion();
-            }
-            else
-            {
-                if (this.Retry <= 0) GameController.Instance?.UpdateNextQuestion();
+                if (this.Retry <= 0)
+                {
+                    GameController.Instance?.UpdateNextQuestion();
+                }
+                this.resetAnswer();
             }
         }
-        this.IsCorrect = false;
     }
 
     public void StopConnection(int currentTime= 0)
@@ -321,14 +320,7 @@ public class PlayerController : UserData
         {
             if (!string.IsNullOrEmpty(this.answerBox.text))
             {
-                if(this.loader.gameSetup.playerNumber > 1)
-                {
-                    this.setCoverBlank(true);
-                }
-                else
-                {
-                    this.checkAnswer(currentTime);
-                }
+                this.checkAnswer(currentTime);
             }
             this.IsConnectWord = false;
         }
@@ -337,6 +329,8 @@ public class PlayerController : UserData
     public void setCoverBlank(bool status)
     {
         GameController.Instance.checkBattleIdling = status;
+        if (this.answerBox != null) 
+            this.answerBox.GetComponent<CanvasGroup>().DOFade(status ? 0f : 1f, 0f);
         this.IsAnswered = status;
         if (this.lineDrawer != null) this.lineDrawer.lineRenderer.enabled = !status;
         if (this.coverBlank != null)
@@ -344,14 +338,20 @@ public class PlayerController : UserData
             this.coverBlank.raycastTarget = status;
             this.coverBlank.DOFillAmount(status ? 1f : 0f, 0.5f);
         }
+
+        if (this.Retry == 0 && !status)
+        {
+            SetUI.Set(this.correctAnswerBox, true);
+        }
     }
 
     public void setCountDown(float count=0f)
     {
-        if (this.countDownText != null)
+        if (this.countDownText != null && this.countDownBox != null)
         {
             if(count < 5.99f)
             {
+                this.countDownBox.DOFade(1f, 0f);
                 string countDown = Mathf.FloorToInt(count).ToString();
 
                 if (string.IsNullOrEmpty(this.countDownText.text) && this.timerScaleTween == null)
@@ -362,6 +362,7 @@ public class PlayerController : UserData
             }
             else
             {
+                this.countDownBox.DOFade(0f, 0f);
                 this.countDownText.text = "";
             }
         }
@@ -373,7 +374,13 @@ public class PlayerController : UserData
            this.timerScaleTween.Kill();
            this.timerScaleTween = null;
         }
+        this.scoring.correct = false;
+        this.IsCheckedAnswer = false;
+        this.IsAnswered = false;
+        this.IsCorrect = false;
         this.answer = "";
+        this.setGetScorePopup(false);
+        this.setWrongPopup(false);
         if (this.answerBox != null) this.answerBox.text = "";
     }
 
