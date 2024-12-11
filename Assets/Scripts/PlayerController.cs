@@ -103,6 +103,7 @@ public class PlayerController : UserData
         }
         else
         {
+            this.NumberOfRetry = LoaderConfig.Instance.gameSetup.retry_times;
             this.Retry = this.NumberOfRetry;
         }
 

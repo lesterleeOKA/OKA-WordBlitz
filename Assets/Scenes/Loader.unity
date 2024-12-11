@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -418,6 +418,7 @@ MonoBehaviour:
     gameTime: 0
     showFPS: 0
     playerNumber: 2
+    retry_times: 3
     gridWordFormat: 0
     gridNormalColor:
       serializedVersion: 2
@@ -456,6 +457,7 @@ MonoBehaviour:
       frameImageUrl_P2: 
       grid_image: 
       gridWordFormat: 0
+      retryTimes: 0
     maxRetries: 10
     debugLayer: {fileID: 1630735626}
     loginErrorBox: {fileID: 645755778}

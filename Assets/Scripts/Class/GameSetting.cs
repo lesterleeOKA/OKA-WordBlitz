@@ -270,6 +270,7 @@ public class GameSetup : LoadImage
     public float gameTime;
     public bool showFPS = false;
     public int playerNumber = 1;
+    public int retry_times = 3;
     public GridWordFormat gridWordFormat = GridWordFormat.AllUpper;
     public Color32 gridNormalColor = default;
     public Color32 gridPressedColor = default;

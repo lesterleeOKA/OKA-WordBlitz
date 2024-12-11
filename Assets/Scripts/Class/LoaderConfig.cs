@@ -1,5 +1,4 @@
 using System;
-using UnityEngine.SceneManagement;
 
 
 public class LoaderConfig : GameSetting
@@ -29,7 +28,7 @@ public class LoaderConfig : GameSetting
 
     public void LoadGameData()
     {
-        RegisterCustomHandler("wordFormat", (value) =>
+        this.RegisterCustomHandler("wordFormat", (value) =>
         {
             int wordFormat = int.Parse(value);
             if (Enum.IsDefined(typeof(GridWordFormat), wordFormat))
@@ -37,6 +36,13 @@ public class LoaderConfig : GameSetting
                 this.gameSetup.gridWordFormat = (GridWordFormat)wordFormat;
                 LogController.Instance?.debug("GridWordFormat: " + this.gameSetup.gridWordFormat);
             }
+        });
+
+        this.RegisterCustomHandler("retryTimes", (value) =>
+        {
+            int retryTimes = int.Parse(value);
+            this.gameSetup.retry_times = retryTimes;
+            LogController.Instance?.debug("retry Times: " + this.gameSetup.retry_times);
         });
 
         this.apiManager.PostGameSetting(this.GetParseURLParams,

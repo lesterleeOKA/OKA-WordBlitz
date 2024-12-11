@@ -9,6 +9,7 @@ public class GameSettings : Settings
     public string frameImageUrl_P2;
     public string grid_image;
     public int gridWordFormat;
+    public int retryTimes;
     //public string normal_color;
     //public string pressed_color;
 }
@@ -31,13 +32,15 @@ public static class SetParams
 
             settings.playerNumber = jsonNode["setting"]["player_number"] != null ? jsonNode["setting"]["player_number"] : null;
             settings.gridWordFormat = jsonNode["setting"]["grid_word_format"] != null ? jsonNode["setting"]["grid_word_format"] : null;
+            settings.retryTimes = jsonNode["setting"]["retry_times"] != null ? jsonNode["setting"]["retry_times"] : null;
 
             LoaderConfig.Instance.gameSetup.playerNumber = settings.playerNumber;
+            LoaderConfig.Instance.gameSetup.retry_times = settings.retryTimes;
 
             if (Enum.IsDefined(typeof(GridWordFormat), settings.gridWordFormat))
             {
                 LoaderConfig.Instance.gameSetup.gridWordFormat = (GridWordFormat)settings.gridWordFormat;
-                LogController.Instance?.debug("GridWordFormat: " + LoaderConfig.Instance.gameSetup.gridWordFormat);
+                //LogController.Instance?.debug("GridWordFormat: " + LoaderConfig.Instance.gameSetup.gridWordFormat);
             }
 
             /*this.settings.normal_color = jsonNode["setting"]["normal_color"] != null ?
