@@ -29,7 +29,6 @@ public class QuestionManager : MonoBehaviour
             Instance = this;
     }
 
-
     public void LoadQuestionFile(string unitKey = "", Action onCompleted = null)
     {
         try

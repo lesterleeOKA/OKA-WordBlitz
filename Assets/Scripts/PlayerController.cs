@@ -131,7 +131,6 @@ public class PlayerController : UserData
                 this.PlayerIcons[i].SetStatus(_status, _playerName, _icon);
             }
         }
-
     }
 
     public void SelectCell(Cell cell)
@@ -222,7 +221,6 @@ public class PlayerController : UserData
 
                     correctId = 2;
                     score = eachQAScore; // load from question settings score of each question
-
                     //Debug.Log("Each QA Score!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + eachQAScore + "______answer" + this.answer);
                     currentQAPercent = 100f;
                 }

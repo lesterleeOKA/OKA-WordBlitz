@@ -212,18 +212,12 @@ public class GameController : GameBaseController
 
     private IEnumerator DelayedResetProcess(float delay)
     {
-        foreach (var controller in this.playerControllers)
-        {
-            if (controller != null)
-            {
-                controller.setCoverBlank(false);
-            }
-        }
         yield return new WaitForSeconds(delay);
         foreach (var controller in this.playerControllers)
         {
             if (controller != null)
             {
+                controller.setCoverBlank(false);
                 controller.resetAnswer();
             }
         }
@@ -401,7 +395,6 @@ public class GameController : GameBaseController
 
     private PlayerController GetPlayerByTouchIndex(int touchIndex)
     {
-        // Map touch index to player index (assuming two players)
         if (touchIndex < playerControllers.Count)
         {
             return playerControllers[touchIndex];
