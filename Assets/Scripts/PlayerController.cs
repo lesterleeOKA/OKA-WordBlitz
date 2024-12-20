@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +20,7 @@ public class PlayerController : UserData
     public bool IsShowHintLetter = false;
     public bool IsCorrect = false;
     public CanvasGroup correctAnswerBox, countDownBox;
-    public TextMeshProUGUI answerBox, retryTimesUIText;
+    public TextMeshProUGUI answerBox;
     public Image answerBoxFrame;
     public Image frame, coverBlank;
     protected Vector2 originalGetScorePos = Vector2.zero;
@@ -29,13 +28,30 @@ public class PlayerController : UserData
     private LoaderConfig loader = null;
     private Tween timerScaleTween = null;
     public TextMeshProUGUI countDownText = null;
+    public BloodController[] bloodControllers;
+    private BloodController bloodController;
 
     // Start is called before the first frame update
 
     public void Init(string _word, Sprite[] defaultAnswerBoxes=null, Sprite[] defaultFrames = null, GridWordFormat gridWordFormat = GridWordFormat.AllUpper)
     {
-        this.updateRetryTimes(false);
         this.loader = LoaderConfig.Instance;
+        for (int i = 0; i < this.bloodControllers.Length; i++)
+        {
+            if (this.bloodControllers[i] != null)
+            {
+                if (i == this.UserId)
+                {
+                    this.bloodControllers[i].gameObject.SetActive(true);
+                    this.bloodController = this.bloodControllers[i];
+                }
+                else
+                {
+                    this.bloodControllers[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        this.updateRetryTimes(false);
         if (this.correctPopup != null) this.originalGetScorePos = this.correctPopup.transform.localPosition;
 
         if (this.PlayerIcons[0] == null)
@@ -58,7 +74,6 @@ public class PlayerController : UserData
         Sprite gridTexture = this.loader.gameSetup.gridTexture != null ? 
             SetUI.ConvertTextureToSprite(this.loader.gameSetup.gridTexture as Texture2D) : null;
         this.grid = gridManager.CreateGrid(this.UserId, _word, frame_width, gridTexture, gridWordFormat);
-
 
         if(this.frame != null)
         {
@@ -100,16 +115,17 @@ public class PlayerController : UserData
             {
                 this.Retry--;
             }
+
+            if (this.bloodController != null)
+            {
+                this.bloodController.setBloods(false);
+            }
         }
         else
         {
             this.NumberOfRetry = LoaderConfig.Instance.gameSetup.retry_times;
             this.Retry = this.NumberOfRetry;
-        }
-
-        if (this.retryTimesUIText != null)
-        {
-            this.retryTimesUIText.text = this.Retry + "/" + this.NumberOfRetry;
+            this.bloodController.setBloods(true);
         }
     }
 
@@ -355,7 +371,7 @@ public class PlayerController : UserData
 
                 if (string.IsNullOrEmpty(this.countDownText.text) && this.timerScaleTween == null)
                 {
-                    this.timerScaleTween = this.countDownText.transform.DOScale(0.8f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                    this.timerScaleTween = this.countDownBox.transform.DOScale(0.8f, 0.5f).SetLoops(-1, LoopType.Yoyo);
                 }
                 this.countDownText.text = countDown;
             }

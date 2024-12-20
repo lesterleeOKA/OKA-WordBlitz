@@ -130,6 +130,12 @@ public class GameController : GameBaseController
                 this.playerControllers[i].NewQuestionWord(word, this.gridWordFormat);
             }
         }
+
+        for (int i = 0; i < this.playerControllers.Count; i++)
+        {
+            this.playerControllers[i].gridManager.showQuestionWordPosition = this.showWordHints;
+            this.playerControllers[i].gridManager.setLetterHint(this.showWordHints, Color.green);
+        }
     }
 
    
@@ -145,12 +151,11 @@ public class GameController : GameBaseController
         else if (Input.GetKeyDown(KeyCode.W))
         {
             this.showWordHints = !this.showWordHints;
-        }
-
-        for (int i = 0; i < this.playerControllers.Count; i++)
-        {
-            this.playerControllers[i].gridManager.showQuestionWordPosition = this.showWordHints;
-            this.playerControllers[i].gridManager.setLetterHint(this.showWordHints, Color.green);
+            for (int i = 0; i < this.playerControllers.Count; i++)
+            {
+                this.playerControllers[i].gridManager.showQuestionWordPosition = this.showWordHints;
+                this.playerControllers[i].gridManager.setLetterHint(this.showWordHints, Color.green);
+            }
         }
 
         // Handle mouse input
