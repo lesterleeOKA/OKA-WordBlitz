@@ -304,6 +304,14 @@ public class GameController : GameBaseController
 
                     if (anyPlayerFinishedRetry)
                     {
+                        for (int i = 0; i < this.playerControllers.Count; i++)
+                        {
+                            if (this.playerControllers[i] != null)
+                            {
+                                var correctBox = this.playerControllers[i].correctAnswerBox;
+                                SetUI.Set(correctBox, true);
+                            }
+                        }
                         this.answerStatus = AnswerStatus.finished;
                     }
                     else
