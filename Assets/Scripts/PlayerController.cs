@@ -23,7 +23,7 @@ public class PlayerController : UserData
     public TextMeshProUGUI answerBox;
     public Image answerBoxFrame;
     public Image frame, coverBlank;
-    protected Vector2 originalGetScorePos = Vector2.zero;
+    public Vector2 originalGetScorePos = Vector2.zero;
     public CanvasGroup correctPopup, wrongPopup;
     private LoaderConfig loader = null;
     private Tween timerScaleTween = null;
@@ -52,7 +52,7 @@ public class PlayerController : UserData
             }
         }
         this.updateRetryTimes(false);
-        if (this.correctPopup != null) this.originalGetScorePos = this.correctPopup.transform.localPosition;
+        if (this.correctPopup != null) this.originalGetScorePos = new Vector2(0f, 150f);
 
         if (this.PlayerIcons[0] == null)
         {
