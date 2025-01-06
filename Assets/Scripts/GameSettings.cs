@@ -34,7 +34,11 @@ public static class SetParams
             settings.gridWordFormat = jsonNode["setting"]["grid_word_format"] != null ? jsonNode["setting"]["grid_word_format"] : null;
             settings.retryTimes = jsonNode["setting"]["retry_times"] != null ? jsonNode["setting"]["retry_times"] : null;
 
-            LoaderConfig.Instance.gameSetup.playerNumber = settings.playerNumber;
+            if (jsonNode["setting"]["player_number"] != null)
+            {
+                settings.playerNumber = jsonNode["setting"]["player_number"];
+                LoaderConfig.Instance.gameSetup.playerNumber = settings.playerNumber;
+            }
             LoaderConfig.Instance.gameSetup.retry_times = settings.retryTimes;
 
             if (Enum.IsDefined(typeof(GridWordFormat), settings.gridWordFormat))
