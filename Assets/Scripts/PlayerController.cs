@@ -385,7 +385,8 @@ public class PlayerController : UserData
 
     public void resetAnswer()
     {   if(this.timerScaleTween != null) {
-           this.countDownText.transform.DOScale(1.0f, 0f);
+           this.countDownText.text = "";
+           this.countDownBox.transform.DOScale(1.0f, 0f);
            this.timerScaleTween.Kill();
            this.timerScaleTween = null;
         }
