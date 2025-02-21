@@ -211,6 +211,76 @@
       "media": "p1u4-d20.jpg"
     },
     {
+      "qid": "p1u6-e1",
+      "questionType": "fillInBlank",
+      "question": "The baby has a cute, chubby ______.",
+      "correctAnswer": "tummy",
+      "media": "p1u6-e1.mp3"
+    },
+    {
+      "qid": "p1u6-e2",
+      "questionType": "fillInBlank",
+      "question": "I move my _______ when I don't know the answer.",
+      "correctAnswer": "shoulders",
+      "media": "p1u6-e2.mp3"
+    },
+    {
+      "qid": "p1u6-e3",
+      "questionType": "fillInBlank",
+      "question": "Her _______ are as bright as stars.",
+      "correctAnswer": "eyes",
+      "media": "p1u6-e3.mp3"
+    },
+    {
+      "qid": "p1u6-e4",
+      "questionType": "fillInBlank",
+      "question": "I love holding my parent's ________ when we go out.",
+      "correctAnswer": "hand",
+      "media": "p1u6-e4.mp3"
+    },
+    {
+      "qid": "p1u6-e5",
+      "questionType": "fillInBlank",
+      "question": "Please cover your _______ when you sneeze.",
+      "correctAnswer": "nose",
+      "media": "p1u6-e5.mp3"
+    },
+    {
+      "qid": "p1u6-e6",
+      "questionType": "fillInBlank",
+      "question": "You need to wear a helmet to protect your _______.",
+      "correctAnswer": "head",
+      "media": "p1u6-e6.mp3"
+    },
+    {
+      "qid": "p1u6-e7",
+      "questionType": "fillInBlank",
+      "question": "Doris was born with _____ hair. It's beautiful.",
+      "correctAnswer": "curly",
+      "media": "p1u6-e7.mp3"
+    },
+    {
+      "qid": "p1u6-e8",
+      "questionType": "fillInBlank",
+      "question": "My dog ​​wags his _____ to welcome me home.",
+      "correctAnswer": "tail",
+      "media": "p1u6-e8.mp3"
+    },
+    {
+      "qid": "p1u6-e9",
+      "questionType": "fillInBlank",
+      "question": "I think Aunt Kelly looks better with _____ hair.",
+      "correctAnswer": "short",
+      "media": "p1u6-e9.mp3"
+    },
+    {
+      "qid": "p1u6-e10",
+      "questionType": "fillInBlank",
+      "question": "Elle is shy. Her ______ turns red easily.",
+      "correctAnswer": "face",
+      "media": "p1u6-e10.mp3"
+    },
+    {
       "qid": "p2u1-c1",
       "questionType": "audio",
       "question": "",
