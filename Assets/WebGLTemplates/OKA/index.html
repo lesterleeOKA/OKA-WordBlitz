@@ -41,15 +41,7 @@
 				alert('Could not access the microphone. Please check your permissions.');
 			}
 		}*/
-
-      window.addEventListener("load", function () {
-        //accessAudio();
-        if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("ServiceWorker.js");
-        }
-      });
-	  
-	  	let unityInstance;
+	  let unityInstance;
 
 		window.onbeforeunload = function(e) {
 			console.log("Calling OnClose from Browser!");
@@ -58,7 +50,7 @@
 			e.returnValue = dialogText;
 			return dialogText;
 		};
-
+		
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -154,6 +146,14 @@
 		const loadingTextElement = document.getElementById("loadingText");
 		loadingTextElement.textContent = newText;
 	  }
+	  function replaceUrlPart() {
+        var currentUrl = window.location.href;
+        var hostname = window.location.origin;
+        var pathAndQuery = currentUrl.slice(hostname.length);
+        var newUrl = hostname + "/" + config.productName;
+        window.history.pushState({ path: newUrl }, '', newUrl);
+	  }
+	  
     </script>
   </body>
 </html>
