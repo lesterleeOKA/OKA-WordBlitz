@@ -561,144 +561,565 @@
       "media": "p2u2-c20.mp3"
     },
     {
-      "qid": "p3u1-d1",
-      "questionType": "fillInBlank",
-      "question": "I play the _____.",
-      "correctAnswer": "cello",
-      "media": "p3u1-d1.mp3"
+      "qid": "p2u4-c1",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "hairband",
+      "media": "p2u4-c1.mp3"
     },
     {
-      "qid": "p3u1-d2",
-      "questionType": "fillInBlank",
-      "question": "He plays the _____.",
-      "correctAnswer": "violin",
-      "media": "p3u1-d2.mp3"
+      "qid": "p2u4-c2",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "glasses",
+      "media": "p2u4-c2.mp3"
     },
     {
-      "qid": "p3u1-d3",
-      "questionType": "fillInBlank",
-      "question": "Dad plays the ______.",
-      "correctAnswer": "guitar",
-      "media": "p3u1-d3.mp3"
+      "qid": "p2u4-c3",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "cap",
+      "media": "p2u4-c3.mp3"
     },
     {
-      "qid": "p3u1-d4",
-      "questionType": "fillInBlank",
-      "question": "She plays ________.",
-      "correctAnswer": "badminton",
-      "media": "p3u1-d4.mp3"
+      "qid": "p2u4-c4",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "ribbon",
+      "media": "p2u4-c4.mp3"
     },
     {
-      "qid": "p3u1-d5",
-      "questionType": "fillInBlank",
-      "question": "Dave kicked the _______.",
-      "correctAnswer": "football",
-      "media": "p3u1-d5.mp3"
+      "qid": "p2u4-c5",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "hair clip",
+      "media": "p2u4-c5.mp3"
     },
     {
-      "qid": "p3u1-d6",
-      "questionType": "fillInBlank",
-      "question": "Mum likes doing _____.",
-      "correctAnswer": "puzzles",
-      "media": "p3u1-d6.mp3"
+      "qid": "p2u4-c6",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "Identity card",
+      "media": "p2u4-c6.mp3"
     },
     {
-      "qid": "p3u1-d7",
-      "questionType": "fillInBlank",
-      "question": "Ms. Ho collects _______.",
-      "correctAnswer": "stamps",
-      "media": "p3u1-d7.mp3"
+      "qid": "p2u4-c7",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "tie",
+      "media": "p2u4-c7.mp3"
     },
     {
-      "qid": "p3u1-d8",
-      "questionType": "fillInBlank",
-      "question": "Keith plays the _______.",
-      "correctAnswer": "drum",
-      "media": "p3u1-d8.mp3"
+      "qid": "p2u4-c8",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "coins",
+      "media": "p2u4-c8.mp3"
     },
     {
-      "qid": "p3u1-d9",
-      "questionType": "fillInBlank",
-      "question": "They are playing the ________.",
-      "correctAnswer": "trumpet",
-      "media": "p3u1-d9.mp3"
+      "qid": "p2u4-c9",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "keys",
+      "media": "p2u4-c9.mp3"
     },
     {
-      "qid": "p3u1-d10",
-      "questionType": "fillInBlank",
-      "question": "He is playing the _______.",
-      "correctAnswer": "piano",
-      "media": "p3u1-d10.mp3"
+      "qid": "p2u4-c10",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "shoes",
+      "media": "p2u4-c10.mp3"
     },
     {
-      "qid": "p3u1-d11",
-      "questionType": "fillInBlank",
-      "question": "I can throw a ________.",
-      "correctAnswer": "baseball",
-      "media": "p3u1-d11.mp3"
+      "qid": "p2u4-c11",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "towel",
+      "media": "p2u4-c11.mp3"
     },
     {
-      "qid": "p3u1-d12",
-      "questionType": "fillInBlank",
-      "question": "He is a _______ player.",
-      "correctAnswer": "basketball",
-      "media": "p3u1-d12.mp3"
+      "qid": "p2u4-c12",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "wallet",
+      "media": "p2u4-c12.mp3"
     },
     {
-      "qid": "p3u1-d13",
-      "questionType": "fillInBlank",
-      "question": "Mr. Chan enjoys ______ to school.",
-      "correctAnswer": "cycling",
-      "media": "p3u1-d13.mp3"
+      "qid": "p2u4-c13",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "watch",
+      "media": "p2u4-c13.mp3"
     },
     {
-      "qid": "p3u1-d14",
-      "questionType": "fillInBlank",
-      "question": "Ms. Law listens to _______.",
-      "correctAnswer": "music",
-      "media": "p3u1-d14.mp3"
+      "qid": "p2u4-c14",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "scarf",
+      "media": "p2u4-c14.mp3"
     },
     {
-      "qid": "p3u1-d15",
-      "questionType": "fillInBlank",
-      "question": "He is playing a ________.",
-      "correctAnswer": "recorder",
-      "media": "p3u1-d15.mp3"
+      "qid": "p2u4-c15",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "belt",
+      "media": "p2u4-c15.mp3"
     },
     {
-      "qid": "p3u1-d16",
-      "questionType": "fillInBlank",
-      "question": "She is learning the ______.",
-      "correctAnswer": "viola",
-      "media": "p3u1-d16.mp3"
+      "qid": "p2u4-c16",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "jacket",
+      "media": "p2u4-c16.mp3"
     },
     {
-      "qid": "p3u1-d17",
-      "questionType": "fillInBlank",
-      "question": "Auntie is a ______ dancer.",
-      "correctAnswer": "ballet",
-      "media": "p3u1-d17.mp3"
+      "qid": "p2u4-c17",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "hat",
+      "media": "p2u4-c17.mp3"
     },
     {
-      "qid": "p3u1-d18",
-      "questionType": "fillInBlank",
-      "question": "My dog loves chasing ______ balls.",
-      "correctAnswer": "tennis",
-      "media": "p3u1-d18.mp3"
+      "qid": "p2u4-c18",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "umbrella",
+      "media": "p2u4-c18.mp3"
     },
     {
-      "qid": "p3u1-d19",
-      "questionType": "fillInBlank",
-      "question": "Grandpa likes playing _____.",
-      "correctAnswer": "chess",
-      "media": "p3u1-d19.mp3"
+      "qid": "p2u4-c19",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "purse",
+      "media": "p2u4-c19.mp3"
     },
     {
-      "qid": "p3u1-d20",
+      "qid": "p2u4-c20",
+      "questionType": "audio",
+      "question": "",
+      "correctAnswer": "water bottle",
+      "media": "p2u4-c20.mp3"
+    },
+    {
+      "qid": "p3Bu1-d1",
       "questionType": "fillInBlank",
-      "question": "John likes to make _______.",
-      "correctAnswer": "crafts",
-      "media": "p3u1-d20.mp3"
+      "question": "Sally is ______ of the dark.",
+      "correctAnswer": "afraid",
+      "media": "p3Bu1-d1.mp3"
+    },
+    {
+      "qid": "p3Bu1-d2",
+      "questionType": "fillInBlank",
+      "question": "I was _____ when Ben broke my toy.",
+      "correctAnswer": "angry",
+      "media": "p3Bu1-d2.mp3"
+    },
+    {
+      "qid": "p3Bu1-d3",
+      "questionType": "fillInBlank",
+      "question": "Greta feels _____ because there’s nothing to do.",
+      "correctAnswer": "bored",
+      "media": "p3Bu1-d3.mp3"
+    },
+    {
+      "qid": "p3Bu1-d4",
+      "questionType": "fillInBlank",
+      "question": "Dad is ______ about a party tomorrow.",
+      "correctAnswer": "excited",
+      "media": "p3Bu1-d4.mp3"
+    },
+    {
+      "qid": "p3Bu1-d5",
+      "questionType": "fillInBlank",
+      "question": "Tim is ______ because he skipped breakfast.",
+      "correctAnswer": "hungry",
+      "media": "p3Bu1-d5.mp3"
+    },
+    {
+      "qid": "p3Bu1-d6",
+      "questionType": "fillInBlank",
+      "question": "Max was _______ about his first day at school.",
+      "correctAnswer": "nervous",
+      "media": "p3Bu1-d6.mp3"
+    },
+    {
+      "qid": "p3Bu1-d7",
+      "questionType": "fillInBlank",
+      "question": "Linda felt ___ when her goldfish died.",
+      "correctAnswer": "sad",
+      "media": "p3Bu1-d7.mp3"
+    },
+    {
+      "qid": "p3Bu1-d8",
+      "questionType": "fillInBlank",
+      "question": "Ron was _______ after playing football all day.",
+      "correctAnswer": "thirsty",
+      "media": "p3Bu1-d8.mp3"
+    },
+    {
+      "qid": "p3Bu1-d9",
+      "questionType": "fillInBlank",
+      "question": "Minnie felt _____ after a long day at school.",
+      "correctAnswer": "tired",
+      "media": "p3Bu1-d9.mp3"
+    },
+    {
+      "qid": "p3Bu1-d10",
+      "questionType": "fillInBlank",
+      "question": "I feel ________ about the test.",
+      "correctAnswer": "confident",
+      "media": "p3Bu1-d10.mp3"
+    },
+    {
+      "qid": "p3Bu1-d11",
+      "questionType": "fillInBlank",
+      "question": "Mum felt ___________ when she tripped in the MTR.",
+      "correctAnswer": "embarrassed",
+      "media": "p3Bu1-d11.mp3"
+    },
+    {
+      "qid": "p3Bu1-d12",
+      "questionType": "fillInBlank",
+      "question": "Dad is ____________ because his computer keeps freezing.",
+      "correctAnswer": "frustrated",
+      "media": "p3Bu1-d12.mp3"
+    },
+    {
+      "qid": "p3Bu1-d13",
+      "questionType": "fillInBlank",
+      "question": "Eve felt _______ of Lily's new bike.",
+      "correctAnswer": "jealous",
+      "media": "p3Bu1-d13.mp3"
+    },
+    {
+      "qid": "p3Bu1-d14",
+      "questionType": "fillInBlank",
+      "question": "Mark is _____ because he lost his favorite hat.",
+      "correctAnswer": "upset",
+      "media": "p3Bu1-d14.mp3"
+    },
+    {
+      "qid": "p3Bu1-d15",
+      "questionType": "fillInBlank",
+      "question": "Ms. Wong felt _____ of her certificate on the wall.",
+      "correctAnswer": "proud",
+      "media": "p3Bu1-d15.mp3"
+    },
+    {
+      "qid": "p3Bu1-d16",
+      "questionType": "fillInBlank",
+      "question": "Victor was _______ upon hearing the news.",
+      "correctAnswer": "shocked",
+      "media": "p3Bu1-d16.mp3"
+    },
+    {
+      "qid": "p3Bu1-d17",
+      "questionType": "fillInBlank",
+      "question": "Sarah feels ________ about the upcoming exams.",
+      "correctAnswer": "stressed",
+      "media": "p3Bu1-d17.mp3"
+    },
+    {
+      "qid": "p3Bu1-d18",
+      "questionType": "fillInBlank",
+      "question": "Dad was _______ about Mum’s health.",
+      "correctAnswer": "worried",
+      "media": "p3Bu1-d18.mp3"
+    },
+    {
+      "qid": "p3Bu1-d19",
+      "questionType": "fillInBlank",
+      "question": "Ms. Yip was _______ by our farewell letter.",
+      "correctAnswer": "touched",
+      "media": "p3Bu1-d19.mp3"
+    },
+    {
+      "qid": "p3Bu1-d20",
+      "questionType": "fillInBlank",
+      "question": "Nick felt _______ waiting for the interview.",
+      "correctAnswer": "anxious",
+      "media": "p3Bu1-d20.mp3"
+    },
+    {
+      "qid": "p3Bu3-d1",
+      "questionType": "fillInBlank",
+      "question": "He’s too ____ to lift the heavy box.",
+      "correctAnswer": "weak",
+      "media": "p3Bu3-d1.mp3"
+    },
+    {
+      "qid": "p3Bu3-d2",
+      "questionType": "fillInBlank",
+      "question": "You don’t need big muscles to be ______.",
+      "correctAnswer": "strong",
+      "media": "p3Bu3-d2.mp3"
+    },
+    {
+      "qid": "p3Bu3-d3",
+      "questionType": "fillInBlank",
+      "question": "She’s too _____ to know what love is.",
+      "correctAnswer": "young",
+      "media": "p3Bu3-d3.mp3"
+    },
+    {
+      "qid": "p3Bu3-d4",
+      "questionType": "fillInBlank",
+      "question": "The ___ woman shared stories from her youth with the children.",
+      "correctAnswer": "old",
+      "media": "p3Bu3-d4.mp3"
+    },
+    {
+      "qid": "p3Bu3-d5",
+      "questionType": "fillInBlank",
+      "question": "The _____ man refused to give money to the beggar.",
+      "correctAnswer": "cruel",
+      "media": "p3Bu3-d5.mp3"
+    },
+    {
+      "qid": "p3Bu3-d6",
+      "questionType": "fillInBlank",
+      "question": "Gina is very _______ and always greets me with a smile.",
+      "correctAnswer": "friendly",
+      "media": "p3Bu3-d6.mp3"
+    },
+    {
+      "qid": "p3Bu3-d7",
+      "questionType": "fillInBlank",
+      "question": "There lives an ____ ogre in the swamp, scaring everyone.",
+      "correctAnswer": "ugly",
+      "media": "p3Bu3-d7.mp3"
+    },
+    {
+      "qid": "p3Bu3-d8",
+      "questionType": "fillInBlank",
+      "question": "The queen is so _________ people come far and wide just to look at her.",
+      "correctAnswer": "beautiful",
+      "media": "p3Bu3-d8.mp3"
+    },
+    {
+      "qid": "p3Bu3-d9",
+      "questionType": "fillInBlank",
+      "question": "____ can never triumph over goodness.",
+      "correctAnswer": "evil",
+      "media": "p3Bu3-d9.mp3"
+    },
+    {
+      "qid": "p3Bu3-d10",
+      "questionType": "fillInBlank",
+      "question": "Horse jockeys are usually _____ and light.",
+      "correctAnswer": "short",
+      "media": "p3Bu3-d10.mp3"
+    },
+    {
+      "qid": "p3Bu3-d11",
+      "questionType": "fillInBlank",
+      "question": "James is very ____, so his friends tell him to play basketball.",
+      "correctAnswer": "tall",
+      "media": "p3Bu3-d11.mp3"
+    },
+    {
+      "qid": "p3Bu3-d12",
+      "questionType": "fillInBlank",
+      "question": "The ___ cat lounged lazily in the sun.",
+      "correctAnswer": "fat",
+      "media": "p3Bu3-d12.mp3"
+    },
+    {
+      "qid": "p3Bu3-d13",
+      "questionType": "fillInBlank",
+      "question": "Mickey is very ____ even though he eats a lot.",
+      "correctAnswer": "thin",
+      "media": "p3Bu3-d13.mp3"
+    },
+    {
+      "qid": "p3Bu3-d14",
+      "questionType": "fillInBlank",
+      "question": "The ______ man shared the credit with his friends.",
+      "correctAnswer": "humble",
+      "media": "p3Bu3-d14.mp3"
+    },
+    {
+      "qid": "p3Bu3-d15",
+      "questionType": "fillInBlank",
+      "question": "A _________ criminal escaped from the prison.",
+      "correctAnswer": "dangerous",
+      "media": "p3Bu3-d15.mp3"
+    },
+    {
+      "qid": "p3Bu3-d16",
+      "questionType": "fillInBlank",
+      "question": "Mr. Chen is very ____ and has a collection of cars.",
+      "correctAnswer": "rich",
+      "media": "p3Bu3-d16.mp3"
+    },
+    {
+      "qid": "p3Bu3-d17",
+      "questionType": "fillInBlank",
+      "question": "The ______ detective solved the case quickly.",
+      "correctAnswer": "clever",
+      "media": "p3Bu3-d17.mp3"
+    },
+    {
+      "qid": "p3Bu3-d18",
+      "questionType": "fillInBlank",
+      "question": "Augustus is very ______ and never shares.",
+      "correctAnswer": "greedy",
+      "media": "p3Bu3-d18.mp3"
+    },
+    {
+      "qid": "p3Bu3-d19",
+      "questionType": "fillInBlank",
+      "question": "The ______ vizier tried to hypnotize the princess.",
+      "correctAnswer": "wicked",
+      "media": "p3Bu3-d19.mp3"
+    },
+    {
+      "qid": "p3Bu3-d20",
+      "questionType": "fillInBlank",
+      "question": "Yvette is very _________ and never tells the truth.",
+      "correctAnswer": "dishonest",
+      "media": "p3Bu3-d20.mp3"
+    },
+    {
+      "qid": "p3Bu4-d1",
+      "questionType": "fillInBlank",
+      "question": "We blew _______ around the camp.",
+      "correctAnswer": "bubbles",
+      "media": "p3Bu4-d1.mp3"
+    },
+    {
+      "qid": "p3Bu4-d2",
+      "questionType": "fillInBlank",
+      "question": "I saw colorful ___________ near the tent.",
+      "correctAnswer": "butterflies",
+      "media": "p3Bu4-d2.mp3"
+    },
+    {
+      "qid": "p3Bu4-d3",
+      "questionType": "fillInBlank",
+      "question": "Ms. Lee roasted _____________ for us.",
+      "correctAnswer": "marshmallows",
+      "media": "p3Bu4-d3.mp3"
+    },
+    {
+      "qid": "p3Bu4-d4",
+      "questionType": "fillInBlank",
+      "question": "The weather is perfect for flying a ____. ",
+      "correctAnswer": "kite",
+      "media": "p3Bu4-d4.mp3"
+    },
+    {
+      "qid": "p3Bu4-d5",
+      "questionType": "fillInBlank",
+      "question": "After many tries, Jim finally built a ____ for the camp.",
+      "correctAnswer": "fire",
+      "media": "p3Bu4-d5.mp3"
+    },
+    {
+      "qid": "p3Bu4-d6",
+      "questionType": "fillInBlank",
+      "question": "Jenny is so good at playing hide-and-____ because she is tiny.",
+      "correctAnswer": "seek",
+      "media": "p3Bu4-d6.mp3"
+    },
+    {
+      "qid": "p3Bu4-d7",
+      "questionType": "fillInBlank",
+      "question": "Dad taught me how to ride a _______ yesterday.",
+      "correctAnswer": "bicycle",
+      "media": "p3Bu4-d7.mp3"
+    },
+    {
+      "qid": "p3Bu4-d8",
+      "questionType": "fillInBlank",
+      "question": "Mum likes to go ______ every Sunday morning.",
+      "correctAnswer": "hiking",
+      "media": "p3Bu4-d8.mp3"
+    },
+    {
+      "qid": "p3Bu4-d9",
+      "questionType": "fillInBlank",
+      "question": "Mr. Chan brought a lot of meat for a ________.",
+      "correctAnswer": "barbecue",
+      "media": "p3Bu4-d9.mp3"
+    },
+    {
+      "qid": "p3Bu4-d10",
+      "questionType": "fillInBlank",
+      "question": "Most of us managed to _____ up the rock.",
+      "correctAnswer": "climb",
+      "media": "p3Bu4-d10.mp3"
+    },
+    {
+      "qid": "p3Bu4-d11",
+      "questionType": "fillInBlank",
+      "question": "A _______ appeared after the rain.",
+      "correctAnswer": "rainbow",
+      "media": "p3Bu4-d11.mp3"
+    },
+    {
+      "qid": "p3Bu4-d12",
+      "questionType": "fillInBlank",
+      "question": "We petted ______ at a farm near the camp.",
+      "correctAnswer": "horses",
+      "media": "p3Bu4-d12.mp3"
+    },
+    {
+      "qid": "p3Bu4-d13",
+      "questionType": "fillInBlank",
+      "question": "At night, we told _____ stories around the campfire.",
+      "correctAnswer": "ghost",
+      "media": "p3Bu4-d13.mp3"
+    },
+    {
+      "qid": "p3Bu4-d14",
+      "questionType": "fillInBlank",
+      "question": "We played ____ games inside the tent at night.",
+      "correctAnswer": "card",
+      "media": "p3Bu4-d14.mp3"
+    },
+    {
+      "qid": "p3Bu4-d15",
+      "questionType": "fillInBlank",
+      "question": "We spent the afternoon _______ by the lake.",
+      "correctAnswer": "fishing",
+      "media": "p3Bu4-d15.mp3"
+    },
+
+    {
+    "qid": "p3Bu4-d16",
+    "questionType": "fillInBlank",
+    "question": "It took a while, but I finally managed to set up a ____. ",
+    "correctAnswer": "tent",
+    "media": "p3Bu4-d16.mp3"
+  },
+  {
+    "qid": "p3Bu4-d17",
+    "questionType": "fillInBlank",
+    "question": "We saw a _____ sink into the lake today.",
+    "correctAnswer": "yacht",
+    "media": "p3Bu4-d17.mp3"
+  },
+  {
+    "qid": "p3Bu4-d18",
+    "questionType": "fillInBlank",
+    "question": "Mike really loves _______ activities.",
+    "correctAnswer": "outdoor",
+    "media": "p3Bu4-d18.mp3"
+  },
+  {
+    "qid": "p3Bu4-d19",
+    "questionType": "fillInBlank",
+    "question": "We took a break to ________ on the grass.",
+    "correctAnswer": "sunbathe",
+    "media": "p3Bu4-d19.mp3"
+  },
+    {
+      "qid": "p3Bu4-d20",
+      "questionType": "fillInBlank",
+      "question": "We struggled to row the ____ across the lake.",
+      "correctAnswer": "row",
+      "media": "p3Bu4-d20.mp3"
     },
     {
       "qid": "p5u3-d1",
