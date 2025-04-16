@@ -68,13 +68,13 @@ public static class ExternalCaller
             }
             else if (hostname.Contains("www.rainbowone.app"))
             {
+                  string Production = "https://www.starwishparty.com/";
                   string javascript = $@"
                     if (window.self !== window.top) {{
                         console.log('This page is inside an iframe');
                         window.parent.postMessage('closeIframe', '*');
                     }}
                     else {{
-                        string Production = "https://www.starwishparty.com/";
                         window.location.replace('{Production}');
                     }}
                 ";
