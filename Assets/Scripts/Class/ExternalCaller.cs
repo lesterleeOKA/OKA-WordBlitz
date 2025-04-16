@@ -30,7 +30,16 @@ public static class ExternalCaller
         {
             if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
-                Application.ExternalEval("history.back();");
+                string javascript = $@"
+                    if (window.self !== window.top) {{
+                        console.log('This page is inside an iframe');
+                        window.parent.postMessage({{ action: 'exit' }}, '*');
+                    }}
+                    else {{
+                        history.back();
+                    }}
+                ";
+                Application.ExternalEval(javascript);
             }
             else
             {
@@ -45,14 +54,31 @@ public static class ExternalCaller
                 string baseUrl = GetCurrentDomainName;
                 string newUrl = $"https://{baseUrl}/RainbowOne/webapp/OKAGames/SelectGames/";
                 if (LogController.Instance != null) LogController.Instance.debug("full url:" + newUrl);
-                //Application.ExternalEval($"location.href = '{newUrl}', '_self'");
-                Application.ExternalEval($"window.location.replace('{newUrl}')");
+
+                string javascript = $@"
+                    if (window.self !== window.top) {{
+                        console.log('This page is inside an iframe');
+                        window.parent.postMessage('closeIframe', '*');
+                    }}
+                    else {{
+                        window.location.replace('{newUrl}');
+                    }}
+                ";
+                Application.ExternalEval(javascript);
             }
             else if (hostname.Contains("www.rainbowone.app"))
             {
-                string Production = "https://www.starwishparty.com/";
-                //Application.ExternalEval($"location.href = '{Production}', '_self'");
-                Application.ExternalEval($"window.location.replace('{Production}')");
+                  string javascript = $@"
+                    if (window.self !== window.top) {{
+                        console.log('This page is inside an iframe');
+                        window.parent.postMessage('closeIframe', '*');
+                    }}
+                    else {{
+                        string Production = "https://www.starwishparty.com/";
+                        window.location.replace('{Production}');
+                    }}
+                ";
+                Application.ExternalEval(javascript);
             }
             else if (hostname.Contains("localhost"))
             {
